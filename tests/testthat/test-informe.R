@@ -8,3 +8,15 @@ test_that("el informe HTML se genera", {
   txt <- paste(readLines(f, warn = FALSE, encoding = "UTF-8"), collapse = " ")
   expect_match(txt, "DATOS SINT")
 })
+
+test_that("el informe incluye las dos guías paso a paso", {
+  skip_on_cran()
+  skip_if_not_installed("rmarkdown")
+  skip_if_not(rmarkdown::pandoc_available(), "Pandoc no disponible")
+  f <- tempfile(fileext = ".html")
+  suppressMessages(sov_informe(adage2019, archivo = f, B = 20, abrir = FALSE, categoria = "auto_marcas", marca = "Chevrolet"))
+  txt <- paste(readLines(f, warn = FALSE, encoding = "UTF-8"), collapse = " ")
+  expect_match(txt, "Guía paso a paso 1", fixed = TRUE)
+  expect_match(txt, "Guía paso a paso 2", fixed = TRUE)
+  expect_match(txt, "Paso 10 de 10", fixed = TRUE)
+})

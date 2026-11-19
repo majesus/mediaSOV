@@ -41,6 +41,15 @@ sov_grafico(x, x$sectores[[1]]$caso)
 
 `sov_informe(x)` genera un HTML autocontenido y `sov_asistente()` abre una aplicación sin código.
 
+## Guías paso a paso
+
+`sov_guia()` explica, con el mismo tono didáctico y cifras calculadas sobre los propios datos, cómo pasar de las cuotas a la brecha de una marca (guía 1) y de los puntos a la recta y la duda razonable (guía 2). Ambas se incluyen en el informe.
+
+```{r guia, eval = FALSE}
+sov_guia(x, "marca", categoria = "auto_marcas", marca = "Chevrolet")
+sov_guia(x, "sector", categoria = "auto_marcas")
+```
+
 ## Robustez
 
 Con pocas marcas, el intervalo clásico de mínimos cuadrados puede ser demasiado estrecho. El paquete añade errores robustos HC3, Theil-Sen, validación dejando una marca fuera y bootstrap de pares; la viñeta sobre simulación cuantifica su cobertura.

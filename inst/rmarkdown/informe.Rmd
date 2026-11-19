@@ -13,6 +13,12 @@ params:
   x: NULL
   titulo: "Informe SOV-SOM"
   autor: ""
+  guias: TRUE
+  categoria: NULL
+  marca: NULL
+  epsilon: 0.05
+  anios: 3
+  inversion: 50
 ---
 
 ```{r setup, include=FALSE}
@@ -44,7 +50,28 @@ cat(paste0("Se analizan **", length(x$sectores), " categorías** y **",
 cat(sov_interpreta(x), sep = "\n\n")
 ```
 
+# Cómo usar este informe
+
+Este informe está pensado para **aprender a interpretar** los datos, no solo para consultarlos. Sugerimos este recorrido:
+
+1. Lea el **Resumen**: dice, en lenguaje llano, qué muestran los datos de cada categoría.
+2. Si es la primera vez, siga las **dos guías paso a paso**: la primera responde a *¿invierte una marca lo que cabría esperar de una marca de su tamaño?* y la segunda a *¿podemos fiarnos de una recta calculada con pocas marcas?*
+3. Consulte después las **tablas y gráficos** de cada categoría, con una nota sobre cómo leerlos.
+4. Ante cualquier término desconocido, vaya al **Glosario**; para saber hasta dónde llegan las conclusiones, a las **Limitaciones**.
+
+```{r guias, results="asis"}
+if (isTRUE(params$guias)) {
+  cat("\n# Guía paso a paso 1: de las cuotas a la brecha de una marca\n\n")
+  cat(sov_guia(x, "marca", categoria = params$categoria, marca = params$marca,
+               epsilon = params$epsilon, anios = params$anios, inversion = params$inversion))
+  cat("\n\n# Guía paso a paso 2: de los puntos a la recta, y de la recta a la duda razonable\n\n")
+  cat(sov_guia(x, "sector", categoria = params$categoria, marca = params$marca))
+}
+```
+
 # Resultados por categoría
+
+*Cómo leerla.* Cada fila resume una categoría: **β** es la pendiente (negativa: las marcas grandes invierten proporcionalmente menos); si el intervalo de confianza incluye 0 no hay evidencia de pendiente; compare el intervalo clásico con el robusto (HC3) y mire la columna «β al omitir cada marca»: si cambia de signo, el resultado depende de una sola marca.
 
 ```{r tabla-res}
 cat(sov_tabla(x, "resultados", formato = "html"))
@@ -58,17 +85,23 @@ for (s in x$sectores) if (!is.null(s$ajuste)) sov_grafico(x, s$caso)
 
 # Diagnóstico de influencia
 
+*Cómo leerlo.* Las alertas señalan marcas que pesan mucho en la recta: **P** (cuota inusual), **A** (ESOV atípico), **I** (mueve la pendiente). No son veredictos: compruebe los datos de esas marcas y compare la pendiente sin ellas.
+
 ```{r tabla-inf}
 cat(sov_tabla(x, "influencia", formato = "html"))
 ```
 
 # Formas funcionales alternativas
 
+*Cómo leerlas.* Si la forma lineal no es la mejor por RMSE de validación cruzada ni por AICc, la relación podría no ser lineal; con pocas marcas, conserve la recta y use las otras formas como comprobación.
+
 ```{r tabla-formas}
 cat(sov_tabla(x, "formas", formato = "html"))
 ```
 
 # Elasticidad (modelo log-log)
+
+*Cómo leerla.* γ < 1 indica economías de escala (el SOV crece menos que proporcionalmente con la cuota); γ = 1, proporcionalidad; γ > 1, deseconomías.
 
 ```{r tabla-el}
 cat(sov_tabla(x, "elasticidad", formato = "html"))

@@ -48,7 +48,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Manuel Jesús Sánchez-Franco \email{majesus@users.noreply.github.com} (\href{https://orcid.org/0000-0002-8042-3550}{ORCID}) [copyright holder]
+\strong{Maintainer}: Manuel Jesús Sánchez-Franco \email{majesus@users.noreply.github.com} [copyright holder]
 
 }
 \keyword{internal}

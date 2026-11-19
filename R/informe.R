@@ -12,6 +12,13 @@
 #' @param autor Autor (opcional).
 #' @param abrir Si `TRUE`, abre el informe en el navegador.
 #' @param B Remuestras del bootstrap si `datos` aún no está analizado.
+#' @param guias Si `TRUE` (por defecto), incluye las dos guías paso a paso para
+#'   estudiantes ([sov_guia()]), con las cifras de los datos analizados.
+#' @param categoria,marca Categoría (identificador o nombre) y marca que sirven de
+#'   ejemplo en las guías; por defecto, la primera categoría ajustable y su marca
+#'   de mayor cuota.
+#' @param epsilon,anios,inversion Elasticidad supuesta, horizonte en años y
+#'   cambio de inversión (%) de la guía de la marca; véase [sov_guia()].
 #' @return La ruta del archivo, de forma invisible.
 #' @details Requiere los paquetes `rmarkdown` y `knitr` y Pandoc (incluido en
 #'   RStudio). Si faltan, se indica cómo instalarlos.
@@ -24,7 +31,8 @@
 #' @export
 sov_informe <- function(datos, archivo = "informe_sov.html",
                         titulo = "Cuota de voz y cuota de mercado: informe de an\u00e1lisis",
-                        autor = "", abrir = interactive(), B = 1000) {
+                        autor = "", abrir = interactive(), B = 1000, guias = TRUE,
+                        categoria = NULL, marca = NULL, epsilon = 0.05, anios = 3, inversion = 50) {
   for (p in c("rmarkdown", "knitr")) {
     if (!requireNamespace(p, quietly = TRUE)) {
       stop("Falta el paquete '", p, "'. Inst\u00e1lelo con install.packages(\"", p, "\").", call. = FALSE)
@@ -43,7 +51,8 @@ sov_informe <- function(datos, archivo = "informe_sov.html",
   file.copy(plantilla, file.path(tmp, "informe.Rmd"))
   out <- rmarkdown::render(file.path(tmp, "informe.Rmd"), output_file = basename(archivo),
                            output_dir = dirname(archivo), quiet = TRUE,
-                           params = list(x = x, titulo = titulo, autor = autor),
+                           params = list(x = x, titulo = titulo, autor = autor, guias = guias, categoria = categoria,
+                                         marca = marca, epsilon = epsilon, anios = anios, inversion = inversion),
                            envir = new.env(parent = globalenv()))
   if (isTRUE(abrir)) utils::browseURL(out)
   message("Informe generado en: ", out)

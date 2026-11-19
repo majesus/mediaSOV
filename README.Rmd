@@ -344,19 +344,44 @@ sov_heterogeneidad(x$datos)
 
 ```r
 sov_informe(x, archivo = "informe.html", titulo = "Mi informe", autor = "Su nombre")
+
+# Con la marca y la categoría que se quieren seguir en la guía 1
+sov_informe(adage2019, archivo = "informe.html",
+            categoria = "auto_marcas", marca = "Chevrolet",
+            epsilon = 0.05, anios = 3, inversion = 50)
 ```
 
-Genera un HTML autocontenido (se puede enviar por correo) con resumen, lectura en lenguaje llano, tablas, gráficos, diagnóstico de influencia, formas funcionales, elasticidad, glosario, limitaciones y referencias. Si los datos son sintéticos, el informe lo indica en un recuadro destacado e incluye el postulado, los parámetros y su procedencia. Requiere `rmarkdown`, `knitr` y Pandoc (incluido en RStudio).
+Genera un HTML autocontenido (se puede enviar por correo) con resumen, **dos guías paso a paso** (véase 9.2), lectura en lenguaje llano, tablas, gráficos, diagnóstico de influencia, formas funcionales, elasticidad, glosario, limitaciones y referencias. Si los datos son sintéticos, el informe lo indica en un recuadro destacado e incluye el postulado, los parámetros y su procedencia. Requiere `rmarkdown`, `knitr` y Pandoc (incluido en RStudio).
 
-### 9.2 Asistente sin código
+### 9.2 Guías paso a paso: `sov_guia()`
+
+Las guías están pensadas para estudiantes y para quien no es experto: acompañan la lectura de los datos con un tono didáctico, una pregunta por paso y un recuadro con el resultado. Todas las cifras, las figuras y las advertencias se generan a partir de **sus** datos, de modo que el texto cambia cuando cambia el resultado (por ejemplo, si una sola marca decide el signo de la pendiente).
+
+```r
+x <- sov_analiza(adage2019)
+
+# Guía 1 (10 pasos): ¿invierte esta marca lo que cabría esperar de una marca de su tamaño?
+sov_guia(x, "marca", categoria = "auto_marcas", marca = "Chevrolet")
+
+# Guía 2 (11 pasos): ¿podemos fiarnos de la recta calculada con pocas marcas?
+sov_guia(x, "sector", categoria = "auto_marcas")
+
+# Página HTML independiente, o versión en texto plano
+sov_guia(x, "marca", "auto_marcas", "Chevrolet", archivo = "guia_chevrolet.html")
+sov_guia(x, "sector", "auto_marcas", formato = "texto")
+```
+
+La guía 1 recorre SOM, SOV, ESOV, el mapa, la referencia de Jones, una segunda referencia (la regresión de la propia categoría), la proyección con la elasticidad ε y la palanca de inversión. La guía 2 recorre la nube de puntos, la recta, la lectura de α y β, la confianza (error estándar, intervalo, HC3, bootstrap), la comparación entre categorías, el análisis dejando fuera una marca cada vez, los diagnósticos de influencia, Theil-Sen y recta frente a curva. Las advertencias del paquete se mantienen dentro de las guías: los valores de Jones (α = +6,4; β = −0,38) proceden de las diapositivas y no están verificados con la fuente original; ε = 0,05 es un supuesto operativo, no una estimación; y con datos sintéticos aparece un recuadro que lo indica.
+
+### 9.3 Asistente sin código
 
 ```r
 sov_asistente()
 ```
 
-Abre en el navegador una aplicación con tres orígenes de datos (ejemplo real, CSV propio con descarga de plantilla, o datos sintéticos), selector de nivel de confianza y bootstrap, pestañas de lectura, resultados, gráfico, influencia, glosario y ayuda, y descarga del informe HTML. Requiere `shiny`.
+Abre en el navegador una aplicación con tres orígenes de datos (ejemplo real, CSV propio con descarga de plantilla, o datos sintéticos), selector de nivel de confianza y bootstrap, pestañas de lectura, resultados, gráfico, influencia, guía paso a paso, glosario y ayuda, y descarga del informe HTML. Requiere `shiny`.
 
-### 9.3 Glosario
+### 9.4 Glosario
 
 ```{r glosario}
 sov_glosario("beta")
@@ -480,7 +505,8 @@ Una cobertura cercana al 95 % indica que los intervalos son fiables bajo ese pos
 | `sov_interpreta()` | Lectura en lenguaje llano |
 | `sov_tabla()` | Tablas de resultados (data.frame o HTML) |
 | `sov_grafico()`, `sov_grafico_bosque()`, `plot()` | Gráficos |
-| `sov_informe()` | Informe HTML autocontenido |
+| `sov_informe()` | Informe HTML autocontenido (incluye las dos guías) |
+| `sov_guia()` | Guía paso a paso: de las cuotas a la brecha de una marca (`"marca"`) o de los puntos a la recta (`"sector"`) |
 | `sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()` | Componentes del análisis con vectores |
 | `sov_postulados()` | Catálogo de postulados de simulación |
 | `sov_parametros()` | Parámetros y procedencia |

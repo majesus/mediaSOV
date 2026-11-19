@@ -1,5 +1,6 @@
 library(shiny)
 library(mediaSOV)
+`%||%` <- function(a, b) if (is.null(a) || is.na(a)) b else a
 
 ui <- fluidPage(
   titlePanel("mediaSOV: cuota de voz frente a cuota de mercado"),
@@ -33,6 +34,18 @@ ui <- fluidPage(
                  selectInput("cat", "Categoría", choices = NULL),
                  plotOutput("grafico", height = "480px")),
         tabPanel("Influencia", br(), htmlOutput("t_inf")),
+        tabPanel("Guía paso a paso", br(),
+                 fluidRow(
+                   column(4, radioButtons("g_tipo", "Guía",
+                     c("1. ¿Invierte esta marca lo que cabría esperar? (una marca)" = "marca",
+                       "2. ¿Podemos fiarnos de la recta? (la categoría)" = "sector"))),
+                   column(4, selectInput("g_cat", "Categoría", choices = NULL),
+                             selectInput("g_marca", "Marca de ejemplo", choices = NULL)),
+                   column(4, conditionalPanel("input.g_tipo == 'marca'",
+                     numericInput("g_inv", "Cambio de inversión simulado (%)", 50, step = 10),
+                     numericInput("g_anios", "Horizonte (años)", 3, min = 1, max = 10),
+                     numericInput("g_eps", "Elasticidad supuesta (ε)", 0.05, min = 0, max = 0.5, step = 0.01)))),
+                 uiOutput("guia")),
         tabPanel("Glosario", br(), tableOutput("glosario")),
         tabPanel("Ayuda", br(), htmlOutput("ayuda"))
       )
@@ -69,6 +82,23 @@ server <- function(input, output, session) {
   tryx <- function(expr) tryCatch(expr, error = function(e) {
     showNotification(conditionMessage(e), type = "error", duration = 15); NULL })
 
+  observe({
+    x <- analisis()
+    ok <- Filter(function(s) !is.null(s$ajuste), x$sectores)
+    updateSelectInput(session, "g_cat", choices = stats::setNames(
+      vapply(ok, function(s) s$caso, ""), vapply(ok, function(s) s$sector, "")))
+  })
+  observeEvent(input$g_cat, {
+    x <- analisis(); req(input$g_cat, input$g_cat %in% names(x$sectores))
+    z <- x$sectores[[input$g_cat]]$datos
+    updateSelectInput(session, "g_marca", choices = z$marca, selected = z$marca[which.max(z$som)])
+  })
+  output$guia <- renderUI({
+    x <- tryx(analisis()); req(x, input$g_cat, input$g_marca)
+    req(input$g_marca %in% x$sectores[[input$g_cat]]$datos$marca)
+    HTML(sov_guia(x, input$g_tipo, categoria = input$g_cat, marca = input$g_marca,
+                  epsilon = input$g_eps %||% 0.05, anios = input$g_anios %||% 3, inversion = input$g_inv %||% 50))
+  })
   output$aviso <- renderUI({
     x <- tryx(analisis()); req(x)
     if (isTRUE(x$simulado)) div(style = "border:2px solid #b00020;background:#fdecea;padding:8px;margin-bottom:10px",

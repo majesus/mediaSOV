@@ -10,7 +10,13 @@ sov_informe(
   titulo = "Cuota de voz y cuota de mercado: informe de análisis",
   autor = "",
   abrir = interactive(),
-  B = 1000
+  B = 1000,
+  guias = TRUE,
+  categoria = NULL,
+  marca = NULL,
+  epsilon = 0.05,
+  anios = 3,
+  inversion = 50
 )
 }
 \arguments{
@@ -26,6 +32,16 @@ el directorio de trabajo).}
 \item{abrir}{Si \code{TRUE}, abre el informe en el navegador.}
 
 \item{B}{Remuestras del bootstrap si \code{datos} aún no está analizado.}
+
+\item{guias}{Si \code{TRUE} (por defecto), incluye las dos guías paso a paso para
+estudiantes (\code{\link[=sov_guia]{sov_guia()}}), con las cifras de los datos analizados.}
+
+\item{categoria, marca}{Categoría (identificador o nombre) y marca que sirven de
+ejemplo en las guías; por defecto, la primera categoría ajustable y su marca
+de mayor cuota.}
+
+\item{epsilon, anios, inversion}{Elasticidad supuesta, horizonte en años y
+cambio de inversión (\%) de la guía de la marca; véase \code{\link[=sov_guia]{sov_guia()}}.}
 }
 \value{
 La ruta del archivo, de forma invisible.

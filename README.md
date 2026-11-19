@@ -1,102 +1,125 @@
 
-
 # mediaSOV
 
-**Análisis y simulación de la relación entre cuota de voz (SOV) y cuota de mercado (SOM) en planificación de medios**, diseñado para usarse sin conocimientos avanzados de R y con el rigor metodológico que exige una publicación académica o un informe profesional.
+**Análisis y simulación de la relación entre cuota de voz (SOV) y cuota
+de mercado (SOM) en planificación de medios**, diseñado para usarse sin
+conocimientos avanzados de R y con el rigor metodológico que exige una
+publicación académica o un informe profesional.
 
-> Todas las salidas que aparecen en este documento se generan ejecutando el código mostrado con la versión actual del paquete (`README.Rmd` se compila con `knitr`).
+> Todas las salidas que aparecen en este documento se generan ejecutando
+> el código mostrado con la versión actual del paquete (`README.Rmd` se
+> compila con `knitr`).
 
 ## Índice
 
-1. [¿Qué hace el paquete?](#1-qué-hace-el-paquete)
-2. [Instalación](#2-instalación)
-3. [Inicio rápido (2 minutos)](#3-inicio-rápido-2-minutos)
-4. [Sus propios datos](#4-sus-propios-datos)
-5. [Análisis: `sov_analiza()` y su lectura](#5-análisis-sov_analiza-y-su-lectura)
-6. [Tablas](#6-tablas)
-7. [Gráficos](#7-gráficos)
-8. [Funciones de análisis por separado](#8-funciones-de-análisis-por-separado)
-9. [Informe HTML y asistente interactivo](#9-informe-html-y-asistente-interactivo)
+1.  [¿Qué hace el paquete?](#1-qué-hace-el-paquete)
+2.  [Instalación](#2-instalación)
+3.  [Inicio rápido (2 minutos)](#3-inicio-rápido-2-minutos)
+4.  [Sus propios datos](#4-sus-propios-datos)
+5.  [Análisis: `sov_analiza()` y su
+    lectura](#5-análisis-sov_analiza-y-su-lectura)
+6.  [Tablas](#6-tablas)
+7.  [Gráficos](#7-gráficos)
+8.  [Funciones de análisis por
+    separado](#8-funciones-de-análisis-por-separado)
+9.  [Informe HTML y asistente
+    interactivo](#9-informe-html-y-asistente-interactivo)
 10. [Datos sintéticos](#10-datos-sintéticos)
-11. [Estudio de recuperación (validación del método)](#11-estudio-de-recuperación-validación-del-método)
-12. [Cómo interpretar los resultados](#12-cómo-interpretar-los-resultados)
+11. [Estudio de recuperación (validación del
+    método)](#11-estudio-de-recuperación-validación-del-método)
+12. [Cómo interpretar los
+    resultados](#12-cómo-interpretar-los-resultados)
 13. [Referencia de funciones](#13-referencia-de-funciones)
 14. [Solución de problemas](#14-solución-de-problemas)
-15. [Limitaciones y procedencia de los datos](#15-limitaciones-y-procedencia-de-los-datos)
-16. [Cita, licencia y contribuciones](#16-cita-licencia-y-contribuciones)
+15. [Limitaciones y procedencia de los
+    datos](#15-limitaciones-y-procedencia-de-los-datos)
+16. [Cita, licencia y
+    contribuciones](#16-cita-licencia-y-contribuciones)
 
----
+------------------------------------------------------------------------
 
 ## 1. ¿Qué hace el paquete?
 
-Una marca invierte en publicidad una proporción del total de su categoría (**SOV**, *share of voice*) y tiene una cuota de ventas (**SOM**, *share of market*). La diferencia **ESOV = SOV − SOM** (exceso de cuota de voz, en puntos porcentuales) indica si invierte más o menos de lo que le correspondería por su tamaño. **mediaSOV** estima, por categoría, el modelo
+Una marca invierte en publicidad una proporción del total de su
+categoría (**SOV**, *share of voice*) y tiene una cuota de ventas
+(**SOM**, *share of market*). La diferencia **ESOV = SOV − SOM** (exceso
+de cuota de voz, en puntos porcentuales) indica si invierte más o menos
+de lo que le correspondería por su tamaño. **mediaSOV** estima, por
+categoría, el modelo
 
 $$\mathrm{ESOV}_i = \alpha + \beta\,\mathrm{SOM}_i + \varepsilon_i$$
 
-y responde a la pregunta clásica de la curva de intensidad publicitaria de Jones (1990): ¿invierten las marcas grandes proporcionalmente menos que las pequeñas (**β < 0**)?
+y responde a la pregunta clásica de la curva de intensidad publicitaria
+de Jones (1990): ¿invierten las marcas grandes proporcionalmente menos
+que las pequeñas (**β \< 0**)?
 
-| Módulo | Qué ofrece |
-|---|---|
-| Lectura | CSV con separador `;` o `,`, decimal coma o punto, UTF-8 o Latin-1, nombres de columna flexibles |
-| Análisis | MCO, errores robustos HC3, Theil-Sen, validación dejando una marca fuera, influencia (palanca, Cook, DFBETAS), bootstrap de pares, formas funcionales (AICc y validación cruzada), elasticidad log-log, homogeneidad de pendientes |
-| Salidas | Tablas (data.frame o HTML), gráficos, lectura en lenguaje llano, informe HTML autocontenido |
-| Interfaz | Aplicación Shiny (`sov_asistente()`) sin escribir código |
-| Simulación | Datos sintéticos con verdad conocida bajo 5 postulados estáticos y 2 dinámicos, parámetros editables con procedencia, calibración con datos reales y estudio de recuperación |
+| Módulo     | Qué ofrece                                                                                                                                                                                                                         |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Lectura    | CSV con separador `;` o `,`, decimal coma o punto, UTF-8 o Latin-1, nombres de columna flexibles                                                                                                                                   |
+| Análisis   | MCO, errores robustos HC3, Theil-Sen, validación dejando una marca fuera, influencia (palanca, Cook, DFBETAS), bootstrap de pares, formas funcionales (AICc y validación cruzada), elasticidad log-log, homogeneidad de pendientes |
+| Salidas    | Tablas (data.frame o HTML), gráficos, lectura en lenguaje llano, informe HTML autocontenido                                                                                                                                        |
+| Interfaz   | Aplicación Shiny (`sov_asistente()`) sin escribir código                                                                                                                                                                           |
+| Simulación | Datos sintéticos con verdad conocida bajo 5 postulados estáticos y 2 dinámicos, parámetros editables con procedencia, calibración con datos reales y estudio de recuperación                                                       |
 
 ## 2. Instalación
 
 ### 2.1 Requisitos
 
-- **R ≥ 4.1.0** (https://cran.r-project.org). Recomendado: **RStudio** (https://posit.co/download/rstudio-desktop/), que además incluye Pandoc, necesario para el informe HTML.
+- **R ≥ 4.1.0** (<https://cran.r-project.org>). Recomendado: **RStudio**
+  (<https://posit.co/download/rstudio-desktop/>), que además incluye
+  Pandoc, necesario para el informe HTML.
 - Conexión a internet para la instalación.
 
 ### 2.2 Instalación desde GitHub (recomendada)
 
 Copie y pegue estas líneas en la consola de R:
 
-```r
+``` r
 install.packages("remotes")                       # solo la primera vez
 remotes::install_github("majesus/mediaSOV")
 ```
 
 Para instalar también las viñetas (más lento):
 
-```r
+``` r
 remotes::install_github("majesus/mediaSOV", build_vignettes = TRUE)
 ```
 
-Paquetes opcionales, necesarios solo para algunas funciones (`sov_informe()` y `sov_asistente()`):
+Paquetes opcionales, necesarios solo para algunas funciones
+(`sov_informe()` y `sov_asistente()`):
 
-```r
+``` r
 install.packages(c("rmarkdown", "knitr", "shiny"))
 ```
 
 ### 2.3 Instalación alternativa sin `remotes`
 
-Descargue el repositorio como ZIP desde GitHub (botón verde *Code* → *Download ZIP*), descomprímalo y ejecute desde la carpeta que lo contiene:
+Descargue el repositorio como ZIP desde GitHub (botón verde *Code* →
+*Download ZIP*), descomprímalo y ejecute desde la carpeta que lo
+contiene:
 
-```r
+``` r
 install.packages("ruta/a/mediaSOV-main", repos = NULL, type = "source")
 ```
 
 ### 2.4 Comprobar que funciona
 
-```r
+``` r
 library(mediaSOV)
 packageVersion("mediaSOV")
 ```
 
-
-```r
+``` r
 packageVersion("mediaSOV")
 #> [1] '0.1.0'
 ```
 
-Para actualizar a una versión más reciente, repita la orden de `install_github()`.
+Para actualizar a una versión más reciente, repita la orden de
+`install_github()`.
 
 ## 3. Inicio rápido (2 minutos)
 
-```r
+``` r
 library(mediaSOV)
 sov_demo()          # recorrido guiado con datos reales y sintéticos
 sov_asistente()     # aplicación en el navegador, sin escribir código
@@ -104,8 +127,7 @@ sov_asistente()     # aplicación en el navegador, sin escribir código
 
 El mismo análisis en cuatro líneas:
 
-
-```r
+``` r
 x <- sov_analiza(adage2019, B = 300)   # B = remuestras bootstrap (más = más preciso y lento)
 x
 #> <sov_analisis> ESOV = alfa + beta * SOM  |  6 categorías, 54 marcas  |  IC 95 %  |  bootstrap B = 300
@@ -195,28 +217,34 @@ x
 
 Una fila por marca, con **cuatro columnas obligatorias**:
 
-| Columna | Contenido | Variantes de nombre admitidas (ejemplos) |
-|---|---|---|
-| categoría | Mercado o sector al que pertenece la marca | `categoria`, `sector`, `category` |
-| marca | Nombre de la marca | `marca`, `brand` |
-| SOM | Cuota de mercado, **en %** (0–100) | `som`, `cuota_mercado`, `market_share` |
-| SOV | Cuota de voz, **en %** (0–100) | `sov`, `cuota_voz`, `share_of_voice` |
+| Columna   | Contenido                                  | Variantes de nombre admitidas (ejemplos) |
+|-----------|--------------------------------------------|------------------------------------------|
+| categoría | Mercado o sector al que pertenece la marca | `categoria`, `sector`, `category`        |
+| marca     | Nombre de la marca                         | `marca`, `brand`                         |
+| SOM       | Cuota de mercado, **en %** (0–100)         | `som`, `cuota_mercado`, `market_share`   |
+| SOV       | Cuota de voz, **en %** (0–100)             | `sov`, `cuota_voz`, `share_of_voice`     |
 
-Si trabaja con la estructura de Ad Age (columnas `market_share_pct`, `media_musd`, etc.), el paquete también la reconoce y calcula las cuotas de voz.
+Si trabaja con la estructura de Ad Age (columnas `market_share_pct`,
+`media_musd`, etc.), el paquete también la reconoce y calcula las cuotas
+de voz.
 
 **Reglas que conviene respetar:**
 
-- Cada categoría necesita **al menos 4 marcas**; con menos se omite y el paquete lo avisa.
-- **No incluya la fila «resto del mercado»**: no es una marca y, como las cuotas suman 100 %, fuerza mecánicamente la recta. Solo se incluye con `incluir_resto = TRUE` (no recomendado).
-- Las cuotas van en **puntos porcentuales** (35, no 0,35). Los valores fuera de 0–100 generan un aviso.
-- Si sus datos están en Excel (.xlsx), expórtelos antes a CSV (*Archivo → Guardar como → CSV*).
+- Cada categoría necesita **al menos 4 marcas**; con menos se omite y el
+  paquete lo avisa.
+- **No incluya la fila «resto del mercado»**: no es una marca y, como
+  las cuotas suman 100 %, fuerza mecánicamente la recta. Solo se incluye
+  con `incluir_resto = TRUE` (no recomendado).
+- Las cuotas van en **puntos porcentuales** (35, no 0,35). Los valores
+  fuera de 0–100 generan un aviso.
+- Si sus datos están en Excel (.xlsx), expórtelos antes a CSV (*Archivo
+  → Guardar como → CSV*).
 
 ### 4.2 Crear una plantilla
 
-
-```r
+``` r
 ruta <- sov_plantilla(file.path(tempdir(), "mis_datos.csv"))
-#> Archivo creado: /tmp/RtmpmtWYJu/mis_datos.csv
+#> Archivo creado: /tmp/Rtmp5ZbTjC/mis_datos.csv
 #> Sustituya las cifras ficticias por las suyas (conserve los nombres de columna).
 cat(readLines(ruta, n = 8, encoding = "UTF-8"), sep = "\n")
 #> categoria;marca;som;sov
@@ -228,20 +256,24 @@ cat(readLines(ruta, n = 8, encoding = "UTF-8"), sep = "\n")
 #> Categoría ficticia;Marca F;5;6
 ```
 
-La plantilla se guarda con separador `;`, coma decimal y marca de orden de bytes (BOM), de modo que **Excel la abre correctamente** en configuración regional española. Sustituya las cifras ficticias por las suyas, **conservando los nombres de columna**, y guárdela como CSV.
+La plantilla se guarda con separador `;`, coma decimal y marca de orden
+de bytes (BOM), de modo que **Excel la abre correctamente** en
+configuración regional española. Sustituya las cifras ficticias por las
+suyas, **conservando los nombres de columna**, y guárdela como CSV.
 
-Sin argumentos, `sov_plantilla()` crea `plantilla_sov.csv` en el directorio de trabajo (`getwd()`).
+Sin argumentos, `sov_plantilla()` crea `plantilla_sov.csv` en el
+directorio de trabajo (`getwd()`).
 
 ### 4.3 Leer y analizar
 
-```r
+``` r
 x <- sov_analiza("mis_datos.csv")
 ```
 
-Si el análisis no se lee como esperaba, inspeccione cómo interpreta el archivo:
+Si el análisis no se lee como esperaba, inspeccione cómo interpreta el
+archivo:
 
-
-```r
+``` r
 d <- sov_lee(ruta)       # tabla tal como figura en el archivo
 head(d, 3)
 #>            categoria   marca som sov
@@ -256,16 +288,17 @@ p
 #> (SOM_cubierta y SOV_cubierta: suma de las marcas incluidas, en %)
 ```
 
-La salida de `sov_prepara()` resume, por categoría, el número de marcas y la suma de cuotas cubierta. También admite un `data.frame` ya cargado en R:
+La salida de `sov_prepara()` resume, por categoría, el número de marcas
+y la suma de cuotas cubierta. También admite un `data.frame` ya cargado
+en R:
 
-```r
+``` r
 x <- sov_analiza(mi_data_frame)
 ```
 
 ### 4.4 Datos de ejemplo incluidos
 
-
-```r
+``` r
 adage2019                     # objeto de datos (Ad Age, 2019)
 #>         case_id                                     case_title                sector pdf_page
 #> 1   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
@@ -578,23 +611,22 @@ sov_ejemplo()                 # ruta del CSV de ejemplo incluido en el paquete
 
 ## 5. Análisis: `sov_analiza()` y su lectura
 
-```r
+``` r
 x <- sov_analiza(datos, nivel = 0.95, B = 2000, semilla = 2019,
                  incluir_resto = FALSE)
 ```
 
-| Argumento | Significado |
-|---|---|
-| `datos` | Ruta de un CSV, `data.frame` o resultado de `sov_prepara()`/`sov_simula()` |
-| `nivel` | Nivel de confianza de los intervalos (0,95 por defecto) |
-| `B` | Remuestras del bootstrap (2000 por defecto; `0` lo omite y acelera) |
-| `semilla` | Semilla del bootstrap (el generador del usuario se restaura al terminar) |
-| `incluir_resto` | `TRUE` para incluir la fila «resto del mercado» (no recomendado) |
+| Argumento       | Significado                                                                |
+|-----------------|----------------------------------------------------------------------------|
+| `datos`         | Ruta de un CSV, `data.frame` o resultado de `sov_prepara()`/`sov_simula()` |
+| `nivel`         | Nivel de confianza de los intervalos (0,95 por defecto)                    |
+| `B`             | Remuestras del bootstrap (2000 por defecto; `0` lo omite y acelera)        |
+| `semilla`       | Semilla del bootstrap (el generador del usuario se restaura al terminar)   |
+| `incluir_resto` | `TRUE` para incluir la fila «resto del mercado» (no recomendado)           |
 
 ### 5.1 Resumen
 
-
-```r
+``` r
 x
 #> <sov_analisis> ESOV = alfa + beta * SOM  |  6 categorías, 54 marcas  |  IC 95 %  |  bootstrap B = 300
 #>  Categoría           n  β     IC 95 % de β   IC 95 % robusto (HC3) p     R²   β Theil-Sen
@@ -679,10 +711,10 @@ x
 
 ### 5.2 Lectura en lenguaje llano
 
-`sov_interpreta()` redacta, para cada categoría, qué indican los coeficientes, cuán robustos son y qué marcas revisar:
+`sov_interpreta()` redacta, para cada categoría, qué indican los
+coeficientes, cuán robustos son y qué marcas revisar:
 
-
-```r
+``` r
 cat(sov_interpreta(x)[1:2], sep = "\n\n")
 #> Automoción (n = 10 marcas). La pendiente de ESOV sobre SOM es −0,35 (IC 95 %: [−0,58; −0,12]; p = 0,007) y la recta explica el 61 % de la variabilidad (R² = 0,61). Las marcas grandes invierten proporcionalmente menos que las pequeñas (economías de escala, en el sentido de la curva de Jones); el valor de Jones (−0,38) cae dentro del intervalo. Con Theil-Sen la pendiente es −0,50; al omitir cada marca por turno oscila entre −0,43 y −0,29. El ESOV medio se anula cuando la cuota alcanza el 3,0 %: por encima de ese umbral, las marcas invierten de media menos de lo que su cuota sugiere. Marcas con alerta de influencia: Ford (I); Toyota (I); Chevrolet (I). Conviene comprobar que sus datos son correctos y comparar la pendiente sin ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 100 % de las remuestras.
 #> 
@@ -693,8 +725,7 @@ cat(sov_interpreta(x)[1:2], sep = "\n\n")
 
 El objeto `x` es una lista; cada categoría está en `x$sectores`:
 
-
-```r
+``` r
 names(x$sectores)
 #> [1] "auto_marcas"  "restaurantes" "telefonia"    "tarjetas"     "cerveza"      "bebidas"
 a <- x$sectores$auto_marcas$ajuste
@@ -726,19 +757,20 @@ a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc3")]
 
 ## 6. Tablas
 
-`sov_tabla(x, tipo, categoria, formato)` produce seis tipos de tabla, como `data.frame` de caracteres con formato español (coma decimal) o como HTML autocontenido (`formato = "html"`) para pegar en un documento:
+`sov_tabla(x, tipo, categoria, formato)` produce seis tipos de tabla,
+como `data.frame` de caracteres con formato español (coma decimal) o
+como HTML autocontenido (`formato = "html"`) para pegar en un documento:
 
-| `tipo` | Contenido |
-|---|---|
-| `"resultados"` | β, IC clásico y robusto HC3, p, R², Theil-Sen, rango al omitir cada marca, umbral de SOM |
-| `"influencia"` | Palanca, t\*, Cook, DFBETAS y β sin cada marca, con alertas |
-| `"formas"` | Comparación de formas funcionales (RMSE de validación cruzada, ΔAICc) |
-| `"bootstrap"` | Intervalos bootstrap percentil de MCO y Theil-Sen |
-| `"elasticidad"` | Elasticidad γ del modelo log-log |
-| `"cobertura"` | Cobertura de cuotas de cada categoría |
+| `tipo`          | Contenido                                                                                |
+|-----------------|------------------------------------------------------------------------------------------|
+| `"resultados"`  | β, IC clásico y robusto HC3, p, R², Theil-Sen, rango al omitir cada marca, umbral de SOM |
+| `"influencia"`  | Palanca, t\*, Cook, DFBETAS y β sin cada marca, con alertas                              |
+| `"formas"`      | Comparación de formas funcionales (RMSE de validación cruzada, ΔAICc)                    |
+| `"bootstrap"`   | Intervalos bootstrap percentil de MCO y Theil-Sen                                        |
+| `"elasticidad"` | Elasticidad γ del modelo log-log                                                         |
+| `"cobertura"`   | Cobertura de cuotas de cada categoría                                                    |
 
-
-```r
+``` r
 sov_tabla(x, "resultados")
 #>             Categoría  n     β   IC 95 % de β IC 95 % robusto (HC3)     p   R² β Theil-Sen
 #> 1          Automoción 10 −0,35 [−0,58; −0,12]        [−0,65; −0,05] 0,007 0,61       −0,50
@@ -756,8 +788,7 @@ sov_tabla(x, "resultados")
 #> 6           [1,15; 1,73]          — Deseconomía de escala
 ```
 
-
-```r
+``` r
 sov_tabla(x, "influencia", categoria = "restaurantes")
 #>       Categoría       Marca SOM (%) SOV (%) ESOV (pp) Palanca    t*  Cook DFBETAS β sin la marca
 #> 1  Restauración  McDonald's     7,0    11,3      +4,3    0,89  2,10 12,31    5,58          −2,19
@@ -783,8 +814,7 @@ sov_tabla(x, "influencia", categoria = "restaurantes")
 #> 10      —
 ```
 
-
-```r
+``` r
 sov_tabla(x, "formas", categoria = "auto_marcas")
 #>    Categoría      Forma RMSE (validación cruzada) ΔAICc vs. lineal Mejor en
 #> 1 Automoción     Lineal                      1,43              0,0        —
@@ -792,8 +822,7 @@ sov_tabla(x, "formas", categoria = "auto_marcas")
 #> 3 Automoción Cuadrática                      1,21             +1,8     RMSE
 ```
 
-
-```r
+``` r
 sov_tabla(x, "elasticidad")
 #>             Categoría  n     γ  IC 95 % de γ p (γ = 1)                        Lectura
 #> 1          Automoción 10  0,71  [0,44; 0,99]     0,044             Economía de escala
@@ -804,61 +833,52 @@ sov_tabla(x, "elasticidad")
 #> 6             Bebidas 10  3,19  [0,78; 5,60]     0,069 No distinguible de 1 (paridad)
 ```
 
-```r
+``` r
 sov_tabla(x, "resultados", formato = "html")   # cadena HTML
 ```
 
 ## 7. Gráficos
 
-Gráficos con R base (sin dependencias adicionales). Los datos simulados llevan automáticamente la marca de agua «DATOS SINTETICOS».
+Gráficos con R base (sin dependencias adicionales). Los datos simulados
+llevan automáticamente la marca de agua «DATOS SINTETICOS».
 
 ### 7.1 Dispersión por categoría
 
-Recta de mínimos cuadrados con banda de confianza, recta de referencia de Jones (discontinua) y marcas con alerta de influencia en rojo:
+Recta de mínimos cuadrados con banda de confianza, recta de referencia
+de Jones (discontinua) y marcas con alerta de influencia en rojo:
 
-
-```r
+``` r
 sov_grafico(x, "auto_marcas")
 ```
 
-<div class="figure">
-<img src="man/figures/README-graf1-1.png" alt="plot of chunk graf1" width="90%" />
-<p class="caption">plot of chunk graf1</p>
-</div>
+<img src="man/figures/README-graf1-1.png" width="90%" />
 
-
-```r
+``` r
 sov_grafico(x, "restaurantes")
 ```
 
-<div class="figure">
-<img src="man/figures/README-graf2-1.png" alt="plot of chunk graf2" width="90%" />
-<p class="caption">plot of chunk graf2</p>
-</div>
+<img src="man/figures/README-graf2-1.png" width="90%" />
 
-`sov_grafico(x)` sin categoría dibuja todas; `etiquetas = FALSE` suprime los nombres de marca.
+`sov_grafico(x)` sin categoría dibuja todas; `etiquetas = FALSE` suprime
+los nombres de marca.
 
 ### 7.2 Resumen de todas las categorías
 
-
-```r
+``` r
 sov_grafico_bosque(x)
 ```
 
-<div class="figure">
-<img src="man/figures/README-graf3-1.png" alt="plot of chunk graf3" width="90%" />
-<p class="caption">plot of chunk graf3</p>
-</div>
+<img src="man/figures/README-graf3-1.png" width="90%" />
 
 ### 7.3 Gráfico de método genérico
 
-```r
+``` r
 plot(x)    # equivale a sov_grafico(x)
 ```
 
 ### 7.4 Guardar un gráfico
 
-```r
+``` r
 png("auto.png", width = 1400, height = 900, res = 200)
 sov_grafico(x, "auto_marcas")
 dev.off()
@@ -866,18 +886,18 @@ dev.off()
 
 ## 8. Funciones de análisis por separado
 
-Cada pieza se puede usar de forma independiente con vectores numéricos. En los ejemplos, `som`, `sov` y `esov` son de la categoría Automoción.
+Cada pieza se puede usar de forma independiente con vectores numéricos.
+En los ejemplos, `som`, `sov` y `esov` son de la categoría Automoción.
 
-
-```r
+``` r
 z <- x$sectores$auto_marcas$datos
 som <- z$som; sov <- z$sov; esov <- z$esov; marca <- z$marca
 ```
 
-**Ajuste por mínimos cuadrados con errores robustos y Theil-Sen** (`sov_ajusta`):
+**Ajuste por mínimos cuadrados con errores robustos y Theil-Sen**
+(`sov_ajusta`):
 
-
-```r
+``` r
 a <- sov_ajusta(som, esov)
 round(c(beta = a$beta, se = a$se_beta, p = a$p_beta, se_HC3 = a$se_beta_hc3, p_HC3 = a$p_beta_hc3), 4)
 #>    beta      se       p  se_HC3   p_HC3 
@@ -887,19 +907,19 @@ a$ic_beta; a$ic_beta_hc3
 #> [1] -0.64824020 -0.05137132
 ```
 
-**Estimador de Theil-Sen** (mediana de las pendientes por pares; poco sensible a extremos):
+**Estimador de Theil-Sen** (mediana de las pendientes por pares; poco
+sensible a extremos):
 
-
-```r
+``` r
 sov_theil_sen(som, esov)
 #>       alfa       beta 
 #>  1.7180541 -0.5032545
 ```
 
-**Influencia** (palanca, t\* estudentizado, Cook, DFBETAS, β al omitir la marca):
+**Influencia** (palanca, t\* estudentizado, Cook, DFBETAS, β al omitir
+la marca):
 
-
-```r
+``` r
 sov_influencia(som, esov, marca, sov)
 #>        marca  som       sov        esov     residuo   palanca      t_stud         cook     dfbetas
 #> 1       Ford 14.3 11.485098 -2.81490236  1.12579863 0.3908188  1.19137830 0.4326215413  0.82316654
@@ -927,8 +947,7 @@ sov_influencia(som, esov, marca, sov)
 
 **Bootstrap de pares** (no supone normalidad):
 
-
-```r
+``` r
 b <- sov_bootstrap(som, esov, B = 500, semilla = 1)
 b$ols     # IC percentil de la pendiente por MCO
 #> [1] -0.6991944 -0.1902591
@@ -936,10 +955,10 @@ b$ts      # IC percentil de Theil-Sen
 #> [1] -0.7430627 -0.2241552
 ```
 
-**Formas funcionales alternativas** (lineal, ln SOM, cuadrática), con RMSE de validación cruzada dejando una marca fuera (PRESS) y AICc:
+**Formas funcionales alternativas** (lineal, ln SOM, cuadrática), con
+RMSE de validación cruzada dejando una marca fuera (PRESS) y AICc:
 
-
-```r
+``` r
 sov_formas(som, esov)
 #>        forma k  rmse_cv     aicc delta_aicc mejor_rmse mejor_aicc
 #> 1     Lineal 3 1.434227 40.48232   0.000000      FALSE      FALSE
@@ -947,10 +966,10 @@ sov_formas(som, esov)
 #> 3 Cuadrática 4 1.209555 42.27150   1.789183       TRUE      FALSE
 ```
 
-**Elasticidad** (modelo log-log, SOV = c · SOM<sup>γ</sup>; γ < 1 indica economías de escala):
+**Elasticidad** (modelo log-log, SOV = c · SOM<sup>γ</sup>; γ \< 1
+indica economías de escala):
 
-
-```r
+``` r
 sov_elasticidad(som, sov)
 #> $n
 #> [1] 10
@@ -971,10 +990,10 @@ sov_elasticidad(som, sov)
 #> [1] 0
 ```
 
-**Homogeneidad de pendientes** entre categorías (contraste F de pendientes comunes):
+**Homogeneidad de pendientes** entre categorías (contraste F de
+pendientes comunes):
 
-
-```r
+``` r
 sov_heterogeneidad(x$datos)
 #> $F
 #> [1] 3.372421
@@ -1002,24 +1021,73 @@ sov_heterogeneidad(x$datos)
 
 ### 9.1 Informe
 
-```r
+``` r
 sov_informe(x, archivo = "informe.html", titulo = "Mi informe", autor = "Su nombre")
+
+# Con la marca y la categoría que se quieren seguir en la guía 1
+sov_informe(adage2019, archivo = "informe.html",
+            categoria = "auto_marcas", marca = "Chevrolet",
+            epsilon = 0.05, anios = 3, inversion = 50)
 ```
 
-Genera un HTML autocontenido (se puede enviar por correo) con resumen, lectura en lenguaje llano, tablas, gráficos, diagnóstico de influencia, formas funcionales, elasticidad, glosario, limitaciones y referencias. Si los datos son sintéticos, el informe lo indica en un recuadro destacado e incluye el postulado, los parámetros y su procedencia. Requiere `rmarkdown`, `knitr` y Pandoc (incluido en RStudio).
+Genera un HTML autocontenido (se puede enviar por correo) con resumen,
+**dos guías paso a paso** (véase 9.2), lectura en lenguaje llano,
+tablas, gráficos, diagnóstico de influencia, formas funcionales,
+elasticidad, glosario, limitaciones y referencias. Si los datos son
+sintéticos, el informe lo indica en un recuadro destacado e incluye el
+postulado, los parámetros y su procedencia. Requiere `rmarkdown`,
+`knitr` y Pandoc (incluido en RStudio).
 
-### 9.2 Asistente sin código
+### 9.2 Guías paso a paso: `sov_guia()`
 
-```r
+Las guías están pensadas para estudiantes y para quien no es experto:
+acompañan la lectura de los datos con un tono didáctico, una pregunta
+por paso y un recuadro con el resultado. Todas las cifras, las figuras y
+las advertencias se generan a partir de **sus** datos, de modo que el
+texto cambia cuando cambia el resultado (por ejemplo, si una sola marca
+decide el signo de la pendiente).
+
+``` r
+x <- sov_analiza(adage2019)
+
+# Guía 1 (10 pasos): ¿invierte esta marca lo que cabría esperar de una marca de su tamaño?
+sov_guia(x, "marca", categoria = "auto_marcas", marca = "Chevrolet")
+
+# Guía 2 (11 pasos): ¿podemos fiarnos de la recta calculada con pocas marcas?
+sov_guia(x, "sector", categoria = "auto_marcas")
+
+# Página HTML independiente, o versión en texto plano
+sov_guia(x, "marca", "auto_marcas", "Chevrolet", archivo = "guia_chevrolet.html")
+sov_guia(x, "sector", "auto_marcas", formato = "texto")
+```
+
+La guía 1 recorre SOM, SOV, ESOV, el mapa, la referencia de Jones, una
+segunda referencia (la regresión de la propia categoría), la proyección
+con la elasticidad ε y la palanca de inversión. La guía 2 recorre la
+nube de puntos, la recta, la lectura de α y β, la confianza (error
+estándar, intervalo, HC3, bootstrap), la comparación entre categorías,
+el análisis dejando fuera una marca cada vez, los diagnósticos de
+influencia, Theil-Sen y recta frente a curva. Las advertencias del
+paquete se mantienen dentro de las guías: los valores de Jones (α =
++6,4; β = −0,38) proceden de las diapositivas y no están verificados con
+la fuente original; ε = 0,05 es un supuesto operativo, no una
+estimación; y con datos sintéticos aparece un recuadro que lo indica.
+
+### 9.3 Asistente sin código
+
+``` r
 sov_asistente()
 ```
 
-Abre en el navegador una aplicación con tres orígenes de datos (ejemplo real, CSV propio con descarga de plantilla, o datos sintéticos), selector de nivel de confianza y bootstrap, pestañas de lectura, resultados, gráfico, influencia, glosario y ayuda, y descarga del informe HTML. Requiere `shiny`.
+Abre en el navegador una aplicación con tres orígenes de datos (ejemplo
+real, CSV propio con descarga de plantilla, o datos sintéticos),
+selector de nivel de confianza y bootstrap, pestañas de lectura,
+resultados, gráfico, influencia, guía paso a paso, glosario y ayuda, y
+descarga del informe HTML. Requiere `shiny`.
 
-### 9.3 Glosario
+### 9.4 Glosario
 
-
-```r
+``` r
 sov_glosario("beta")
 #>                       termino
 #> 1            beta (pendiente)
@@ -1031,12 +1099,14 @@ sov_glosario("beta")
 
 ## 10. Datos sintéticos
 
-> **Los datos sintéticos no son evidencia empírica.** Sirven para (i) comprobar que un método recupera una verdad conocida bajo un supuesto explícito y (ii) reproducir órdenes de magnitud calibrados con datos publicados. Nunca para afirmar nada sobre un mercado real.
+> **Los datos sintéticos no son evidencia empírica.** Sirven para (i)
+> comprobar que un método recupera una verdad conocida bajo un supuesto
+> explícito y (ii) reproducir órdenes de magnitud calibrados con datos
+> publicados. Nunca para afirmar nada sobre un mercado real.
 
 ### 10.1 Postulados disponibles
 
-
-```r
+``` r
 sov_postulados()[, c("id", "nombre", "tipo")]
 #>                  id                                   nombre     tipo
 #> 1      jones_lineal                  Curva de Jones (lineal) estático
@@ -1067,8 +1137,7 @@ sov_postulados()[, c("id", "formulacion")]
 
 ### 10.2 Generar datos
 
-
-```r
+``` r
 s <- sov_simula("jones_lineal", semilla = 2019)
 s
 #> <sov_datos> 66 filas, 6 categorías  ** DATOS SINTÉTICOS (no son evidencia empírica) **
@@ -1082,10 +1151,12 @@ s
 #> (SOM_cubierta y SOV_cubierta: suma de las marcas incluidas, en %)
 ```
 
-Cada categoría tiene cuotas que suman exactamente 100 % (mercado cerrado) y el SOV se genera con ruido de Dirichlet (Morais et al., 2017), que preserva el cierre sin sesgo en la media. La **verdad conocida** está en el atributo `simulacion`:
+Cada categoría tiene cuotas que suman exactamente 100 % (mercado
+cerrado) y el SOV se genera con ruido de Dirichlet (Morais et al.,
+2017), que preserva el cierre sin sesgo en la media. La **verdad
+conocida** está en el atributo `simulacion`:
 
-
-```r
+``` r
 sim <- attr(s, "simulacion")
 sim$postulado; sim$semilla
 #> [1] "jones_lineal"
@@ -1100,10 +1171,10 @@ sim$verdad[, c("caso", "beta_lineal_publicadas", "cobertura_som")]
 #> 6 cat06                  -0.38      65.58314
 ```
 
-Se analizan con las mismas funciones que los datos reales, y todo resultado derivado se rotula como sintético:
+Se analizan con las mismas funciones que los datos reales, y todo
+resultado derivado se rotula como sintético:
 
-
-```r
+``` r
 xs <- sov_analiza(s, B = 0)
 sov_tabla(xs, "resultados")[, 1:5]
 #>     Categoría  n     β   IC 95 % de β IC 95 % robusto (HC3)
@@ -1115,12 +1186,12 @@ sov_tabla(xs, "resultados")[, 1:5]
 #> 6 Categoría 6 10 −1,07 [−1,75; −0,39]        [−1,49; −0,65]
 ```
 
-La misma semilla reproduce exactamente los mismos datos; el generador de números aleatorios del usuario no se altera.
+La misma semilla reproduce exactamente los mismos datos; el generador de
+números aleatorios del usuario no se altera.
 
 ### 10.3 Parámetros y su procedencia
 
-
-```r
+``` r
 sov_parametros("jones_lineal")
 #> <sov_parametros> postulado: jones_lineal (Curva de Jones (lineal))
 #>  parametro      valor  
@@ -1153,25 +1224,30 @@ sov_parametros("jones_lineal")
 #>  Supuesto de sensibilidad (sin respaldo empírico)
 ```
 
-Cada parámetro indica su valor, su procedencia (calibración con Ad Age 2019, valor de la literatura, supuesto operativo o valor del usuario) y la fuente. Se modifican por nombre:
+Cada parámetro indica su valor, su procedencia (calibración con Ad Age
+2019, valor de la literatura, supuesto operativo o valor del usuario) y
+la fuente. Se modifican por nombre:
 
-```r
+``` r
 s2 <- sov_simula("jones_lineal", semilla = 1, beta = -0.5, kappa = 300, n_categorias = 12)
 ```
 
-Los parámetros modificados quedan registrados como procedencia «usuario». También se puede construir el objeto de parámetros primero y reutilizarlo:
+Los parámetros modificados quedan registrados como procedencia
+«usuario». También se puede construir el objeto de parámetros primero y
+reutilizarlo:
 
-```r
+``` r
 p <- sov_parametros("jones_lineal", beta = -0.5)
 s3 <- sov_simula("jones_lineal", parametros = p, semilla = 2)
 ```
 
-Todos los postulados estáticos se generan igual cambiando el identificador: `"paridad"`, `"jones_heterogeneo"`, `"potencia"`, `"curvilinea"`.
+Todos los postulados estáticos se generan igual cambiando el
+identificador: `"paridad"`, `"jones_heterogeneo"`, `"potencia"`,
+`"curvilinea"`.
 
 ### 10.4 Calibración con los datos reales
 
-
-```r
+``` r
 sov_calibra()
 #> <sov_calibracion> 6 categorías
 #>               sector  n theta sigma_forma  gamma   kappa   beta se_beta
@@ -1185,14 +1261,19 @@ sov_calibra()
 #> Resumen (medianas entre categorías): theta = 0.833 (sd 0.501), sigma_forma = 0.24, gamma = 0.82, kappa = 43.3, beta = -0.199, tau_beta = 0.579
 ```
 
-Estima, por método de momentos y por categoría, el tamaño del mercado (`theta`), la dispersión de las cuotas, la elasticidad `gamma`, la precisión del ruido (`kappa`) y la pendiente `beta`. Admite sus propios datos: `sov_calibra(sus_datos)`, y `sov_parametros("jones_lineal", calibrar_con = sus_datos)` los usa directamente.
+Estima, por método de momentos y por categoría, el tamaño del mercado
+(`theta`), la dispersión de las cuotas, la elasticidad `gamma`, la
+precisión del ruido (`kappa`) y la pendiente `beta`. Admite sus propios
+datos: `sov_calibra(sus_datos)`, y
+`sov_parametros("jones_lineal", calibrar_con = sus_datos)` los usa
+directamente.
 
 ### 10.5 Simulación dinámica (panel temporal)
 
-Para estudiar si el exceso de voz hace crecer la cuota de mercado en el tiempo:
+Para estudiar si el exceso de voz hace crecer la cuota de mercado en el
+tiempo:
 
-
-```r
+``` r
 d <- sov_simula_dinamica("elasticidad", semilla = 11)
 d
 #> <sov_datos> 528 filas, 6 categorías, 8 períodos  ** DATOS SINTÉTICOS (no son evidencia empírica) **
@@ -1227,18 +1308,22 @@ sov_efecto_esov(d)
 #> [1] 377
 ```
 
-Con `"equilibrio"` (η = 0, Graham, 2009) el efecto estimado debe ser nulo; con `"elasticidad"` (η = 0,24) debe aproximarse a ese valor. La elasticidad 0,24 es un **supuesto operativo** inspirado en Sethuraman et al. (2011), no una estimación propia.
+Con `"equilibrio"` (η = 0, Graham, 2009) el efecto estimado debe ser
+nulo; con `"elasticidad"` (η = 0,24) debe aproximarse a ese valor. La
+elasticidad 0,24 es un **supuesto operativo** inspirado en Sethuraman et
+al. (2011), no una estimación propia.
 
 ## 11. Estudio de recuperación (validación del método)
 
-`sov_valida_simulacion()` repite la simulación `R` veces y mide el sesgo, el error cuadrático y la **cobertura** de los intervalos (cuántas veces contienen el valor verdadero):
+`sov_valida_simulacion()` repite la simulación `R` veces y mide el
+sesgo, el error cuadrático y la **cobertura** de los intervalos (cuántas
+veces contienen el valor verdadero):
 
-```r
+``` r
 sov_valida_simulacion("jones_lineal", R = 500, B = 500, semilla = 11)
 ```
 
-
-```r
+``` r
 v <- sov_valida_simulacion("jones_lineal", R = 100, semilla = 11, B = 200)
 v
 #> <sov_validacion> postulado: jones_lineal | R = 100 réplicas | 600 ajustes | semilla 11
@@ -1258,52 +1343,73 @@ v
 #> Lectura: el error_mc es el error de Monte Carlo (incertidumbre debida al número de réplicas). Una cobertura cercana a 95 % indica que los intervalos son fiables bajo este postulado; una desviación mayor que ~2 errores de Monte Carlo es una limitación real del método y debe comunicarse.
 ```
 
-Una cobertura cercana al 95 % indica que los intervalos son fiables bajo ese postulado. Los resultados dependen de `R`, de la semilla y de los parámetros; el `error_mc` es la incertidumbre de Monte Carlo. Con `R` pequeño (como en este ejemplo) las cifras son aproximadas; para resultados citables use `R ≥ 500`.
+Una cobertura cercana al 95 % indica que los intervalos son fiables bajo
+ese postulado. Los resultados dependen de `R`, de la semilla y de los
+parámetros; el `error_mc` es la incertidumbre de Monte Carlo. Con `R`
+pequeño (como en este ejemplo) las cifras son aproximadas; para
+resultados citables use `R ≥ 500`.
 
-**Lectura de este resultado.** El estimador de la pendiente es prácticamente insesgado, pero el intervalo **clásico** de MCO cubre menos del 95 % nominal con 6–10 marcas por categoría, mientras que el intervalo robusto HC3 y el bootstrap se aproximan más. Por eso el paquete muestra siempre ambos intervalos.
+**Lectura de este resultado.** El estimador de la pendiente es
+prácticamente insesgado, pero el intervalo **clásico** de MCO cubre
+menos del 95 % nominal con 6–10 marcas por categoría, mientras que el
+intervalo robusto HC3 y el bootstrap se aproximan más. Por eso el
+paquete muestra siempre ambos intervalos.
 
 ## 12. Cómo interpretar los resultados
 
-- **β < 0 con IC que excluye 0**: las marcas grandes invierten proporcionalmente menos (economías de escala en el sentido de Jones). **β > 0**: lo contrario. **IC que contiene 0**: el gasto es aproximadamente proporcional a la cuota.
-- Como SOM figura en ambos lados de la ecuación, β se interpreta frente a SOV = SOM (β = 0), **no frente a 0 en SOV**.
-- **Robustez**: compare el IC clásico con el HC3, Theil-Sen y el bootstrap. Si el signo cambia al omitir una marca (columna «β al omitir cada marca»), el resultado depende de esa marca y debe tomarse con cautela.
-- **Umbral de SOM**: cuota en la que el ESOV medio se anula; por encima, las marcas invierten de media menos de lo que su cuota sugiere.
-- **Alertas de influencia**: P = palanca alta; A = residuo atípico; I = influencia sobre la pendiente (Cook o DFBETAS). Son umbrales heurísticos: revise los datos de esas marcas antes de decidir.
-- **Formas funcionales**: si la forma lineal no es la mejor por RMSE y AICc, la relación puede no ser lineal.
+- **β \< 0 con IC que excluye 0**: las marcas grandes invierten
+  proporcionalmente menos (economías de escala en el sentido de Jones).
+  **β \> 0**: lo contrario. **IC que contiene 0**: el gasto es
+  aproximadamente proporcional a la cuota.
+- Como SOM figura en ambos lados de la ecuación, β se interpreta frente
+  a SOV = SOM (β = 0), **no frente a 0 en SOV**.
+- **Robustez**: compare el IC clásico con el HC3, Theil-Sen y el
+  bootstrap. Si el signo cambia al omitir una marca (columna «β al
+  omitir cada marca»), el resultado depende de esa marca y debe tomarse
+  con cautela.
+- **Umbral de SOM**: cuota en la que el ESOV medio se anula; por encima,
+  las marcas invierten de media menos de lo que su cuota sugiere.
+- **Alertas de influencia**: P = palanca alta; A = residuo atípico; I =
+  influencia sobre la pendiente (Cook o DFBETAS). Son umbrales
+  heurísticos: revise los datos de esas marcas antes de decidir.
+- **Formas funcionales**: si la forma lineal no es la mejor por RMSE y
+  AICc, la relación puede no ser lineal.
 - Una asociación entre ESOV y SOM **no demuestra causalidad**.
 
 ## 13. Referencia de funciones
 
-| Función | Para qué sirve |
-|---|---|
-| `sov_demo()` | Recorrido guiado de todo el flujo |
-| `sov_asistente()` | Aplicación Shiny sin código |
-| `sov_plantilla()` | Crea un CSV de muestra compatible con Excel |
-| `sov_ejemplo()` | Ruta del CSV de ejemplo (Ad Age, 2019) |
-| `adage2019` | Datos reales de ejemplo |
-| `sov_lee()` | Lee un CSV (separador, decimal y codificación automáticos) |
-| `sov_prepara()` | Estandariza y valida los datos |
-| `sov_analiza()` | Análisis completo por categoría |
-| `sov_interpreta()` | Lectura en lenguaje llano |
-| `sov_tabla()` | Tablas de resultados (data.frame o HTML) |
-| `sov_grafico()`, `sov_grafico_bosque()`, `plot()` | Gráficos |
-| `sov_informe()` | Informe HTML autocontenido |
-| `sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()` | Componentes del análisis con vectores |
-| `sov_postulados()` | Catálogo de postulados de simulación |
-| `sov_parametros()` | Parámetros y procedencia |
-| `sov_calibra()` | Calibración con datos reales |
-| `sov_simula()`, `sov_simula_dinamica()` | Generación de datos sintéticos |
-| `sov_efecto_esov()` | Efecto del ESOV sobre la variación de cuota (panel) |
-| `sov_valida_simulacion()` | Estudio de recuperación (sesgo, RMSE, cobertura) |
-| `sov_referencias()` | Bibliografía con estado de verificación |
-| `sov_glosario()` | Definición de términos |
+| Función                                                                                                                               | Para qué sirve                                                                                               |
+|---------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| `sov_demo()`                                                                                                                          | Recorrido guiado de todo el flujo                                                                            |
+| `sov_asistente()`                                                                                                                     | Aplicación Shiny sin código                                                                                  |
+| `sov_plantilla()`                                                                                                                     | Crea un CSV de muestra compatible con Excel                                                                  |
+| `sov_ejemplo()`                                                                                                                       | Ruta del CSV de ejemplo (Ad Age, 2019)                                                                       |
+| `adage2019`                                                                                                                           | Datos reales de ejemplo                                                                                      |
+| `sov_lee()`                                                                                                                           | Lee un CSV (separador, decimal y codificación automáticos)                                                   |
+| `sov_prepara()`                                                                                                                       | Estandariza y valida los datos                                                                               |
+| `sov_analiza()`                                                                                                                       | Análisis completo por categoría                                                                              |
+| `sov_interpreta()`                                                                                                                    | Lectura en lenguaje llano                                                                                    |
+| `sov_tabla()`                                                                                                                         | Tablas de resultados (data.frame o HTML)                                                                     |
+| `sov_grafico()`, `sov_grafico_bosque()`, `plot()`                                                                                     | Gráficos                                                                                                     |
+| `sov_informe()`                                                                                                                       | Informe HTML autocontenido (incluye las dos guías)                                                           |
+| `sov_guia()`                                                                                                                          | Guía paso a paso: de las cuotas a la brecha de una marca (`"marca"`) o de los puntos a la recta (`"sector"`) |
+| `sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()` | Componentes del análisis con vectores                                                                        |
+| `sov_postulados()`                                                                                                                    | Catálogo de postulados de simulación                                                                         |
+| `sov_parametros()`                                                                                                                    | Parámetros y procedencia                                                                                     |
+| `sov_calibra()`                                                                                                                       | Calibración con datos reales                                                                                 |
+| `sov_simula()`, `sov_simula_dinamica()`                                                                                               | Generación de datos sintéticos                                                                               |
+| `sov_efecto_esov()`                                                                                                                   | Efecto del ESOV sobre la variación de cuota (panel)                                                          |
+| `sov_valida_simulacion()`                                                                                                             | Estudio de recuperación (sesgo, RMSE, cobertura)                                                             |
+| `sov_referencias()`                                                                                                                   | Bibliografía con estado de verificación                                                                      |
+| `sov_glosario()`                                                                                                                      | Definición de términos                                                                                       |
 
-La ayuda de cada función está disponible con `?sov_analiza`, `help(package = "mediaSOV")` y `vignette("primeros-pasos", "mediaSOV")` (si instaló las viñetas).
+La ayuda de cada función está disponible con `?sov_analiza`,
+`help(package = "mediaSOV")` y `vignette("primeros-pasos", "mediaSOV")`
+(si instaló las viñetas).
 
 ### Referencias bibliográficas
 
-
-```r
+``` r
 r <- sov_referencias()
 for (i in seq_len(nrow(r))) cat("- ", r$cita[i], " *[", r$verificacion[i], "]*\n", sep = "")
 #> - Jones, J. P. (1990). Ad spending: Maintaining market share. Harvard Business Review, 68(1), 38-42. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
@@ -1325,35 +1431,49 @@ for (i in seq_len(nrow(r))) cat("- ", r$cita[i], " *[", r$verificacion[i], "]*\n
 
 ## 14. Solución de problemas
 
-| Síntoma | Causa probable | Solución |
-|---|---|---|
-| `no se puede abrir el URL` / error en `install_github` | Sin conexión o proxy | Descargue el ZIP (apartado 2.3) |
-| Error por Pandoc en `sov_informe()` | Pandoc no instalado | Use RStudio o instale Pandoc (https://pandoc.org/installing.html) |
-| `Falta el paquete 'shiny'` | Paquete opcional ausente | `install.packages("shiny")` |
-| «columna» no encontrada al leer | Nombres de columna no reconocidos | Renómbrelos (apartado 4.1) o use `sov_plantilla()` |
-| Cifras 100 veces menores o mayores | Cuotas en proporción (0–1) | Multiplique por 100 |
-| «menos de 4 marcas» | Categoría con pocas marcas | Se omite; añada marcas o agrupe categorías |
-| Acentos mal en consola de Windows | Codificación de la consola | El archivo se lee bien; use RStudio o `Sys.setlocale("LC_ALL", "es_ES.UTF-8")` |
-| Excel muestra todo en una columna | Separador distinto del configurado | Use la plantilla del paquete o *Datos → Texto en columnas* |
+| Síntoma                                                | Causa probable                     | Solución                                                                       |
+|--------------------------------------------------------|------------------------------------|--------------------------------------------------------------------------------|
+| `no se puede abrir el URL` / error en `install_github` | Sin conexión o proxy               | Descargue el ZIP (apartado 2.3)                                                |
+| Error por Pandoc en `sov_informe()`                    | Pandoc no instalado                | Use RStudio o instale Pandoc (<https://pandoc.org/installing.html>)            |
+| `Falta el paquete 'shiny'`                             | Paquete opcional ausente           | `install.packages("shiny")`                                                    |
+| «columna» no encontrada al leer                        | Nombres de columna no reconocidos  | Renómbrelos (apartado 4.1) o use `sov_plantilla()`                             |
+| Cifras 100 veces menores o mayores                     | Cuotas en proporción (0–1)         | Multiplique por 100                                                            |
+| «menos de 4 marcas»                                    | Categoría con pocas marcas         | Se omite; añada marcas o agrupe categorías                                     |
+| Acentos mal en consola de Windows                      | Codificación de la consola         | El archivo se lee bien; use RStudio o `Sys.setlocale("LC_ALL", "es_ES.UTF-8")` |
+| Excel muestra todo en una columna                      | Separador distinto del configurado | Use la plantilla del paquete o *Datos → Texto en columnas*                     |
 
-Si el problema persiste, abra una *issue* en https://github.com/majesus/mediaSOV/issues indicando la salida de `sessionInfo()` y un ejemplo mínimo reproducible.
+Si el problema persiste, abra una *issue* en
+<https://github.com/majesus/mediaSOV/issues> indicando la salida de
+`sessionInfo()` y un ejemplo mínimo reproducible.
 
 ## 15. Limitaciones y procedencia de los datos
 
-- Las cuotas de una categoría suman 100 %, por lo que SOV y SOM no son independientes y la relación puede contener efectos de cierre.
-- Con 6–10 marcas por categoría, la potencia estadística es baja y el intervalo clásico tiende a ser demasiado estrecho; use también HC3, Theil-Sen y bootstrap.
-- Los **datos reales de ejemplo** (Ad Age, 2019) se transcribieron a partir del material de una diapositiva docente y **no se han contrastado con la publicación original**. Para publicar, verifique las cifras contra la fuente.
-- Los coeficientes de la curva de referencia de Jones (α = 6,4; β = −0,38) proceden de esa misma diapositiva y **no se han verificado contra el original**.
-- La elasticidad η = 0,24 de la simulación dinámica es un **supuesto operativo**.
-- Algunas referencias de `sov_referencias()` son clásicas y no se han verificado en bases bibliográficas; la columna `verificacion` indica el estado de cada una.
+- Las cuotas de una categoría suman 100 %, por lo que SOV y SOM no son
+  independientes y la relación puede contener efectos de cierre.
+- Con 6–10 marcas por categoría, la potencia estadística es baja y el
+  intervalo clásico tiende a ser demasiado estrecho; use también HC3,
+  Theil-Sen y bootstrap.
+- Los **datos reales de ejemplo** (Ad Age, 2019) se transcribieron a
+  partir del material de una diapositiva docente y **no se han
+  contrastado con la publicación original**. Para publicar, verifique
+  las cifras contra la fuente.
+- Los coeficientes de la curva de referencia de Jones (α = 6,4; β =
+  −0,38) proceden de esa misma diapositiva y **no se han verificado
+  contra el original**.
+- La elasticidad η = 0,24 de la simulación dinámica es un **supuesto
+  operativo**.
+- Algunas referencias de `sov_referencias()` son clásicas y no se han
+  verificado en bases bibliográficas; la columna `verificacion` indica
+  el estado de cada una.
 - Los datos sintéticos no son evidencia empírica.
 
 ## 16. Cita, licencia y contribuciones
 
-```r
+``` r
 citation("mediaSOV")
 ```
 
-Licencia **MIT** (véase `LICENSE`). Sugerencias y errores: https://github.com/majesus/mediaSOV/issues.
+Licencia **MIT** (véase `LICENSE`). Sugerencias y errores:
+<https://github.com/majesus/mediaSOV/issues>.
 
 Autor y mantenedor: Manuel Jesús Sánchez-Franco, Universidad de Sevilla.
