@@ -1,0 +1,22 @@
+Casos SOV x SOM · Ad Age Marketing Fact Pack 2019
+=================================================
+Fuente: "Ad Age U.S. market leaders by category" (Ad Age, 17-12-2018), cifras de 2017, dólares en millones.
+Archivo origen: data/AdAge-Marketing-Fact-Pack-2019.pdf, páginas 10, 12 y 13 del PDF.
+
+Variables
+- market_share_pct: cuota de mercado publicada (SOM), en %. La base (unidades, ventas, suscriptores, volumen) figura en share_basis.
+- media_musd: gasto en medios medidos (Kantar Media) de la marca o del grupo, en millones de dólares.
+- industry_media_total_musd: gasto en medios medidos de toda la industria (publicado).
+- SOV de una marca = media_musd / industry_media_total_musd x 100.
+- Fila "Resto del mercado" (is_rest = 1): DERIVADA. Cuota = 100 - Top publicado; medios = total - Top publicado.
+  Cierra los totales a 100 % para que SOV y SOM sean cuotas sobre toda la industria. No es una marca.
+- focal = 1: marca seleccionada por defecto en la calculadora.
+
+Casos omitidos (la fuente no da cuota de mercado, o no da el total de inversión de la industria):
+- Personal care, household products, prescription drugs, insurance: solo cuota de gasto publicitario (no hay SOM).
+- Auto marketers y Retailers: no figura el total de inversión publicitaria de la industria (NA).
+
+Notas de rigor
+- Las cifras están redondeadas en la fuente; la suma de las filas puede diferir de los totales publicados en +-0,1 puntos o +-3 M$.
+- En un mismo grupo (p. ej. PepsiCo) las marcas figuran por separado, tal como en la fuente.
+- Medios medidos no equivale a inversión publicitaria total (no incluye todas las formas de comunicación).

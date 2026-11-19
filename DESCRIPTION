@@ -1,0 +1,36 @@
+Package: mediaSOV
+Type: Package
+Title: Cuota de Voz y Cuota de Mercado: Análisis, Diagnóstico y Simulación Fundamentada en la Literatura
+Version: 0.1.0
+Authors@R:
+    person(given = "Manuel Jesús", family = "Sánchez-Franco",
+           role = c("aut", "cre", "cph"),
+           email = "majesus@users.noreply.github.com")
+Description: Herramientas para analizar la relación entre la cuota de voz (SOV,
+    'share of voice') y la cuota de mercado (SOM, 'share of market') de las
+    marcas de una categoría. Estima la regresión del exceso de cuota de voz
+    (ESOV = SOV - SOM) sobre la cuota de mercado por sector, con intervalos
+    de confianza, estimador robusto de Theil-Sen, diagnóstico de influencia
+    (palanca, residuos estudentizados, distancia de Cook, DFBETAS),
+    bootstrap de pares, comparación de formas funcionales (lineal, logarítmica
+    y cuadrática) y contraste de homogeneidad de pendientes. Incluye un
+    generador de datos sintéticos con cinco postulados parametrizados (paridad,
+    curva de intensidad publicitaria de Jones lineal y heterogénea, potencia
+    y curvilínea) y dos dinámicos (equilibrio y elasticidad), con trazabilidad
+    de la procedencia de cada parámetro, calibración con datos reales y un
+    estudio de recuperación de parámetros que acredita el comportamiento del
+    método. Ofrece informes en HTML con ayudas interpretativas y un asistente
+    interactivo para usuarios sin experiencia en R.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: es
+Depends: R (>= 4.1.0)
+Imports: graphics, grDevices, stats, utils
+Suggests: knitr, rmarkdown, shiny, testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+URL: https://github.com/majesus/mediaSOV
+BugReports: https://github.com/majesus/mediaSOV/issues

@@ -1,0 +1,10 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^data-raw$
+^\.github$
+^CONTRIBUTING\.md$
+^codecov\.yml$
+^cran-comments\.md$
+^\.gitignore$

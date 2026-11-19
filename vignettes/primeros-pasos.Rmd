@@ -1,0 +1,46 @@
+---
+title: "Primeros pasos con mediaSOV"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Primeros pasos con mediaSOV}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 4.5)
+library(mediaSOV)
+```
+
+## Qué hace el paquete
+
+**mediaSOV** estudia si la inversión publicitaria relativa de una marca (**SOV**, cuota de voz) se desvía de su cuota de mercado (**SOM**). La medida central es el exceso de cuota de voz, **ESOV = SOV − SOM**, y la pregunta es si el ESOV depende de la cuota: una pendiente $\beta$ negativa indica que las marcas pequeñas invierten proporcionalmente más (curva de Jones, 1990).
+
+## Análisis de los datos de ejemplo
+
+```{r analisis}
+x <- sov_analiza(adage2019, B = 300)
+sov_tabla(x, "resultados")[, 1:5]
+```
+
+La lectura en lenguaje llano de la primera categoría:
+
+```{r lectura}
+cat(sov_interpreta(x)[1])
+```
+
+```{r grafico}
+sov_grafico(x, x$sectores[[1]]$caso)
+```
+
+## Sus propios datos
+
+`sov_plantilla()` crea un CSV de muestra que Excel abre sin problemas (separador `;`, coma decimal). Rellénelo con una fila por marca y analícelo con `sov_analiza("mi_archivo.csv")`. Cada categoría necesita al menos 4 marcas. No incluya la fila «resto del mercado»: forzaría mecánicamente la recta.
+
+## Informe y aplicación
+
+`sov_informe(x)` genera un HTML autocontenido y `sov_asistente()` abre una aplicación sin código.
+
+## Robustez
+
+Con pocas marcas, el intervalo clásico de mínimos cuadrados puede ser demasiado estrecho. El paquete añade errores robustos HC3, Theil-Sen, validación dejando una marca fuera y bootstrap de pares; la viñeta sobre simulación cuantifica su cobertura.

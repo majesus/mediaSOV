@@ -1,0 +1,110 @@
+---
+title: "`r params$titulo`"
+author: "`r params$autor`"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+lang: es
+output:
+  html_document:
+    self_contained: true
+    toc: true
+    toc_float: true
+    theme: flatly
+params:
+  x: NULL
+  titulo: "Informe SOV-SOM"
+  autor: ""
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results = "asis",
+                      fig.width = 7, fig.height = 4.6, dpi = 110)
+library(mediaSOV)
+x <- params$x
+sim <- isTRUE(x$simulado)
+cat_h <- function(...) cat(..., sep = "")
+```
+
+```{r banner}
+if (sim) {
+  cat('<div style="border:3px solid #b00020;background:#fdecea;padding:12px;margin:10px 0">',
+      '<strong>DATOS SINTÉTICOS.</strong> Las cifras de este informe proceden de una simulación con parámetros ',
+      'conocidos. Sirven para ilustrar y validar el método; <strong>no constituyen evidencia empírica</strong> ',
+      'sobre ningún mercado real.</div>', sep = "")
+}
+```
+
+# Resumen
+
+```{r resumen}
+cat(paste0("Se analizan **", length(x$sectores), " categorías** y **",
+           sum(vapply(x$sectores, function(s) s$n, numeric(1))), " marcas**, sin la fila «resto del mercado» ",
+           if (isTRUE(x$incluir_resto)) "(incluida por petición expresa). " else "(excluida: no es una marca y fuerza una relación mecánica). ",
+           "La variable explicada es el exceso de cuota de voz, ESOV = SOV − SOM, y la explicativa la cuota de mercado (SOM). ",
+           "Nivel de confianza: ", round(x$nivel * 100), " %; remuestras bootstrap: ", x$B, ".\n\n"))
+cat(sov_interpreta(x), sep = "\n\n")
+```
+
+# Resultados por categoría
+
+```{r tabla-res}
+cat(sov_tabla(x, "resultados", formato = "html"))
+```
+
+# Gráficos
+
+```{r graficos, results="markup"}
+for (s in x$sectores) if (!is.null(s$ajuste)) sov_grafico(x, s$caso)
+```
+
+# Diagnóstico de influencia
+
+```{r tabla-inf}
+cat(sov_tabla(x, "influencia", formato = "html"))
+```
+
+# Formas funcionales alternativas
+
+```{r tabla-formas}
+cat(sov_tabla(x, "formas", formato = "html"))
+```
+
+# Elasticidad (modelo log-log)
+
+```{r tabla-el}
+cat(sov_tabla(x, "elasticidad", formato = "html"))
+```
+
+# Origen de los datos simulados
+
+```{r simulacion}
+if (sim && !is.null(x$simulacion)) {
+  sm <- x$simulacion
+  cat("**Postulado:** `", sm$postulado, "`. **Semilla:** ", sm$semilla, ". **Versión del paquete:** ", sm$paquete, ".\n\n", sep = "")
+  p <- sm$parametros
+  if (!is.null(p$procedencia)) {
+    cat("Parámetros y procedencia:\n\n")
+    cat(knitr::kable(p$procedencia, format = "html", row.names = FALSE), sep = "\n")
+  }
+  cat("\n\nVerdad conocida por categoría:\n\n")
+  cat(knitr::kable(sm$verdad, format = "html", digits = 3, row.names = FALSE), sep = "\n")
+} else cat("Los datos no son simulados.")
+```
+
+# Glosario
+
+```{r glosario}
+cat(knitr::kable(sov_glosario(), format = "html", col.names = c("Término", "Definición"), row.names = FALSE), sep = "\n")
+```
+
+# Limitaciones
+
+Las cuotas de una categoría suman 100 %, de modo que SOV y SOM no son independientes y la relación puede contener efectos de cierre. Con 6 a 10 marcas por categoría la potencia estadística es baja y los intervalos clásicos tienden a ser estrechos; el paquete ofrece además errores robustos (HC3), Theil-Sen y bootstrap de pares, y el estudio de recuperación (`sov_valida_simulacion()`) cuantifica su cobertura. Una asociación entre ESOV y SOM no demuestra causalidad. Los coeficientes de la curva de Jones usados como referencia proceden de una diapositiva docente y no se han verificado contra el original. La elasticidad η = 0,24 de las simulaciones dinámicas es un supuesto operativo inspirado en la literatura, no una estimación propia.
+
+# Referencias
+
+```{r refs}
+r <- sov_referencias()
+cat(paste0("- ", r$cita, " *(", r$verificacion, ")*"), sep = "\n")
+```
+
+*Informe generado con mediaSOV `r x$version`.*

@@ -1,0 +1,8 @@
+bibentry("Manual",
+  title = "mediaSOV: Cuota de voz y cuota de mercado: análisis y simulación",
+  author = person("Manuel Jesús", "Sánchez-Franco"),
+  year = format(Sys.Date(), "%Y"),
+  note = paste("Paquete R, versión", meta$Version),
+  url = "https://github.com/majesus/mediaSOV",
+  textVersion = paste0("Sánchez-Franco, M. J. (", format(Sys.Date(), "%Y"),
+    "). mediaSOV: cuota de voz y cuota de mercado, análisis y simulación. Paquete R. https://github.com/majesus/mediaSOV"))

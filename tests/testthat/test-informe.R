@@ -1,0 +1,10 @@
+test_that("el informe HTML se genera", {
+  skip_on_cran()
+  skip_if_not_installed("rmarkdown")
+  skip_if_not(rmarkdown::pandoc_available(), "Pandoc no disponible")
+  f <- tempfile(fileext = ".html")
+  suppressMessages(sov_informe(sov_simula("jones_lineal", semilla = 1), archivo = f, B = 50, abrir = FALSE))
+  expect_true(file.exists(f))
+  txt <- paste(readLines(f, warn = FALSE, encoding = "UTF-8"), collapse = " ")
+  expect_match(txt, "DATOS SINT")
+})
