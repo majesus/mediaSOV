@@ -244,7 +244,7 @@ de voz.
 
 ``` r
 ruta <- sov_plantilla(file.path(tempdir(), "mis_datos.csv"))
-#> Archivo creado: /tmp/RtmpJA5dNR/mis_datos.csv
+#> Archivo creado: /tmp/RtmpfuCrfS/mis_datos.csv
 #> Sustituya las cifras ficticias por las suyas (conserve los nombres de columna).
 cat(readLines(ruta, n = 8, encoding = "UTF-8"), sep = "\n")
 #> categoria;marca;som;sov
@@ -597,6 +597,22 @@ png("auto.png", width = 1400, height = 900, res = 200)
 sov_grafico(x, "auto_marcas")
 dev.off()
 ```
+
+### 7.5 Mapa SOV–SOM: `sov_mapa()`
+
+``` r
+sov_mapa(adage2019, "auto_marcas", marca = "Chevrolet")
+```
+
+<img src="man/figures/README-mapa-1.png" width="90%" />
+
+Cada punto es una marca (SOV en abscisas, SOM en ordenadas). La diagonal
+es el equilibrio SOV = SOM (ESOV = 0): por encima, zona de cosecha; por
+debajo, zona de inversión. La línea roja discontinua es la aproximación
+lineal a la curva de Jones (1990), ESOV = α + β·SOM, trasladada a este
+plano como SOV = α + (1 + β)·SOM; se desactiva con `jones = FALSE`. Sus
+valores (α = +6,4; β = −0,38) proceden de las diapositivas y no están
+verificados con la fuente original.
 
 ## 8. Funciones de análisis por separado
 
@@ -1104,7 +1120,7 @@ paquete muestra siempre ambos intervalos.
 | `sov_analiza()`                                                                                                                       | Análisis completo por categoría                                                                              |
 | `sov_interpreta()`                                                                                                                    | Lectura en lenguaje llano                                                                                    |
 | `sov_tabla()`                                                                                                                         | Tablas de resultados (data.frame o HTML)                                                                     |
-| `sov_grafico()`, `sov_grafico_bosque()`, `plot()`                                                                                     | Gráficos                                                                                                     |
+| `sov_grafico()`, `sov_grafico_bosque()`, `sov_mapa()`, `plot()`                                                                       | Gráficos (ESOV por SOM, bosque de pendientes, mapa SOV–SOM)                                                  |
 | `sov_informe()`                                                                                                                       | Informe HTML autocontenido (incluye las dos guías)                                                           |
 | `sov_guia()`                                                                                                                          | Guía paso a paso: de las cuotas a la brecha de una marca (`"marca"`) o de los puntos a la recta (`"sector"`) |
 | `sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()` | Componentes del análisis con vectores                                                                        |

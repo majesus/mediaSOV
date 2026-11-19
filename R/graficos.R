@@ -76,6 +76,41 @@ sov_grafico <- function(x, categoria = NULL, etiquetas = TRUE) {
   invisible(NULL)
 }
 
+#' Mapa SOV-SOM: cada marca como un punto, con zonas de cosecha e inversión
+#'
+#' Dibuja la cuota de voz (SOV, eje horizontal) frente a la cuota de mercado
+#' (SOM, eje vertical). La diagonal es el equilibrio SOV = SOM (ESOV = 0); por
+#' encima está la zona de cosecha (la marca vende más de lo que habla) y por
+#' debajo la zona de inversión (habla más de lo que vende). La línea roja
+#' discontinua es la aproximación lineal a la curva de Jones (1990)
+#' trasladada a este plano: ESOV = alfa + beta * SOM equivale a
+#' SOV = alfa + (1 + beta) * SOM.
+#'
+#' @param x Objeto `sov_analisis` o datos admitidos por [sov_analiza()].
+#' @param categoria Identificador de la categoría (por defecto, la primera con al menos 4 marcas).
+#' @param marca Marca que se resalta en rojo (opcional).
+#' @param jones Si `TRUE` (por defecto), dibuja la referencia de Jones. Sus valores
+#'   (alfa = +6,4; beta = -0,38) proceden de las diapositivas del curso y no están
+#'   verificados con la fuente original.
+#' @param valores Si `TRUE` (por defecto), añade el SOV y el SOM junto a cada marca.
+#' @return `NULL`, de forma invisible.
+#' @examples
+#' sov_mapa(adage2019, "auto_marcas", marca = "Chevrolet")
+#' @export
+sov_mapa <- function(x, categoria = NULL, marca = NULL, jones = TRUE, valores = NULL) {
+  x <- sov_analiza(x, B = 0)
+  ss <- Filter(function(s) !is.null(s$ajuste), x$sectores)
+  if (!length(ss)) stop("No hay categor\u00edas con al menos 4 marcas que dibujar.", call. = FALSE)
+  if (is.null(categoria)) categoria <- names(ss)[1]
+  if (length(categoria) != 1L || !categoria %in% names(ss))
+    stop("Categor\u00eda no encontrada. Disponibles: ", paste(names(ss), collapse = ", "), call. = FALSE)
+  z <- ss[[categoria]]$datos
+  if (!is.null(marca) && !marca %in% z$marca)
+    stop("Marca no encontrada. Disponibles: ", paste(z$marca, collapse = ", "), call. = FALSE)
+  if (is.null(valores)) valores <- nrow(z) <= 6L
+  .fig_mapa(z, marca, if (isTRUE(jones)) x$jones else NULL, isTRUE(valores))
+}
+
 #' Gráfico de bosque (forest plot) de las pendientes por categoría
 #'
 #' Representa la pendiente beta de cada categoría con su intervalo de confianza,

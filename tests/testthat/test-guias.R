@@ -48,3 +48,12 @@ test_that("las guías funcionan con una categoría de pocos datos y con una sola
   expect_match(sov_guia(x, "sector", formato = "texto"), "una sola categor", ignore.case = TRUE)
   expect_match(sov_guia(x, "marca", formato = "texto"), "Paso 10 de 10", fixed = TRUE)
 })
+
+test_that("sov_mapa dibuja el mapa SOV-SOM y valida sus argumentos", {
+  f <- tempfile(fileext = ".png"); grDevices::png(f)
+  expect_silent(sov_mapa(adage2019, "auto_marcas", marca = "Chevrolet"))
+  expect_silent(sov_mapa(adage2019, "auto_marcas", jones = FALSE, valores = FALSE))
+  grDevices::dev.off()
+  expect_error(sov_mapa(adage2019, "no_existe"), "no encontrada")
+  expect_error(sov_mapa(adage2019, "auto_marcas", marca = "Inexistente"), "no encontrada")
+})

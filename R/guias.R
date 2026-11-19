@@ -82,7 +82,7 @@
 
 .etiquetas <- function(x, y, lab, resalta = NULL, cex = 0.8) {
   usr <- graphics::par("usr"); n <- length(x)
-  w <- graphics::strwidth(lab, cex = cex); h <- graphics::strheight("M", cex = cex) * 1.1
+  w <- graphics::strwidth(lab, cex = cex); h <- graphics::strheight(lab, cex = cex) * 1.1
   dx <- graphics::strwidth("m", cex = cex) * 0.7; dy <- graphics::strheight("M", cex = cex) * 0.7
   ocup <- matrix(numeric(0), ncol = 4)
   solapa <- function(r) {
@@ -137,7 +137,7 @@
   invisible(NULL)
 }
 
-.fig_mapa <- function(z, marca) {
+.fig_mapa <- function(z, marca = NULL, jones = NULL, valores = FALSE, rotulos = NULL) {
   op <- graphics::par(mar = c(4.4, 4.6, 1, 1.2), cex = 1.05, pty = "s"); on.exit(graphics::par(op))
   lim <- c(0, max(z$som, z$sov) * 1.12)
   graphics::plot(NA, xlim = lim, ylim = lim, xlab = "Cuota de voz, SOV (%)", ylab = "Cuota de mercado, SOM (%)", las = 1)
@@ -145,10 +145,18 @@
   graphics::abline(0, 1, lwd = 2)
   graphics::text(lim[2] * 0.03, lim[2] * 0.97, "ZONA COSECHA\n(vende m\u00e1s de lo que habla)", adj = c(0, 1), cex = 0.7, font = 2, col = "grey30")
   graphics::text(lim[2] * 0.97, lim[2] * 0.03, "ZONA INVERSI\u00d3N\n(habla m\u00e1s de lo que vende)", adj = c(1, 0), cex = 0.7, font = 2, col = .COL_ROJO)
-  es_m <- z$marca == marca
+  if (!is.null(jones)) {
+    # ESOV = a + b*SOM  <=>  SOV = a + (1 + b)*SOM  <=>  SOM = (SOV - a)/(1 + b)
+    a <- unname(jones["alfa"]); b <- unname(jones["beta"])
+    x1 <- a + (1 + b) * lim[2]
+    graphics::segments(a, 0, x1, lim[2], col = .COL_ROJO, lty = 2, lwd = 2)
+  }
+  es_m <- if (is.null(marca)) rep(FALSE, nrow(z)) else z$marca == marca
   graphics::points(z$sov[!es_m], z$som[!es_m], pch = 19, col = "grey30", cex = 1.2)
   graphics::points(z$sov[es_m], z$som[es_m], pch = 19, col = .COL_ROJO, cex = 1.9)
-  .etiquetas(z$sov, z$som, z$marca, resalta = which(es_m))
+  lab <- if (is.null(rotulos)) z$marca else rotulos
+  if (valores) lab <- paste0(lab, "\nSOV ", fmt_es(z$sov, 1), " \u00b7 SOM ", fmt_es(z$som, 1))
+  .etiquetas(z$sov, z$som, lab, resalta = which(es_m))
   invisible(NULL)
 }
 
