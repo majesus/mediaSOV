@@ -244,7 +244,7 @@ de voz.
 
 ``` r
 ruta <- sov_plantilla(file.path(tempdir(), "mis_datos.csv"))
-#> Archivo creado: /tmp/Rtmp5ZbTjC/mis_datos.csv
+#> Archivo creado: /tmp/RtmpJA5dNR/mis_datos.csv
 #> Sustituya las cifras ficticias por las suyas (conserve los nombres de columna).
 cat(readLines(ruta, n = 8, encoding = "UTF-8"), sep = "\n")
 #> categoria;marca;som;sov
@@ -299,315 +299,29 @@ x <- sov_analiza(mi_data_frame)
 ### 4.4 Datos de ejemplo incluidos
 
 ``` r
-adage2019                     # objeto de datos (Ad Age, 2019)
-#>         case_id                                     case_title                sector pdf_page
-#> 1   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 2   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 3   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 4   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 5   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 6   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 7   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 8   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 9   auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 10  auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 11  auto_marcas           Marcas de automóvil · EE. UU. (2017)            Automoción       10
-#> 12 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 13 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 14 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 15 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 16 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 17 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 18 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 19 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 20 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 21 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 22 restaurantes       Cadenas de restauración · EE. UU. (2017)          Restauración       10
-#> 23    telefonia Operadores de telefonía móvil · EE. UU. (2017)    Telecomunicaciones       12
-#> 24    telefonia Operadores de telefonía móvil · EE. UU. (2017)    Telecomunicaciones       12
-#> 25    telefonia Operadores de telefonía móvil · EE. UU. (2017)    Telecomunicaciones       12
-#> 26    telefonia Operadores de telefonía móvil · EE. UU. (2017)    Telecomunicaciones       12
-#> 27    telefonia Operadores de telefonía móvil · EE. UU. (2017)    Telecomunicaciones       12
-#> 28    telefonia Operadores de telefonía móvil · EE. UU. (2017)    Telecomunicaciones       12
-#> 29    telefonia Operadores de telefonía móvil · EE. UU. (2017)    Telecomunicaciones       12
-#> 30     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 31     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 32     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 33     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 34     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 35     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 36     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 37     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 38     tarjetas           Tarjetas de crédito · EE. UU. (2017) Servicios financieros       13
-#> 39      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 40      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 41      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 42      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 43      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 44      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 45      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 46      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 47      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 48      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 49      cerveza                    Cerveceras · EE. UU. (2017)   Bebidas alcohólicas       13
-#> 50      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 51      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 52      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 53      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 54      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 55      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 56      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 57      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 58      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 59      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#> 60      bebidas        Bebidas no alcohólicas · EE. UU. (2017)               Bebidas       13
-#>                                        share_basis industry_media_total_musd
-#> 1  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 2  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 3  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 4  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 5  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 6  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 7  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 8  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 9  unidades vendidas (turismos y camiones ligeros)                      7784
-#> 10 unidades vendidas (turismos y camiones ligeros)                      7784
-#> 11 unidades vendidas (turismos y camiones ligeros)                      7784
-#> 12                               ventas sistémicas                      6084
-#> 13                               ventas sistémicas                      6084
-#> 14                               ventas sistémicas                      6084
-#> 15                               ventas sistémicas                      6084
-#> 16                               ventas sistémicas                      6084
-#> 17                               ventas sistémicas                      6084
-#> 18                               ventas sistémicas                      6084
-#> 19                               ventas sistémicas                      6084
-#> 20                               ventas sistémicas                      6084
-#> 21                               ventas sistémicas                      6084
-#> 22                               ventas sistémicas                      6084
-#> 23                   suscriptores de 13 o más años                      4963
-#> 24                   suscriptores de 13 o más años                      4963
-#> 25                   suscriptores de 13 o más años                      4963
-#> 26                   suscriptores de 13 o más años                      4963
-#> 27                   suscriptores de 13 o más años                      4963
-#> 28                   suscriptores de 13 o más años                      4963
-#> 29                   suscriptores de 13 o más años                      4963
-#> 30                  volumen de compras con tarjeta                       876
-#> 31                  volumen de compras con tarjeta                       876
-#> 32                  volumen de compras con tarjeta                       876
-#> 33                  volumen de compras con tarjeta                       876
-#> 34                  volumen de compras con tarjeta                       876
-#> 35                  volumen de compras con tarjeta                       876
-#> 36                  volumen de compras con tarjeta                       876
-#> 37                  volumen de compras con tarjeta                       876
-#> 38                  volumen de compras con tarjeta                       876
-#> 39                    volumen de envíos (barriles)                      1530
-#> 40                    volumen de envíos (barriles)                      1530
-#> 41                    volumen de envíos (barriles)                      1530
-#> 42                    volumen de envíos (barriles)                      1530
-#> 43                    volumen de envíos (barriles)                      1530
-#> 44                    volumen de envíos (barriles)                      1530
-#> 45                    volumen de envíos (barriles)                      1530
-#> 46                    volumen de envíos (barriles)                      1530
-#> 47                    volumen de envíos (barriles)                      1530
-#> 48                    volumen de envíos (barriles)                      1530
-#> 49                    volumen de envíos (barriles)                      1530
-#> 50                     volumen de ventas (galones)                      1797
-#> 51                     volumen de ventas (galones)                      1797
-#> 52                     volumen de ventas (galones)                      1797
-#> 53                     volumen de ventas (galones)                      1797
-#> 54                     volumen de ventas (galones)                      1797
-#> 55                     volumen de ventas (galones)                      1797
-#> 56                     volumen de ventas (galones)                      1797
-#> 57                     volumen de ventas (galones)                      1797
-#> 58                     volumen de ventas (galones)                      1797
-#> 59                     volumen de ventas (galones)                      1797
-#> 60                     volumen de ventas (galones)                      1797
-#>                       brand                                              owner market_share_pct
-#> 1                      Ford                                     Ford Motor Co.             14.3
-#> 2                    Toyota                                 Toyota Motor Corp.             12.3
-#> 3                 Chevrolet                                 General Motors Co.             12.0
-#> 4                     Honda                                    Honda Motor Co.              8.6
-#> 5                    Nissan                                   Nissan Motor Co.              8.4
-#> 6                      Jeep                          Fiat Chrysler Automobiles              4.8
-#> 7                   Hyundai                                  Hyundai Motor Co.              3.9
-#> 8                    Subaru                                       Subaru Corp.              3.8
-#> 9                       Kia                                   Kia Motors Corp.              3.4
-#> 10                      GMC                                 General Motors Co.              3.3
-#> 11        Resto del mercado Derivado: 100 − Top (cuota) y total − Top (medios)             25.3
-#> 12               McDonald's                                   McDonald's Corp.              7.0
-#> 13                Starbucks                                    Starbucks Corp.              3.3
-#> 14                   Subway                                Doctor's Associates              2.0
-#> 15                Taco Bell                                         Yum Brands              1.8
-#> 16              Burger King                    Restaurant Brands International              1.8
-#> 17                  Wendy's                                        Wendy's Co.              1.7
-#> 18              Chick-fil-A                                        Chick-fil-A              1.7
-#> 19                  Dunkin'                               Dunkin' Brands Group              1.6
-#> 20                 Domino's                                     Domino's Pizza              1.1
-#> 21                Pizza Hut                                         Yum Brands              1.0
-#> 22        Resto del mercado Derivado: 100 − Top (cuota) y total − Top (medios)             76.9
-#> 23                  Verizon                             Verizon Communications             32.2
-#> 24                     AT&T                                               AT&T             31.9
-#> 25              T-Mobile US                                   Deutsche Telekom             16.5
-#> 26                   Sprint                               SoftBank Group Corp.             11.5
-#> 27                 TracFone                                      América Móvil              5.1
-#> 28            U.S. Cellular                         Telephone and Data Systems              1.3
-#> 29        Resto del mercado Derivado: 100 − Top (cuota) y total − Top (medios)              1.6
-#> 30         American Express                               American Express Co.             20.6
-#> 31                    Chase                               JPMorgan Chase & Co.             20.0
-#> 32                 Citibank                                          Citigroup             11.5
-#> 33          Bank of America                              Bank of America Corp.              9.9
-#> 34              Capital One                        Capital One Financial Corp.              8.6
-#> 35                U.S. Bank                                       U.S. Bancorp              4.1
-#> 36                 Discover                        Discover Financial Services              3.8
-#> 37              Wells Fargo                                  Wells Fargo & Co.              3.8
-#> 38        Resto del mercado Derivado: 100 − Top (cuota) y total − Top (medios)             17.8
-#> 39     Anheuser-Busch InBev                               Anheuser-Busch InBev             41.6
-#> 40             Molson Coors                           Molson Coors Brewing Co.             24.3
-#> 41     Constellation Brands                               Constellation Brands              8.9
-#> 42                 Heineken                                           Heineken              3.8
-#> 43                    Pabst                                  Pabst Brewing Co.              2.3
-#> 44              Boston Beer                                    Boston Beer Co.              1.7
-#> 45                Yuengling                               D.G. Yuengling & Son              1.3
-#> 46 North American Breweries                           Florida Ice and Farm Co.              1.1
-#> 47                   Diageo                                             Diageo              1.1
-#> 48     Mike's Hard Lemonade                                 Mark Anthony Group              0.9
-#> 49        Resto del mercado Derivado: 100 − Top (cuota) y total − Top (medios)             12.9
-#> 50                     Coke                                      Coca-Cola Co.             11.5
-#> 51                    Pepsi                                            PepsiCo              5.3
-#> 52             Mountain Dew                                            PepsiCo              3.8
-#> 53         Nestlé Pure Life                                             Nestlé              3.5
-#> 54                Dr Pepper                                   Keurig Dr Pepper              3.5
-#> 55                 Gatorade                                            PepsiCo              3.1
-#> 56                   Sprite                                      Coca-Cola Co.              2.8
-#> 57            Poland Spring                                             Nestlé              2.7
-#> 58                   Dasani                                      Coca-Cola Co.              2.1
-#> 59                 Aquafina                                            PepsiCo              1.8
-#> 60        Resto del mercado Derivado: 100 − Top (cuota) y total − Top (medios)             60.0
-#>    media_musd is_rest focal
-#> 1         894       0     0
-#> 2         580       0     0
-#> 3         817       0     1
-#> 4         387       0     0
-#> 5         469       0     0
-#> 6         290       0     0
-#> 7         257       0     0
-#> 8         282       0     0
-#> 9         376       0     0
-#> 10        260       0     0
-#> 11       3172       1     0
-#> 12        687       0     0
-#> 13         72       0     0
-#> 14        347       0     0
-#> 15        422       0     1
-#> 16        341       0     0
-#> 17        258       0     0
-#> 18         72       0     0
-#> 19        143       0     0
-#> 20        363       0     0
-#> 21        204       0     0
-#> 22       3175       1     0
-#> 23        773       0     0
-#> 24        645       0     0
-#> 25       1073       0     1
-#> 26        666       0     0
-#> 27        242       0     0
-#> 28         38       0     0
-#> 29       1527       1     0
-#> 30        188       0     0
-#> 31         47       0     0
-#> 32        105       0     0
-#> 33         14       0     0
-#> 34        197       0     1
-#> 35          0       0     0
-#> 36        123       0     0
-#> 37          0       0     0
-#> 38        202       1     0
-#> 39        591       0     0
-#> 40        397       0     0
-#> 41        263       0     1
-#> 42        171       0     0
-#> 43          1       0     0
-#> 44         52       0     0
-#> 45          5       0     0
-#> 46          1       0     0
-#> 47          9       0     0
-#> 48          6       0     0
-#> 49         36       1     0
-#> 50        377       0     0
-#> 51        169       0     0
-#> 52         85       0     0
-#> 53          3       0     0
-#> 54        111       0     0
-#> 55        130       0     1
-#> 56         34       0     0
-#> 57          1       0     0
-#> 58          4       0     0
-#> 59          1       0     0
-#> 60        884       1     0
-#>                                                                            note
-#> 1                                                                              
-#> 2                                                                              
-#> 3                                                                              
-#> 4                                                                              
-#> 5                                                                              
-#> 6                                                                              
-#> 7                                                                              
-#> 8                                                                              
-#> 9                                                                              
-#> 10                                                                             
-#> 11 Fila derivada: no figura en la fuente; se calcula con los totales publicados
-#> 12                                                                             
-#> 13                                                                             
-#> 14                                                                             
-#> 15                                                                             
-#> 16                                                                             
-#> 17                                                                             
-#> 18                                                                             
-#> 19                                                                             
-#> 20                                                                             
-#> 21                                                                             
-#> 22 Fila derivada: no figura en la fuente; se calcula con los totales publicados
-#> 23                                                                             
-#> 24                                                                             
-#> 25                                                                             
-#> 26                                                                             
-#> 27                                                                             
-#> 28                                                                             
-#> 29 Fila derivada: no figura en la fuente; se calcula con los totales publicados
-#> 30                                                                             
-#> 31                                                                             
-#> 32                                                                             
-#> 33                                                                             
-#> 34                                                                             
-#> 35                                                                             
-#> 36                                                                             
-#> 37                                                                             
-#> 38 Fila derivada: no figura en la fuente; se calcula con los totales publicados
-#> 39                                                                             
-#> 40                                                                             
-#> 41                                                                             
-#> 42                                                                             
-#> 43                                                                             
-#> 44                                                                             
-#> 45                                                                             
-#> 46                                                                             
-#> 47                                                                             
-#> 48                                                                             
-#> 49 Fila derivada: no figura en la fuente; se calcula con los totales publicados
-#> 50                                                                             
-#> 51                                                                             
-#> 52                                                                             
-#> 53                                                                             
-#> 54                                                                             
-#> 55                                                                             
-#> 56                                                                             
-#> 57                                                                             
-#> 58                                                                             
-#> 59                                                                             
-#> 60 Fila derivada: no figura en la fuente; se calcula con los totales publicados
+dim(adage2019)                # 60 filas x 13 columnas (Ad Age, 2019)
+#> [1] 60 13
+head(adage2019[, c("case_id", "brand", "market_share_pct", "media_musd", "is_rest")])
+#>       case_id     brand market_share_pct media_musd is_rest
+#> 1 auto_marcas      Ford             14.3        894       0
+#> 2 auto_marcas    Toyota             12.3        580       0
+#> 3 auto_marcas Chevrolet             12.0        817       0
+#> 4 auto_marcas     Honda              8.6        387       0
+#> 5 auto_marcas    Nissan              8.4        469       0
+#> 6 auto_marcas      Jeep              4.8        290       0
 sov_ejemplo()                 # ruta del CSV de ejemplo incluido en el paquete
 #> [1] "/usr/local/lib/R/site-library/mediaSOV/extdata/sov_som_casos_adage2019.csv"
 ```
+
+Se muestran las seis primeras filas y las columnas esenciales (`head()`
+oculta el resto): cada fila es una marca de una categoría (`case_id`);
+`market_share_pct` es la cuota de mercado en porcentaje de la categoría
+y `media_musd` la inversión publicitaria en millones de dólares, de la
+que `sov_analiza()` calcula la cuota de voz. La columna `is_rest` vale 1
+en la fila «resto del mercado», que se excluye del análisis. Las demás
+columnas (`case_title`, `sector`, `pdf_page`, `share_basis`,
+`industry_media_total_musd`, `owner`, `focal`, `note`) documentan la
+procedencia.
 
 ## 5. Análisis: `sov_analiza()` y su lectura
 

@@ -169,9 +169,12 @@ x <- sov_analiza(mi_data_frame)
 ### 4.4 Datos de ejemplo incluidos
 
 ```{r ejemplo}
-adage2019                     # objeto de datos (Ad Age, 2019)
+dim(adage2019)                # 60 filas x 13 columnas (Ad Age, 2019)
+head(adage2019[, c("case_id", "brand", "market_share_pct", "media_musd", "is_rest")])
 sov_ejemplo()                 # ruta del CSV de ejemplo incluido en el paquete
 ```
+
+Se muestran las seis primeras filas y las columnas esenciales (`head()` oculta el resto): cada fila es una marca de una categoría (`case_id`); `market_share_pct` es la cuota de mercado en porcentaje de la categoría y `media_musd` la inversión publicitaria en millones de dólares, de la que `sov_analiza()` calcula la cuota de voz. La columna `is_rest` vale 1 en la fila «resto del mercado», que se excluye del análisis. Las demás columnas (`case_title`, `sector`, `pdf_page`, `share_basis`, `industry_media_total_musd`, `owner`, `focal`, `note`) documentan la procedencia.
 
 ## 5. Análisis: `sov_analiza()` y su lectura
 
