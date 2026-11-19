@@ -8,3 +8,5 @@
 ^codecov\.yml$
 ^cran-comments\.md$
 ^\.gitignore$
+^README\.Rmd$
+^README\.md$
