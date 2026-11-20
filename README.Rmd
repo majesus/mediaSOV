@@ -5,8 +5,24 @@ options(width = 100)
 library(mediaSOV)
 tabla <- function(d, digitos = 4) {
   d <- as.data.frame(d); class(d) <- "data.frame"
-  cat("\n", knitr::kable(d, format = "pipe", row.names = FALSE, digits = digitos,
-                         format.args = list(decimal.mark = ",")), sep = "\n")
+  # Markdown de GitHub: tipografía compacta mediante <sub> y alineación numérica.
+  numerica <- function(x) {
+    v <- trimws(as.character(x))
+    v <- v[!is.na(v) & !v %in% c("", "—", "NA")]
+    length(v) > 0L && all(grepl("^([+−-]?[[:space:]]*[0-9]+([.,][0-9]+)?[[:space:]]*%?|\\[[^]]+\\]|[<>≤≥][[:space:]]*[0-9.,]+)$", v))
+  }
+  a <- ifelse(vapply(d, numerica, logical(1)), "r", "l")
+  lineas <- knitr::kable(d, format = "pipe", row.names = FALSE, digits = digitos,
+                         align = a, format.args = list(decimal.mark = ","))
+  # kable escapa las barras verticales internas; no se deben dividir.
+  compacta <- function(linea) {
+    campos <- strsplit(linea, "(?<!\\\\)\\|", perl = TRUE)[[1]]
+    if (!length(campos) || !startsWith(linea, "|")) return(linea)
+    campos <- trimws(campos[-1])
+    if (all(grepl("^:?-+:?$", campos))) return(linea)
+    paste0("| ", paste0("<sub>", campos, "</sub>", collapse = " | "), " |")
+  }
+  cat("\n", vapply(lineas, compacta, character(1)), sep = "\n")
   cat("\n\n")
 }
 ficha <- function(a) {
@@ -58,13 +74,13 @@ $$\mathrm{ESOV}_i = \alpha + \beta\,\mathrm{SOM}_i + \varepsilon_i$$
 
 y responde a la pregunta clásica de la curva de intensidad publicitaria de Jones (1990): ¿invierten las marcas grandes proporcionalmente menos que las pequeñas (**β < 0**)?
 
-| Módulo | Qué ofrece |
-|---|---|
-| Lectura | CSV con separador `;` o `,`, decimal coma o punto, UTF-8 o Latin-1, nombres de columna flexibles |
-| Análisis | MCO, errores robustos HC3, Theil-Sen, validación dejando una marca fuera, influencia (palanca, Cook, DFBETAS), bootstrap de pares, formas funcionales (AICc y validación cruzada), elasticidad log-log, homogeneidad de pendientes |
-| Salidas | Tablas (data.frame o HTML), gráficos, lectura en lenguaje llano, informe HTML autocontenido |
-| Interfaz | Aplicación Shiny (`sov_asistente()`) sin escribir código |
-| Simulación | Datos sintéticos con verdad conocida bajo 5 postulados estáticos y 2 dinámicos, parámetros editables con procedencia, calibración con datos reales y estudio de recuperación |
+| <sub>Módulo</sub> | <sub>Qué ofrece</sub> |
+| :--- | :--- |
+| <sub>Lectura</sub> | <sub>CSV con separador `;` o `,`, decimal coma o punto, UTF-8 o Latin-1, nombres de columna flexibles</sub> |
+| <sub>Análisis</sub> | <sub>MCO, errores robustos HC3, Theil-Sen, validación dejando una marca fuera, influencia (palanca, Cook, DFBETAS), bootstrap de pares, formas funcionales (AICc y validación cruzada), elasticidad log-log, homogeneidad de pendientes</sub> |
+| <sub>Salidas</sub> | <sub>Tablas (data.frame o HTML), gráficos, lectura en lenguaje llano, informe HTML autocontenido</sub> |
+| <sub>Interfaz</sub> | <sub>Aplicación Shiny (`sov_asistente()`) sin escribir código</sub> |
+| <sub>Simulación</sub> | <sub>Datos sintéticos con verdad conocida bajo 5 postulados estáticos y 2 dinámicos, parámetros editables con procedencia, calibración con datos reales y estudio de recuperación</sub> |
 
 ## 2. Instalación
 
@@ -136,12 +152,12 @@ tabla(sov_tabla(x, "resultados")[, c(1, 2, 3, 4, 11)])
 
 Una fila por marca, con **cuatro columnas obligatorias**:
 
-| Columna | Contenido | Variantes de nombre admitidas (ejemplos) |
-|---|---|---|
-| categoría | Mercado o sector al que pertenece la marca | `categoria`, `sector`, `category` |
-| marca | Nombre de la marca | `marca`, `brand` |
-| SOM | Cuota de mercado, **en %** (0–100) | `som`, `cuota_mercado`, `market_share` |
-| SOV | Cuota de voz, **en %** (0–100) | `sov`, `cuota_voz`, `share_of_voice` |
+| <sub>Columna</sub> | <sub>Contenido</sub> | <sub>Variantes de nombre admitidas (ejemplos)</sub> |
+| :--- | :--- | :--- |
+| <sub>categoría</sub> | <sub>Mercado o sector al que pertenece la marca</sub> | <sub>`categoria`, `sector`, `category`</sub> |
+| <sub>marca</sub> | <sub>Nombre de la marca</sub> | <sub>`marca`, `brand`</sub> |
+| <sub>SOM</sub> | <sub>Cuota de mercado, **en %** (0–100)</sub> | <sub>`som`, `cuota_mercado`, `market_share`</sub> |
+| <sub>SOV</sub> | <sub>Cuota de voz, **en %** (0–100)</sub> | <sub>`sov`, `cuota_voz`, `share_of_voice`</sub> |
 
 Si trabaja con la estructura de Ad Age (columnas `market_share_pct`, `media_musd`, etc.), el paquete también la reconoce y calcula las cuotas de voz.
 
@@ -201,13 +217,13 @@ x <- sov_analiza(datos, nivel = 0.95, B = 2000, semilla = 2019,
                  incluir_resto = FALSE)
 ```
 
-| Argumento | Significado |
-|---|---|
-| `datos` | Ruta de un CSV, `data.frame` o resultado de `sov_prepara()`/`sov_simula()` |
-| `nivel` | Nivel de confianza de los intervalos (0,95 por defecto) |
-| `B` | Remuestras del bootstrap (2000 por defecto; `0` lo omite y acelera) |
-| `semilla` | Semilla del bootstrap (el generador del usuario se restaura al terminar) |
-| `incluir_resto` | `TRUE` para incluir la fila «resto del mercado» (no recomendado) |
+| <sub>Argumento</sub> | <sub>Significado</sub> |
+| :--- | :--- |
+| <sub>`datos`</sub> | <sub>Ruta de un CSV, `data.frame` o resultado de `sov_prepara()`/`sov_simula()`</sub> |
+| <sub>`nivel`</sub> | <sub>Nivel de confianza de los intervalos (0,95 por defecto)</sub> |
+| <sub>`B`</sub> | <sub>Remuestras del bootstrap (2000 por defecto; `0` lo omite y acelera)</sub> |
+| <sub>`semilla`</sub> | <sub>Semilla del bootstrap (el generador del usuario se restaura al terminar)</sub> |
+| <sub>`incluir_resto`</sub> | <sub>`TRUE` para incluir la fila «resto del mercado» (no recomendado)</sub> |
 
 ### 5.1 Resumen
 
@@ -236,14 +252,14 @@ ficha(a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc
 
 `sov_tabla(x, tipo, categoria, formato)` produce seis tipos de tabla, como `data.frame` de caracteres con formato español (coma decimal) o como HTML autocontenido (`formato = "html"`) para pegar en un documento:
 
-| `tipo` | Contenido |
-|---|---|
-| `"resultados"` | β, IC clásico y robusto HC3, p, R², Theil-Sen, rango al omitir cada marca, umbral de SOM |
-| `"influencia"` | Palanca, t\*, Cook, DFBETAS y β sin cada marca, con alertas |
-| `"formas"` | Comparación de formas funcionales (RMSE de validación cruzada, ΔAICc) |
-| `"bootstrap"` | Intervalos bootstrap percentil de MCO y Theil-Sen |
-| `"elasticidad"` | Elasticidad γ del modelo log-log |
-| `"cobertura"` | Cobertura de cuotas de cada categoría |
+| <sub>`tipo`</sub> | <sub>Contenido</sub> |
+| :--- | :--- |
+| <sub>`"resultados"`</sub> | <sub>β, IC clásico y robusto HC3, p, R², Theil-Sen, rango al omitir cada marca, umbral de SOM</sub> |
+| <sub>`"influencia"`</sub> | <sub>Palanca, t\*, Cook, DFBETAS y β sin cada marca, con alertas</sub> |
+| <sub>`"formas"`</sub> | <sub>Comparación de formas funcionales (RMSE de validación cruzada, ΔAICc)</sub> |
+| <sub>`"bootstrap"`</sub> | <sub>Intervalos bootstrap percentil de MCO y Theil-Sen</sub> |
+| <sub>`"elasticidad"`</sub> | <sub>Elasticidad γ del modelo log-log</sub> |
+| <sub>`"cobertura"`</sub> | <sub>Cobertura de cuotas de cada categoría</sub> |
 
 ```{r tablas, results='asis'}
 resultados(x)
@@ -529,30 +545,30 @@ Una cobertura cercana al 95 % indica que los intervalos son fiables bajo ese pos
 
 ## 13. Referencia de funciones
 
-| Función | Para qué sirve |
-|---|---|
-| `sov_demo()` | Recorrido guiado de todo el flujo |
-| `sov_asistente()` | Aplicación Shiny sin código |
-| `sov_plantilla()` | Crea un CSV de muestra compatible con Excel |
-| `sov_ejemplo()` | Ruta del CSV de ejemplo (Ad Age, 2019) |
-| `adage2019` | Datos reales de ejemplo |
-| `sov_lee()` | Lee un CSV (separador, decimal y codificación automáticos) |
-| `sov_prepara()` | Estandariza y valida los datos |
-| `sov_analiza()` | Análisis completo por categoría |
-| `sov_interpreta()` | Lectura en lenguaje llano |
-| `sov_tabla()` | Tablas de resultados (data.frame o HTML) |
-| `sov_grafico()`, `sov_grafico_bosque()`, `sov_mapa()`, `plot()` | Gráficos (ESOV por SOM, bosque de pendientes, mapa SOV–SOM) |
-| `sov_informe()` | Informe HTML autocontenido (incluye las dos guías) |
-| `sov_guia()` | Guía paso a paso: de las cuotas a la brecha de una marca (`"marca"`) o de los puntos a la recta (`"sector"`) |
-| `sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()` | Componentes del análisis con vectores |
-| `sov_postulados()` | Catálogo de postulados de simulación |
-| `sov_parametros()` | Parámetros y procedencia |
-| `sov_calibra()` | Calibración con datos reales |
-| `sov_simula()`, `sov_simula_dinamica()` | Generación de datos sintéticos |
-| `sov_efecto_esov()` | Efecto del ESOV sobre la variación de cuota (panel) |
-| `sov_valida_simulacion()` | Estudio de recuperación (sesgo, RMSE, cobertura) |
-| `sov_referencias()` | Bibliografía con estado de verificación |
-| `sov_glosario()` | Definición de términos |
+| <sub>Función</sub> | <sub>Para qué sirve</sub> |
+| :--- | :--- |
+| <sub>`sov_demo()`</sub> | <sub>Recorrido guiado de todo el flujo</sub> |
+| <sub>`sov_asistente()`</sub> | <sub>Aplicación Shiny sin código</sub> |
+| <sub>`sov_plantilla()`</sub> | <sub>Crea un CSV de muestra compatible con Excel</sub> |
+| <sub>`sov_ejemplo()`</sub> | <sub>Ruta del CSV de ejemplo (Ad Age, 2019)</sub> |
+| <sub>`adage2019`</sub> | <sub>Datos reales de ejemplo</sub> |
+| <sub>`sov_lee()`</sub> | <sub>Lee un CSV (separador, decimal y codificación automáticos)</sub> |
+| <sub>`sov_prepara()`</sub> | <sub>Estandariza y valida los datos</sub> |
+| <sub>`sov_analiza()`</sub> | <sub>Análisis completo por categoría</sub> |
+| <sub>`sov_interpreta()`</sub> | <sub>Lectura en lenguaje llano</sub> |
+| <sub>`sov_tabla()`</sub> | <sub>Tablas de resultados (data.frame o HTML)</sub> |
+| <sub>`sov_grafico()`, `sov_grafico_bosque()`, `sov_mapa()`, `plot()`</sub> | <sub>Gráficos (ESOV por SOM, bosque de pendientes, mapa SOV–SOM)</sub> |
+| <sub>`sov_informe()`</sub> | <sub>Informe HTML autocontenido (incluye las dos guías)</sub> |
+| <sub>`sov_guia()`</sub> | <sub>Guía paso a paso: de las cuotas a la brecha de una marca (`"marca"`) o de los puntos a la recta (`"sector"`)</sub> |
+| <sub>`sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()`</sub> | <sub>Componentes del análisis con vectores</sub> |
+| <sub>`sov_postulados()`</sub> | <sub>Catálogo de postulados de simulación</sub> |
+| <sub>`sov_parametros()`</sub> | <sub>Parámetros y procedencia</sub> |
+| <sub>`sov_calibra()`</sub> | <sub>Calibración con datos reales</sub> |
+| <sub>`sov_simula()`, `sov_simula_dinamica()`</sub> | <sub>Generación de datos sintéticos</sub> |
+| <sub>`sov_efecto_esov()`</sub> | <sub>Efecto del ESOV sobre la variación de cuota (panel)</sub> |
+| <sub>`sov_valida_simulacion()`</sub> | <sub>Estudio de recuperación (sesgo, RMSE, cobertura)</sub> |
+| <sub>`sov_referencias()`</sub> | <sub>Bibliografía con estado de verificación</sub> |
+| <sub>`sov_glosario()`</sub> | <sub>Definición de términos</sub> |
 
 La ayuda de cada función está disponible con `?sov_analiza`, `help(package = "mediaSOV")` y `vignette("primeros-pasos", "mediaSOV")` (si instaló las viñetas).
 
@@ -565,16 +581,16 @@ for (i in seq_len(nrow(r))) cat("- ", r$cita[i], " *[", r$verificacion[i], "]*\n
 
 ## 14. Solución de problemas
 
-| Síntoma | Causa probable | Solución |
-|---|---|---|
-| `no se puede abrir el URL` / error en `install_github` | Sin conexión o proxy | Descargue el ZIP (apartado 2.3) |
-| Error por Pandoc en `sov_informe()` | Pandoc no instalado | Use RStudio o instale Pandoc (https://pandoc.org/installing.html) |
-| `Falta el paquete 'shiny'` | Paquete opcional ausente | `install.packages("shiny")` |
-| «columna» no encontrada al leer | Nombres de columna no reconocidos | Renómbrelos (apartado 4.1) o use `sov_plantilla()` |
-| Cifras 100 veces menores o mayores | Cuotas en proporción (0–1) | Multiplique por 100 |
-| «menos de 4 marcas» | Categoría con pocas marcas | Se omite; añada marcas o agrupe categorías |
-| Acentos mal en consola de Windows | Codificación de la consola | El archivo se lee bien; use RStudio o `Sys.setlocale("LC_ALL", "es_ES.UTF-8")` |
-| Excel muestra todo en una columna | Separador distinto del configurado | Use la plantilla del paquete o *Datos → Texto en columnas* |
+| <sub>Síntoma</sub> | <sub>Causa probable</sub> | <sub>Solución</sub> |
+| :--- | :--- | :--- |
+| <sub>`no se puede abrir el URL` / error en `install_github`</sub> | <sub>Sin conexión o proxy</sub> | <sub>Descargue el ZIP (apartado 2.3)</sub> |
+| <sub>Error por Pandoc en `sov_informe()`</sub> | <sub>Pandoc no instalado</sub> | <sub>Use RStudio o instale Pandoc (https://pandoc.org/installing.html)</sub> |
+| <sub>`Falta el paquete 'shiny'`</sub> | <sub>Paquete opcional ausente</sub> | <sub>`install.packages("shiny")`</sub> |
+| <sub>«columna» no encontrada al leer</sub> | <sub>Nombres de columna no reconocidos</sub> | <sub>Renómbrelos (apartado 4.1) o use `sov_plantilla()`</sub> |
+| <sub>Cifras 100 veces menores o mayores</sub> | <sub>Cuotas en proporción (0–1)</sub> | <sub>Multiplique por 100</sub> |
+| <sub>«menos de 4 marcas»</sub> | <sub>Categoría con pocas marcas</sub> | <sub>Se omite; añada marcas o agrupe categorías</sub> |
+| <sub>Acentos mal en consola de Windows</sub> | <sub>Codificación de la consola</sub> | <sub>El archivo se lee bien; use RStudio o `Sys.setlocale("LC_ALL", "es_ES.UTF-8")`</sub> |
+| <sub>Excel muestra todo en una columna</sub> | <sub>Separador distinto del configurado</sub> | <sub>Use la plantilla del paquete o *Datos → Texto en columnas*</sub> |
 
 Si el problema persiste, abra una *issue* en https://github.com/majesus/mediaSOV/issues indicando la salida de `sessionInfo()` y un ejemplo mínimo reproducible.
 
