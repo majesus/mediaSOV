@@ -294,10 +294,15 @@ print.sov_datos <- function(x, ...) {
                  stringsAsFactors = FALSE)
     }))
     rownames(res) <- NULL
-    print(res, row.names = FALSE)
-    cat("(SOM_cubierta y SOV_cubierta: suma de las marcas incluidas, en %)\n")
+    names(res) <- c("Categor\u00eda", "Marcas", "SOM cubierta (%)", "SOV cubierta (%)")
+    res[3:4] <- lapply(res[3:4], fmt_es, d = 1)
+    .imprime_bloques(res)
+    cat("(Cobertura: suma de las cuotas de las marcas incluidas, en %)\n")
   } else if (nrow(nd)) {
-    print(utils::head(nd, 6), row.names = FALSE)
+    vista <- utils::head(nd[, c("sector", "marca", "periodo", "som", "sov", "esov")], 6)
+    vista[4:6] <- lapply(vista[4:6], fmt_es, d = 2)
+    names(vista) <- c("Categor\u00eda", "Marca", "Per\u00edodo", "SOM (%)", "SOV (%)", "ESOV (pp)")
+    .imprime_bloques(vista, claves = 1:3)
     cat("... (panel en formato largo: una fila por marca y per\u00edodo)\n")
   }
   invisible(x)

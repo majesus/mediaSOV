@@ -6,9 +6,10 @@ de mercado (SOM) en planificación de medios**, diseñado para usarse sin
 conocimientos avanzados de R y con el rigor metodológico que exige una
 publicación académica o un informe profesional.
 
-> Todas las salidas que aparecen en este documento se generan ejecutando
-> el código mostrado con la versión actual del paquete (`README.Rmd` se
-> compila con `knitr`).
+> Las cifras de las tablas proceden de los resultados ejecutados en la
+> versión anterior del README. El archivo [README.Rmd](README.Rmd)
+> permite regenerarlas con knitr; se ha renovado su presentación sin
+> cambiar las estimaciones.
 
 ## Índice
 
@@ -125,91 +126,24 @@ sov_demo()          # recorrido guiado con datos reales y sintéticos
 sov_asistente()     # aplicación en el navegador, sin escribir código
 ```
 
-El mismo análisis en cuatro líneas:
+El mismo análisis en dos pasos:
 
 ``` r
 x <- sov_analiza(adage2019, B = 300)   # B = remuestras bootstrap (más = más preciso y lento)
-x
-#> <sov_analisis> ESOV = alfa + beta * SOM  |  6 categorías, 54 marcas  |  IC 95 %  |  bootstrap B = 300
-#>  Categoría           n  β     IC 95 % de β   IC 95 % robusto (HC3) p     R²   β Theil-Sen
-#>  Automoción          10 −0,35 [−0,58; −0,12] [−0,65; −0,05]        0,007 0,61 −0,50      
-#>  Restauración        10 0,07  [−1,05; 1,18]  [−5,17; 5,30]         0,895 0,00 0,12       
-#>  Telefonía móvil     6  −0,64 [−1,25; −0,02] [−1,26; −0,02]        0,045 0,68 −0,52      
-#>  Tarjetas de crédito 8  −0,52 [−1,78; 0,74]  [−2,18; 1,15]         0,355 0,14 −0,66      
-#>  Cerveza             10 −0,05 [−0,28; 0,18]  [−0,50; 0,40]         0,635 0,03 0,09       
-#>  Bebidas             10 1,19  [0,55; 1,84]   [−0,06; 2,45]         0,003 0,69 1,36       
-#>  β al omitir cada marca Umbral SOM Lectura              
-#>  [−0,43; −0,29]         3,0 %      Economía de escala   
-#>  [−2,19; 0,26]          —          No distinguible de 0 
-#>  [−0,80; −0,50]         8,8 %      Economía de escala   
-#>  [−0,91; −0,07]         —          No distinguible de 0 
-#>  [−0,07; 0,14]          —          No distinguible de 0 
-#>  [1,15; 1,73]           —          Deseconomía de escala
-#> 
-#> Automoción (n = 10 marcas). La pendiente de ESOV sobre SOM es −0,35 (IC 95 %: [−0,58;
-#>   −0,12]; p = 0,007) y la recta explica el 61 % de la variabilidad (R² = 0,61). Las
-#>   marcas grandes invierten proporcionalmente menos que las pequeñas (economías de escala,
-#>   en el sentido de la curva de Jones); el valor de Jones (−0,38) cae dentro del
-#>   intervalo. Con Theil-Sen la pendiente es −0,50; al omitir cada marca por turno oscila
-#>   entre −0,43 y −0,29. El ESOV medio se anula cuando la cuota alcanza el 3,0 %: por
-#>   encima de ese umbral, las marcas invierten de media menos de lo que su cuota sugiere.
-#>   Marcas con alerta de influencia: Ford (I); Toyota (I); Chevrolet (I). Conviene
-#>   comprobar que sus datos son correctos y comparar la pendiente sin ellas (columna «beta
-#>   sin la marca»). En el bootstrap, la pendiente es negativa en el 100 % de las
-#>   remuestras.
-#> Restauración (n = 10 marcas). La pendiente de ESOV sobre SOM es 0,07 (IC 95 %: [−1,05;
-#>   1,18]; p = 0,895) y la recta explica el 0 % de la variabilidad (R² = 0,00). La
-#>   pendiente no se distingue de cero, de modo que el gasto en voz es aproximadamente
-#>   proporcional a la cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) cae dentro
-#>   del intervalo. Con Theil-Sen la pendiente es 0,12; al omitir cada marca por turno
-#>   oscila entre −2,19 y 0,26, y su signo cambia: el resultado depende de una sola marca y
-#>   debe tomarse con cautela. Marcas con alerta de influencia: McDonald's (P A I);
-#>   Starbucks (A). Conviene comprobar que sus datos son correctos y comparar la pendiente
-#>   sin ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en
-#>   el 41 % de las remuestras.
-#> Telefonía móvil (n = 6 marcas). La pendiente de ESOV sobre SOM es −0,64 (IC 95 %: [−1,25;
-#>   −0,02]; p = 0,045) y la recta explica el 68 % de la variabilidad (R² = 0,68). Las
-#>   marcas grandes invierten proporcionalmente menos que las pequeñas (economías de escala,
-#>   en el sentido de la curva de Jones); el valor de Jones (−0,38) cae dentro del
-#>   intervalo. Con Theil-Sen la pendiente es −0,52; al omitir cada marca por turno oscila
-#>   entre −0,80 y −0,50. El ESOV medio se anula cuando la cuota alcanza el 8,8 %: por
-#>   encima de ese umbral, las marcas invierten de media menos de lo que su cuota sugiere.
-#>   Marcas con alerta de influencia: T-Mobile US (A). Conviene comprobar que sus datos son
-#>   correctos y comparar la pendiente sin ellas (columna «beta sin la marca»). En el
-#>   bootstrap, la pendiente es negativa en el 91 % de las remuestras.
-#> Tarjetas de crédito (n = 8 marcas). La pendiente de ESOV sobre SOM es −0,52 (IC 95 %:
-#>   [−1,78; 0,74]; p = 0,355) y la recta explica el 14 % de la variabilidad (R² = 0,14). La
-#>   pendiente no se distingue de cero, de modo que el gasto en voz es aproximadamente
-#>   proporcional a la cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) cae dentro
-#>   del intervalo. Con Theil-Sen la pendiente es −0,66; al omitir cada marca por turno
-#>   oscila entre −0,91 y −0,07. Marcas con alerta de influencia: American Express (I);
-#>   Chase (I). Conviene comprobar que sus datos son correctos y comparar la pendiente sin
-#>   ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 85
-#>   % de las remuestras.
-#> Cerveza (n = 10 marcas). La pendiente de ESOV sobre SOM es −0,05 (IC 95 %: [−0,28; 0,18];
-#>   p = 0,635) y la recta explica el 3 % de la variabilidad (R² = 0,03). La pendiente no se
-#>   distingue de cero, de modo que el gasto en voz es aproximadamente proporcional a la
-#>   cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) queda fuera del intervalo. Con
-#>   Theil-Sen la pendiente es 0,09; al omitir cada marca por turno oscila entre −0,07 y
-#>   0,14, y su signo cambia: el resultado depende de una sola marca y debe tomarse con
-#>   cautela. Marcas con alerta de influencia: Anheuser-Busch InBev (P I); Constellation
-#>   Brands (A). Conviene comprobar que sus datos son correctos y comparar la pendiente sin
-#>   ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 70
-#>   % de las remuestras.
-#> Bebidas (n = 10 marcas). La pendiente de ESOV sobre SOM es 1,19 (IC 95 %: [0,55; 1,84]; p
-#>   = 0,003) y la recta explica el 69 % de la variabilidad (R² = 0,69). Las marcas grandes
-#>   invierten proporcionalmente más que las pequeñas (lo contrario de la curva de Jones);
-#>   el valor de Jones (−0,38) queda fuera del intervalo. Con Theil-Sen la pendiente es
-#>   1,36; al omitir cada marca por turno oscila entre 1,15 y 1,73. Marcas con alerta de
-#>   influencia: Coke (P I); Gatorade (A). Conviene comprobar que sus datos son correctos y
-#>   comparar la pendiente sin ellas (columna «beta sin la marca»). En el bootstrap, la
-#>   pendiente es negativa en el 0 % de las remuestras.
-#> Homogeneidad de pendientes entre categorías: F(5; 42) = 3,37, p = 0,012. Se rechaza que
-#>   la pendiente sea común: la relación entre cuota de mercado y exceso de voz difiere
-#>   entre categorías y no conviene resumirla con un único coeficiente global.
-#> 
-#> Siguientes pasos: sov_grafico(x) | sov_tabla(x, "influencia") | sov_informe(x)
+sov_tabla(x, "resultados")[, c(1, 2, 3, 4, 11)]
 ```
+
+| Categoría | n | β | IC 95 % de β | Lectura (MCO) |
+| --- | --- | --- | --- | --- |
+| Automoción | 10 | −0,35 | [−0,58; −0,12] | Economía de escala |
+| Restauración | 10 | 0,07 | [−1,05; 1,18] | No distinguible de 0 |
+| Telefonía móvil | 6 | −0,64 | [−1,25; −0,02] | Economía de escala |
+| Tarjetas de crédito | 8 | −0,52 | [−1,78; 0,74] | No distinguible de 0 |
+| Cerveza | 10 | −0,05 | [−0,28; 0,18] | No distinguible de 0 |
+| Bebidas | 10 | 1,19 | [0,55; 1,84] | Deseconomía de escala |
+
+**Lectura rápida:** 6 categorías y 54 marcas. Automoción y telefonía móvil presentan pendientes negativas cuyo IC clásico excluye cero. La sección 5 contrasta los resultados con HC3.
+
 
 ## 4. Sus propios datos
 
@@ -283,9 +217,9 @@ head(d, 3)
 p <- sov_prepara(d)      # datos estandarizados: caso, sector, marca, som, sov, esov...
 p
 #> <sov_datos> 6 filas, 1 categorías
-#>           categoria marcas SOM_cubierta SOV_cubierta
-#>  Categoría ficticia      6           92           93
-#> (SOM_cubierta y SOV_cubierta: suma de las marcas incluidas, en %)
+#>           Categoría Marcas SOM cubierta (%) SOV cubierta (%)
+#>  Categoría ficticia      6             92,0             93,0
+#> (Cobertura: suma de las cuotas de las marcas incluidas, en %)
 ```
 
 La salida de `sov_prepara()` resume, por categoría, el número de marcas
@@ -341,87 +275,33 @@ x <- sov_analiza(datos, nivel = 0.95, B = 2000, semilla = 2019,
 ### 5.1 Resumen
 
 ``` r
-x
-#> <sov_analisis> ESOV = alfa + beta * SOM  |  6 categorías, 54 marcas  |  IC 95 %  |  bootstrap B = 300
-#>  Categoría           n  β     IC 95 % de β   IC 95 % robusto (HC3) p     R²   β Theil-Sen
-#>  Automoción          10 −0,35 [−0,58; −0,12] [−0,65; −0,05]        0,007 0,61 −0,50      
-#>  Restauración        10 0,07  [−1,05; 1,18]  [−5,17; 5,30]         0,895 0,00 0,12       
-#>  Telefonía móvil     6  −0,64 [−1,25; −0,02] [−1,26; −0,02]        0,045 0,68 −0,52      
-#>  Tarjetas de crédito 8  −0,52 [−1,78; 0,74]  [−2,18; 1,15]         0,355 0,14 −0,66      
-#>  Cerveza             10 −0,05 [−0,28; 0,18]  [−0,50; 0,40]         0,635 0,03 0,09       
-#>  Bebidas             10 1,19  [0,55; 1,84]   [−0,06; 2,45]         0,003 0,69 1,36       
-#>  β al omitir cada marca Umbral SOM Lectura              
-#>  [−0,43; −0,29]         3,0 %      Economía de escala   
-#>  [−2,19; 0,26]          —          No distinguible de 0 
-#>  [−0,80; −0,50]         8,8 %      Economía de escala   
-#>  [−0,91; −0,07]         —          No distinguible de 0 
-#>  [−0,07; 0,14]          —          No distinguible de 0 
-#>  [1,15; 1,73]           —          Deseconomía de escala
-#> 
-#> Automoción (n = 10 marcas). La pendiente de ESOV sobre SOM es −0,35 (IC 95 %: [−0,58;
-#>   −0,12]; p = 0,007) y la recta explica el 61 % de la variabilidad (R² = 0,61). Las
-#>   marcas grandes invierten proporcionalmente menos que las pequeñas (economías de escala,
-#>   en el sentido de la curva de Jones); el valor de Jones (−0,38) cae dentro del
-#>   intervalo. Con Theil-Sen la pendiente es −0,50; al omitir cada marca por turno oscila
-#>   entre −0,43 y −0,29. El ESOV medio se anula cuando la cuota alcanza el 3,0 %: por
-#>   encima de ese umbral, las marcas invierten de media menos de lo que su cuota sugiere.
-#>   Marcas con alerta de influencia: Ford (I); Toyota (I); Chevrolet (I). Conviene
-#>   comprobar que sus datos son correctos y comparar la pendiente sin ellas (columna «beta
-#>   sin la marca»). En el bootstrap, la pendiente es negativa en el 100 % de las
-#>   remuestras.
-#> Restauración (n = 10 marcas). La pendiente de ESOV sobre SOM es 0,07 (IC 95 %: [−1,05;
-#>   1,18]; p = 0,895) y la recta explica el 0 % de la variabilidad (R² = 0,00). La
-#>   pendiente no se distingue de cero, de modo que el gasto en voz es aproximadamente
-#>   proporcional a la cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) cae dentro
-#>   del intervalo. Con Theil-Sen la pendiente es 0,12; al omitir cada marca por turno
-#>   oscila entre −2,19 y 0,26, y su signo cambia: el resultado depende de una sola marca y
-#>   debe tomarse con cautela. Marcas con alerta de influencia: McDonald's (P A I);
-#>   Starbucks (A). Conviene comprobar que sus datos son correctos y comparar la pendiente
-#>   sin ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en
-#>   el 41 % de las remuestras.
-#> Telefonía móvil (n = 6 marcas). La pendiente de ESOV sobre SOM es −0,64 (IC 95 %: [−1,25;
-#>   −0,02]; p = 0,045) y la recta explica el 68 % de la variabilidad (R² = 0,68). Las
-#>   marcas grandes invierten proporcionalmente menos que las pequeñas (economías de escala,
-#>   en el sentido de la curva de Jones); el valor de Jones (−0,38) cae dentro del
-#>   intervalo. Con Theil-Sen la pendiente es −0,52; al omitir cada marca por turno oscila
-#>   entre −0,80 y −0,50. El ESOV medio se anula cuando la cuota alcanza el 8,8 %: por
-#>   encima de ese umbral, las marcas invierten de media menos de lo que su cuota sugiere.
-#>   Marcas con alerta de influencia: T-Mobile US (A). Conviene comprobar que sus datos son
-#>   correctos y comparar la pendiente sin ellas (columna «beta sin la marca»). En el
-#>   bootstrap, la pendiente es negativa en el 91 % de las remuestras.
-#> Tarjetas de crédito (n = 8 marcas). La pendiente de ESOV sobre SOM es −0,52 (IC 95 %:
-#>   [−1,78; 0,74]; p = 0,355) y la recta explica el 14 % de la variabilidad (R² = 0,14). La
-#>   pendiente no se distingue de cero, de modo que el gasto en voz es aproximadamente
-#>   proporcional a la cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) cae dentro
-#>   del intervalo. Con Theil-Sen la pendiente es −0,66; al omitir cada marca por turno
-#>   oscila entre −0,91 y −0,07. Marcas con alerta de influencia: American Express (I);
-#>   Chase (I). Conviene comprobar que sus datos son correctos y comparar la pendiente sin
-#>   ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 85
-#>   % de las remuestras.
-#> Cerveza (n = 10 marcas). La pendiente de ESOV sobre SOM es −0,05 (IC 95 %: [−0,28; 0,18];
-#>   p = 0,635) y la recta explica el 3 % de la variabilidad (R² = 0,03). La pendiente no se
-#>   distingue de cero, de modo que el gasto en voz es aproximadamente proporcional a la
-#>   cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) queda fuera del intervalo. Con
-#>   Theil-Sen la pendiente es 0,09; al omitir cada marca por turno oscila entre −0,07 y
-#>   0,14, y su signo cambia: el resultado depende de una sola marca y debe tomarse con
-#>   cautela. Marcas con alerta de influencia: Anheuser-Busch InBev (P I); Constellation
-#>   Brands (A). Conviene comprobar que sus datos son correctos y comparar la pendiente sin
-#>   ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 70
-#>   % de las remuestras.
-#> Bebidas (n = 10 marcas). La pendiente de ESOV sobre SOM es 1,19 (IC 95 %: [0,55; 1,84]; p
-#>   = 0,003) y la recta explica el 69 % de la variabilidad (R² = 0,69). Las marcas grandes
-#>   invierten proporcionalmente más que las pequeñas (lo contrario de la curva de Jones);
-#>   el valor de Jones (−0,38) queda fuera del intervalo. Con Theil-Sen la pendiente es
-#>   1,36; al omitir cada marca por turno oscila entre 1,15 y 1,73. Marcas con alerta de
-#>   influencia: Coke (P I); Gatorade (A). Conviene comprobar que sus datos son correctos y
-#>   comparar la pendiente sin ellas (columna «beta sin la marca»). En el bootstrap, la
-#>   pendiente es negativa en el 0 % de las remuestras.
-#> Homogeneidad de pendientes entre categorías: F(5; 42) = 3,37, p = 0,012. Se rechaza que
-#>   la pendiente sea común: la relación entre cuota de mercado y exceso de voz difiere
-#>   entre categorías y no conviene resumirla con un único coeficiente global.
-#> 
-#> Siguientes pasos: sov_grafico(x) | sov_tabla(x, "influencia") | sov_informe(x)
+sov_tabla(x, "resultados")
 ```
+
+**Estimación e inferencia clásica**
+
+| Categoría | n | β | IC 95 % de β | p | R² | Lectura (MCO) |
+| --- | --- | --- | --- | --- | --- | --- |
+| Automoción | 10 | −0,35 | [−0,58; −0,12] | 0,007 | 0,61 | Economía de escala |
+| Restauración | 10 | 0,07 | [−1,05; 1,18] | 0,895 | 0,00 | No distinguible de 0 |
+| Telefonía móvil | 6 | −0,64 | [−1,25; −0,02] | 0,045 | 0,68 | Economía de escala |
+| Tarjetas de crédito | 8 | −0,52 | [−1,78; 0,74] | 0,355 | 0,14 | No distinguible de 0 |
+| Cerveza | 10 | −0,05 | [−0,28; 0,18] | 0,635 | 0,03 | No distinguible de 0 |
+| Bebidas | 10 | 1,19 | [0,55; 1,84] | 0,003 | 0,69 | Deseconomía de escala |
+
+**Robustez y sensibilidad**
+
+| Categoría | IC 95 % robusto (HC3) | β Theil-Sen | β al omitir cada marca | Umbral SOM |
+| --- | --- | --- | --- | --- |
+| Automoción | [−0,65; −0,05] | −0,50 | [−0,43; −0,29] | 3,0 % |
+| Restauración | [−5,17; 5,30] | 0,12 | [−2,19; 0,26] | — |
+| Telefonía móvil | [−1,26; −0,02] | −0,52 | [−0,80; −0,50] | 8,8 % |
+| Tarjetas de crédito | [−2,18; 1,15] | −0,66 | [−0,91; −0,07] | — |
+| Cerveza | [−0,50; 0,40] | 0,09 | [−0,07; 0,14] | — |
+| Bebidas | [−0,06; 2,45] | 1,36 | [1,15; 1,73] | — |
+
+**Cómo leerlo.** Compare el IC clásico y HC3 antes de concluir. En Bebidas, el intervalo clásico excluye cero, pero el robusto lo incluye.
+
 
 ### 5.2 Lectura en lenguaje llano
 
@@ -430,10 +310,11 @@ coeficientes, cuán robustos son y qué marcas revisar:
 
 ``` r
 cat(sov_interpreta(x)[1:2], sep = "\n\n")
-#> Automoción (n = 10 marcas). La pendiente de ESOV sobre SOM es −0,35 (IC 95 %: [−0,58; −0,12]; p = 0,007) y la recta explica el 61 % de la variabilidad (R² = 0,61). Las marcas grandes invierten proporcionalmente menos que las pequeñas (economías de escala, en el sentido de la curva de Jones); el valor de Jones (−0,38) cae dentro del intervalo. Con Theil-Sen la pendiente es −0,50; al omitir cada marca por turno oscila entre −0,43 y −0,29. El ESOV medio se anula cuando la cuota alcanza el 3,0 %: por encima de ese umbral, las marcas invierten de media menos de lo que su cuota sugiere. Marcas con alerta de influencia: Ford (I); Toyota (I); Chevrolet (I). Conviene comprobar que sus datos son correctos y comparar la pendiente sin ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 100 % de las remuestras.
-#> 
-#> Restauración (n = 10 marcas). La pendiente de ESOV sobre SOM es 0,07 (IC 95 %: [−1,05; 1,18]; p = 0,895) y la recta explica el 0 % de la variabilidad (R² = 0,00). La pendiente no se distingue de cero, de modo que el gasto en voz es aproximadamente proporcional a la cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) cae dentro del intervalo. Con Theil-Sen la pendiente es 0,12; al omitir cada marca por turno oscila entre −2,19 y 0,26, y su signo cambia: el resultado depende de una sola marca y debe tomarse con cautela. Marcas con alerta de influencia: McDonald's (P A I); Starbucks (A). Conviene comprobar que sus datos son correctos y comparar la pendiente sin ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 41 % de las remuestras.
 ```
+**Automoción** (n = 10 marcas). La pendiente de ESOV sobre SOM es −0,35 (IC 95 %: [−0,58; −0,12]; p = 0,007) y la recta explica el 61 % de la variabilidad (R² = 0,61). Las marcas grandes invierten proporcionalmente menos que las pequeñas (economías de escala, en el sentido de la curva de Jones); el valor de Jones (−0,38) cae dentro del intervalo. Con Theil-Sen la pendiente es −0,50; al omitir cada marca por turno oscila entre −0,43 y −0,29. El ESOV medio se anula cuando la cuota alcanza el 3,0 %: por encima de ese umbral, las marcas invierten de media menos de lo que su cuota sugiere. Marcas con alerta de influencia: Ford (I); Toyota (I); Chevrolet (I). Conviene comprobar que sus datos son correctos y comparar la pendiente sin ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 100 % de las remuestras.
+
+**Restauración** (n = 10 marcas). La pendiente de ESOV sobre SOM es 0,07 (IC 95 %: [−1,05; 1,18]; p = 0,895) y la recta explica el 0 % de la variabilidad (R² = 0,00). La pendiente no se distingue de cero, de modo que el gasto en voz es aproximadamente proporcional a la cuota (SOV ≈ SOM + constante); el valor de Jones (−0,38) cae dentro del intervalo. Con Theil-Sen la pendiente es 0,12; al omitir cada marca por turno oscila entre −2,19 y 0,26, y su signo cambia: el resultado depende de una sola marca y debe tomarse con cautela. Marcas con alerta de influencia: McDonald's (P A I); Starbucks (A). Conviene comprobar que sus datos son correctos y comparar la pendiente sin ellas (columna «beta sin la marca»). En el bootstrap, la pendiente es negativa en el 41 % de las remuestras.
+
 
 ### 5.3 Cómo acceder a los resultados numéricos
 
@@ -441,33 +322,23 @@ El objeto `x` es una lista; cada categoría está en `x$sectores`:
 
 ``` r
 names(x$sectores)
-#> [1] "auto_marcas"  "restaurantes" "telefonia"    "tarjetas"     "cerveza"      "bebidas"
 a <- x$sectores$auto_marcas$ajuste
 a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc3")]
-#> $n
-#> [1] 10
-#> 
-#> $alfa
-#> [1] 1.061521
-#> 
-#> $beta
-#> [1] -0.3498058
-#> 
-#> $ic_beta
-#> [1] -0.5762806 -0.1233310
-#> 
-#> $p_beta
-#> [1] 0.007381539
-#> 
-#> $r2
-#> [1] 0.6132703
-#> 
-#> $ts_beta
-#> [1] -0.5032545
-#> 
-#> $ic_beta_hc3
-#> [1] -0.64824020 -0.05137132
 ```
+
+**Categorías disponibles:** `auto_marcas`, `restaurantes`, `telefonia`, `tarjetas`, `cerveza`, `bebidas`.
+
+| Campo | Valor (sin editar) |
+| --- | --- |
+| n | 10 |
+| alfa | 1.061521 |
+| beta | -0.3498058 |
+| ic_beta | -0.5762806 -0.1233310 |
+| p_beta | 0.007381539 |
+| r2 | 0.6132703 |
+| ts_beta | -0.5032545 |
+| ic_beta_hc3 | -0.64824020 -0.05137132 |
+
 
 ## 6. Tablas
 
@@ -485,67 +356,95 @@ como HTML autocontenido (`formato = "html"`) para pegar en un documento:
 | `"cobertura"`   | Cobertura de cuotas de cada categoría                                                    |
 
 ``` r
-sov_tabla(x, "resultados")
-#>             Categoría  n     β   IC 95 % de β IC 95 % robusto (HC3)     p   R² β Theil-Sen
-#> 1          Automoción 10 −0,35 [−0,58; −0,12]        [−0,65; −0,05] 0,007 0,61       −0,50
-#> 2        Restauración 10  0,07  [−1,05; 1,18]         [−5,17; 5,30] 0,895 0,00        0,12
-#> 3     Telefonía móvil  6 −0,64 [−1,25; −0,02]        [−1,26; −0,02] 0,045 0,68       −0,52
-#> 4 Tarjetas de crédito  8 −0,52  [−1,78; 0,74]         [−2,18; 1,15] 0,355 0,14       −0,66
-#> 5             Cerveza 10 −0,05  [−0,28; 0,18]         [−0,50; 0,40] 0,635 0,03        0,09
-#> 6             Bebidas 10  1,19   [0,55; 1,84]         [−0,06; 2,45] 0,003 0,69        1,36
-#>   β al omitir cada marca Umbral SOM               Lectura
-#> 1         [−0,43; −0,29]      3,0 %    Economía de escala
-#> 2          [−2,19; 0,26]          —  No distinguible de 0
-#> 3         [−0,80; −0,50]      8,8 %    Economía de escala
-#> 4         [−0,91; −0,07]          —  No distinguible de 0
-#> 5          [−0,07; 0,14]          —  No distinguible de 0
-#> 6           [1,15; 1,73]          — Deseconomía de escala
+t <- sov_tabla(x, "resultados")
+t[, c(1, 2, 3, 4, 6, 7, 11)]
+t[, c(1, 5, 8, 9, 10)]
 ```
+
+**Estimación e inferencia clásica**
+
+| Categoría | n | β | IC 95 % de β | p | R² | Lectura (MCO) |
+| --- | --- | --- | --- | --- | --- | --- |
+| Automoción | 10 | −0,35 | [−0,58; −0,12] | 0,007 | 0,61 | Economía de escala |
+| Restauración | 10 | 0,07 | [−1,05; 1,18] | 0,895 | 0,00 | No distinguible de 0 |
+| Telefonía móvil | 6 | −0,64 | [−1,25; −0,02] | 0,045 | 0,68 | Economía de escala |
+| Tarjetas de crédito | 8 | −0,52 | [−1,78; 0,74] | 0,355 | 0,14 | No distinguible de 0 |
+| Cerveza | 10 | −0,05 | [−0,28; 0,18] | 0,635 | 0,03 | No distinguible de 0 |
+| Bebidas | 10 | 1,19 | [0,55; 1,84] | 0,003 | 0,69 | Deseconomía de escala |
+
+**Robustez y sensibilidad**
+
+| Categoría | IC 95 % robusto (HC3) | β Theil-Sen | β al omitir cada marca | Umbral SOM |
+| --- | --- | --- | --- | --- |
+| Automoción | [−0,65; −0,05] | −0,50 | [−0,43; −0,29] | 3,0 % |
+| Restauración | [−5,17; 5,30] | 0,12 | [−2,19; 0,26] | — |
+| Telefonía móvil | [−1,26; −0,02] | −0,52 | [−0,80; −0,50] | 8,8 % |
+| Tarjetas de crédito | [−2,18; 1,15] | −0,66 | [−0,91; −0,07] | — |
+| Cerveza | [−0,50; 0,40] | 0,09 | [−0,07; 0,14] | — |
+| Bebidas | [−0,06; 2,45] | 1,36 | [1,15; 1,73] | — |
+
 
 ``` r
 sov_tabla(x, "influencia", categoria = "restaurantes")
-#>       Categoría       Marca SOM (%) SOV (%) ESOV (pp) Palanca    t*  Cook DFBETAS β sin la marca
-#> 1  Restauración  McDonald's     7,0    11,3      +4,3    0,89  2,10 12,31    5,58          −2,19
-#> 2  Restauración   Starbucks     3,3     1,2      −2,1    0,14 −2,55  0,30   −0,52           0,26
-#> 3  Restauración      Subway     2,0     5,7      +3,7    0,10  0,49  0,02   −0,03           0,08
-#> 4  Restauración   Taco Bell     1,8     6,9      +5,1    0,11  1,13  0,08   −0,11           0,12
-#> 5  Restauración Burger King     1,8     5,6      +3,8    0,11  0,54  0,02   −0,05           0,09
-#> 6  Restauración     Wendy's     1,7     4,2      +2,5    0,11  0,04  0,00    0,00           0,07
-#> 7  Restauración Chick-fil-A     1,7     1,2      −0,5    0,11 −1,28  0,10    0,15          −0,01
-#> 8  Restauración     Dunkin'     1,6     2,4      +0,8    0,12 −0,68  0,03    0,10           0,02
-#> 9  Restauración    Domino's     1,1     6,0      +4,9    0,15  1,05  0,10   −0,26           0,19
-#> 10 Restauración   Pizza Hut     1,0     3,4      +2,4    0,16 −0,02  0,00    0,00           0,06
-#>    Alerta
-#> 1   P A I
-#> 2       A
-#> 3       —
-#> 4       —
-#> 5       —
-#> 6       —
-#> 7       —
-#> 8       —
-#> 9       —
-#> 10      —
 ```
+
+**Restauración · cuotas y diagnóstico**
+
+| Marca | SOM (%) | SOV (%) | ESOV (pp) | Alerta |
+| --- | --- | --- | --- | --- |
+| McDonald's | 7,0 | 11,3 | +4,3 | P A I |
+| Starbucks | 3,3 | 1,2 | −2,1 | A |
+| Subway | 2,0 | 5,7 | +3,7 | — |
+| Taco Bell | 1,8 | 6,9 | +5,1 | — |
+| Burger King | 1,8 | 5,6 | +3,8 | — |
+| Wendy's | 1,7 | 4,2 | +2,5 | — |
+| Chick-fil-A | 1,7 | 1,2 | −0,5 | — |
+| Dunkin' | 1,6 | 2,4 | +0,8 | — |
+| Domino's | 1,1 | 6,0 | +4,9 | — |
+| Pizza Hut | 1,0 | 3,4 | +2,4 | — |
+
+**Restauración · influencia y sensibilidad**
+
+| Marca | Palanca | t* | Cook | DFBETAS | β sin la marca |
+| --- | --- | --- | --- | --- | --- |
+| McDonald's | 0,89 | 2,10 | 12,31 | 5,58 | −2,19 |
+| Starbucks | 0,14 | −2,55 | 0,30 | −0,52 | 0,26 |
+| Subway | 0,10 | 0,49 | 0,02 | −0,03 | 0,08 |
+| Taco Bell | 0,11 | 1,13 | 0,08 | −0,11 | 0,12 |
+| Burger King | 0,11 | 0,54 | 0,02 | −0,05 | 0,09 |
+| Wendy's | 0,11 | 0,04 | 0,00 | 0,00 | 0,07 |
+| Chick-fil-A | 0,11 | −1,28 | 0,10 | 0,15 | −0,01 |
+| Dunkin' | 0,12 | −0,68 | 0,03 | 0,10 | 0,02 |
+| Domino's | 0,15 | 1,05 | 0,10 | −0,26 | 0,19 |
+| Pizza Hut | 0,16 | −0,02 | 0,00 | 0,00 | 0,06 |
+
+P = palanca alta; A = atípico; I = influyente. — = sin alerta.
+
 
 ``` r
 sov_tabla(x, "formas", categoria = "auto_marcas")
-#>    Categoría      Forma RMSE (validación cruzada) ΔAICc vs. lineal Mejor en
-#> 1 Automoción     Lineal                      1,43              0,0        —
-#> 2 Automoción     ln SOM                      1,27             −2,3     AICc
-#> 3 Automoción Cuadrática                      1,21             +1,8     RMSE
 ```
+
+| Categoría | Forma | RMSE CV | ΔAICc | Mejor en |
+| --- | --- | --- | --- | --- |
+| Automoción | Lineal | 1,43 | 0,0 | — |
+| Automoción | ln SOM | 1,27 | −2,3 | AICc |
+| Automoción | Cuadrática | 1,21 | +1,8 | RMSE |
+
 
 ``` r
 sov_tabla(x, "elasticidad")
-#>             Categoría  n     γ  IC 95 % de γ p (γ = 1)                        Lectura
-#> 1          Automoción 10  0,71  [0,44; 0,99]     0,044             Economía de escala
-#> 2        Restauración 10  0,28 [−0,80; 1,36]     0,161 No distinguible de 1 (paridad)
-#> 3     Telefonía móvil  6  0,93  [0,39; 1,47]     0,729 No distinguible de 1 (paridad)
-#> 4 Tarjetas de crédito  6 −0,13 [−2,37; 2,11]     0,233 No distinguible de 1 (paridad)
-#> 5             Cerveza 10  1,46  [0,64; 2,29]     0,231 No distinguible de 1 (paridad)
-#> 6             Bebidas 10  3,19  [0,78; 5,60]     0,069 No distinguible de 1 (paridad)
 ```
+
+| Categoría | n | γ | IC 95 % de γ | p (γ = 1) | Lectura |
+| --- | --- | --- | --- | --- | --- |
+| Automoción | 10 | 0,71 | [0,44; 0,99] | 0,044 | Economía de escala |
+| Restauración | 10 | 0,28 | [−0,80; 1,36] | 0,161 | No distinguible de 1 (paridad) |
+| Telefonía móvil | 6 | 0,93 | [0,39; 1,47] | 0,729 | No distinguible de 1 (paridad) |
+| Tarjetas de crédito | 6 | −0,13 | [−2,37; 2,11] | 0,233 | No distinguible de 1 (paridad) |
+| Cerveza | 10 | 1,46 | [0,64; 2,29] | 0,231 | No distinguible de 1 (paridad) |
+| Bebidas | 10 | 3,19 | [0,78; 5,60] | 0,069 | No distinguible de 1 (paridad) |
+
 
 ``` r
 sov_tabla(x, "resultados", formato = "html")   # cadena HTML
@@ -629,123 +528,121 @@ som <- z$som; sov <- z$sov; esov <- z$esov; marca <- z$marca
 
 ``` r
 a <- sov_ajusta(som, esov)
-round(c(beta = a$beta, se = a$se_beta, p = a$p_beta, se_HC3 = a$se_beta_hc3, p_HC3 = a$p_beta_hc3), 4)
-#>    beta      se       p  se_HC3   p_HC3 
-#> -0.3498  0.0982  0.0074  0.1294  0.0270
-a$ic_beta; a$ic_beta_hc3
-#> [1] -0.5762806 -0.1233310
-#> [1] -0.64824020 -0.05137132
 ```
+
+| Método | β | EE | p | IC 95 % |
+| --- | --- | --- | --- | --- |
+| MCO | −0,3498 | 0,0982 | 0,0074 | [−0,5763; −0,1233] |
+| MCO + HC3 | −0,3498 | 0,1294 | 0,0270 | [−0,6482; −0,0514] |
+
 
 **Estimador de Theil-Sen** (mediana de las pendientes por pares; poco
 sensible a extremos):
 
 ``` r
 sov_theil_sen(som, esov)
-#>       alfa       beta 
-#>  1.7180541 -0.5032545
 ```
+
+| Intercepto α | Pendiente β |
+| --- | --- |
+| 1,7181 | −0,5033 |
+
 
 **Influencia** (palanca, t\* estudentizado, Cook, DFBETAS, β al omitir
 la marca):
 
 ``` r
-sov_influencia(som, esov, marca, sov)
-#>        marca  som       sov        esov     residuo   palanca      t_stud         cook     dfbetas
-#> 1       Ford 14.3 11.485098 -2.81490236  1.12579863 0.3908188  1.19137830 0.4326215413  0.82316654
-#> 2     Toyota 12.3  7.451182 -4.84881809 -1.60772862 0.2452606 -1.63971464 0.3607143466 -0.71935570
-#> 3  Chevrolet 12.0 10.495889 -1.50411100  1.63203674 0.2277411  1.64776282 0.3296701299  0.67016008
-#> 4      Honda  8.6  4.971737 -3.62826310 -1.68145496 0.1078431 -1.55517462 0.1241608633 -0.14581542
-#> 5     Nissan  8.4  6.025180 -2.37482014 -0.49797315 0.1052921 -0.40102250 0.0105718102 -0.03084202
-#> 6       Jeep  4.8  3.725591 -1.07440904 -0.45686279 0.1449080 -0.37582742 0.0134073296  0.08612787
-#> 7    Hyundai  3.9  3.301644 -0.59835560 -0.29563454 0.1801346 -0.24696696 0.0075914787  0.07721070
-#> 8     Subaru  3.8  3.622816 -0.17718397  0.09055652 0.1846739  0.07556178 0.0007383909 -0.02435069
-#> 9        Kia  3.4  4.830421  1.43042138  1.55823956 0.2040816  1.51610945 0.2535359179 -0.54825593
-#> 10       GMC  3.3  3.340185  0.04018499  0.13302260 0.2092462  0.11276388 0.0019192434 -0.04191336
-#>      beta_sin  alfa_sin alerta_P alerta_A alerta_I alerta
-#> 1  -0.4286105 1.4661757    FALSE    FALSE     TRUE      I
-#> 2  -0.2856085 0.7943436    FALSE    FALSE     TRUE      I
-#> 3  -0.4095312 1.2969347    FALSE    FALSE     TRUE      I
-#> 4  -0.3366075 1.1512694    FALSE    FALSE    FALSE       
-#> 5  -0.3466042 1.0932311    FALSE    FALSE    FALSE       
-#> 6  -0.3587586 1.1819172    FALSE    FALSE    FALSE       
-#> 7  -0.3578772 1.1579545    FALSE    FALSE    FALSE       
-#> 8  -0.3472502 1.0312989    FALSE    FALSE    FALSE       
-#> 9  -0.2998622 0.4921646    FALSE    FALSE    FALSE       
-#> 10 -0.3454092 1.0118128    FALSE    FALSE    FALSE
+i <- sov_influencia(som, esov, marca, sov)
 ```
+
+| Marca | SOM (%) | SOV (%) | ESOV (pp) | Residuo |
+| --- | --- | --- | --- | --- |
+| Ford | 14,30 | 11,49 | −2,81 | 1,13 |
+| Toyota | 12,30 | 7,45 | −4,85 | −1,61 |
+| Chevrolet | 12,00 | 10,50 | −1,50 | 1,63 |
+| Honda | 8,60 | 4,97 | −3,63 | −1,68 |
+| Nissan | 8,40 | 6,03 | −2,37 | −0,50 |
+| Jeep | 4,80 | 3,73 | −1,07 | −0,46 |
+| Hyundai | 3,90 | 3,30 | −0,60 | −0,30 |
+| Subaru | 3,80 | 3,62 | −0,18 | 0,09 |
+| Kia | 3,40 | 4,83 | 1,43 | 1,56 |
+| GMC | 3,30 | 3,34 | 0,04 | 0,13 |
+
+
+| Marca | Palanca | t* | Cook | DFBETAS | β sin marca | Alerta |
+| --- | --- | --- | --- | --- | --- | --- |
+| Ford | 0,391 | 1,191 | 0,433 | 0,823 | −0,429 | I |
+| Toyota | 0,245 | −1,640 | 0,361 | −0,719 | −0,286 | I |
+| Chevrolet | 0,228 | 1,648 | 0,330 | 0,670 | −0,410 | I |
+| Honda | 0,108 | −1,555 | 0,124 | −0,146 | −0,337 | — |
+| Nissan | 0,105 | −0,401 | 0,011 | −0,031 | −0,347 | — |
+| Jeep | 0,145 | −0,376 | 0,013 | 0,086 | −0,359 | — |
+| Hyundai | 0,180 | −0,247 | 0,008 | 0,077 | −0,358 | — |
+| Subaru | 0,185 | 0,076 | 0,001 | −0,024 | −0,347 | — |
+| Kia | 0,204 | 1,516 | 0,254 | −0,548 | −0,300 | — |
+| GMC | 0,209 | 0,113 | 0,002 | −0,042 | −0,345 | — |
+
 
 **Bootstrap de pares** (no supone normalidad):
 
 ``` r
 b <- sov_bootstrap(som, esov, B = 500, semilla = 1)
-b$ols     # IC percentil de la pendiente por MCO
-#> [1] -0.6991944 -0.1902591
-b$ts      # IC percentil de Theil-Sen
-#> [1] -0.7430627 -0.2241552
 ```
+
+| Método | IC 95 % percentil |
+| --- | --- |
+| MCO | [−0,6992; −0,1903] |
+| Theil-Sen | [−0,7431; −0,2242] |
+
 
 **Formas funcionales alternativas** (lineal, ln SOM, cuadrática), con
 RMSE de validación cruzada dejando una marca fuera (PRESS) y AICc:
 
 ``` r
 sov_formas(som, esov)
-#>        forma k  rmse_cv     aicc delta_aicc mejor_rmse mejor_aicc
-#> 1     Lineal 3 1.434227 40.48232   0.000000      FALSE      FALSE
-#> 2     ln SOM 3 1.270220 38.13676  -2.345556      FALSE       TRUE
-#> 3 Cuadrática 4 1.209555 42.27150   1.789183       TRUE      FALSE
 ```
+
+| Forma | k | RMSE CV | AICc | ΔAICc | Mejor RMSE | Mejor AICc |
+| --- | --- | --- | --- | --- | --- | --- |
+| Lineal | 3 | 1,43 | 40,48 | 0,00 | — | — |
+| ln SOM | 3 | 1,27 | 38,14 | −2,35 | — | Sí |
+| Cuadrática | 4 | 1,21 | 42,27 | 1,79 | Sí | — |
+
 
 **Elasticidad** (modelo log-log, SOV = c · SOM<sup>γ</sup>; γ \< 1
 indica economías de escala):
 
 ``` r
 sov_elasticidad(som, sov)
-#> $n
-#> [1] 10
-#> 
-#> $gamma
-#> [1] 0.7131474
-#> 
-#> $se
-#> [1] 0.1202583
-#> 
-#> $ic
-#> [1] 0.4358312 0.9904635
-#> 
-#> $p_igual1
-#> [1] 0.04417841
-#> 
-#> $excluidas
-#> [1] 0
 ```
+
+| Indicador | Valor |
+| --- | --- |
+| n | 10 |
+| gamma | 0,7131474 |
+| se | 0,1202583 |
+| ic | 0,4358312; 0,9904635 |
+| p_igual1 | 0,04417841 |
+| excluidas | 0 |
+
 
 **Homogeneidad de pendientes** entre categorías (contraste F de
 pendientes comunes):
 
 ``` r
 sov_heterogeneidad(x$datos)
-#> $F
-#> [1] 3.372421
-#> 
-#> $gl1
-#> [1] 5
-#> 
-#> $gl2
-#> [1] 42
-#> 
-#> $p
-#> [1] 0.01191121
-#> 
-#> $beta_comun
-#> [1] -0.2473603
-#> 
-#> $n
-#> [1] 54
-#> 
-#> $casos
-#> [1] 6
 ```
+
+| Indicador | Valor |
+| --- | --- |
+| F | 3,372421 |
+| gl1 | 5 |
+| gl2 | 42 |
+| p | 0,01191121 |
+| beta_comun | −0,2473603 |
+| n | 54 |
+| casos | 6 |
+
 
 ## 9. Informe HTML y asistente interactivo
 
@@ -819,13 +716,13 @@ descarga del informe HTML. Requiere `shiny`.
 
 ``` r
 sov_glosario("beta")
-#>                       termino
-#> 1            beta (pendiente)
-#> 2 Distancia de Cook / DFBETAS
-#>                                                                                                                          definicion
-#> 1 Cambio medio del ESOV por cada punto porcentual adicional de SOM. Negativo: las marcas grandes invierten proporcionalmente menos.
-#> 2                                                                      Medidas de cuánto cambia la pendiente si se omite una marca.
 ```
+
+| Término | Definición |
+| --- | --- |
+| beta (pendiente) | Cambio medio del ESOV por cada punto porcentual adicional de SOM. Negativo: las marcas grandes invierten proporcionalmente menos. |
+| Distancia de Cook / DFBETAS | Medidas de cuánto cambia la pendiente si se omite una marca. |
+
 
 ## 10. Datos sintéticos
 
@@ -837,49 +734,38 @@ sov_glosario("beta")
 ### 10.1 Postulados disponibles
 
 ``` r
-sov_postulados()[, c("id", "nombre", "tipo")]
-#>                  id                                   nombre     tipo
-#> 1      jones_lineal                  Curva de Jones (lineal) estático
-#> 2           paridad                      Paridad (SOV = SOM) estático
-#> 3 jones_heterogeneo Curva de Jones heterogénea por categoría estático
-#> 4          potencia                          Ley de potencia estático
-#> 5        curvilinea             Curvilínea (ESOV cuadrático) estático
-#> 6        equilibrio                     Equilibrio de cuotas dinámico
-#> 7       elasticidad               Elasticidad de largo plazo dinámico
-sov_postulados()[, c("id", "formulacion")]
-#>                  id
-#> 1      jones_lineal
-#> 2           paridad
-#> 3 jones_heterogeneo
-#> 4          potencia
-#> 5        curvilinea
-#> 6        equilibrio
-#> 7       elasticidad
-#>                                                                                  formulacion
-#> 1 ESOV = beta (SOM - media): las marcas pequeñas invierten proporcionalmente más si beta < 0
-#> 2                         ESOV = 0 salvo ruido: cada marca invierte en proporción a su cuota
-#> 3                  Como jones_lineal, con beta_c ~ N(beta, tau^2) distinto en cada categoría
-#> 4        SOV proporcional a SOM^gamma: gamma < 1 economías de escala, gamma > 1 deseconomías
-#> 5    ESOV = beta z + delta (z^2 - media(z^2)), z = SOM - media: efecto no lineal de la cuota
-#> 6            d ln SOM = eta ln(SOV/SOM) + u con eta = 0: el exceso de voz no cambia la cuota
-#> 7          d ln SOM = eta ln(SOV/SOM) + u con eta > 0: el exceso de voz hace crecer la cuota
+sov_postulados()[, c("id", "nombre", "tipo", "formulacion")]
 ```
+
+| ID | Postulado | Tipo | Formulación |
+| --- | --- | --- | --- |
+| jones_lineal | Curva de Jones (lineal) | estático | ESOV = beta (SOM - media): las marcas pequeñas invierten proporcionalmente más si beta < 0 |
+| paridad | Paridad (SOV = SOM) | estático | ESOV = 0 salvo ruido: cada marca invierte en proporción a su cuota |
+| jones_heterogeneo | Curva de Jones heterogénea por categoría | estático | Como jones_lineal, con beta_c ~ N(beta, tau^2) distinto en cada categoría |
+| potencia | Ley de potencia | estático | SOV proporcional a SOM^gamma: gamma < 1 economías de escala, gamma > 1 deseconomías |
+| curvilinea | Curvilínea (ESOV cuadrático) | estático | ESOV = beta z + delta (z^2 - media(z^2)), z = SOM - media: efecto no lineal de la cuota |
+| equilibrio | Equilibrio de cuotas | dinámico | d ln SOM = eta ln(SOV/SOM) + u con eta = 0: el exceso de voz no cambia la cuota |
+| elasticidad | Elasticidad de largo plazo | dinámico | d ln SOM = eta ln(SOV/SOM) + u con eta > 0: el exceso de voz hace crecer la cuota |
+
 
 ### 10.2 Generar datos
 
 ``` r
 s <- sov_simula("jones_lineal", semilla = 2019)
 s
-#> <sov_datos> 66 filas, 6 categorías  ** DATOS SINTÉTICOS (no son evidencia empírica) **
-#>    categoria marcas SOM_cubierta SOV_cubierta
-#>  Categoría 1     10         79.0         59.3
-#>  Categoría 2     10         63.0         51.5
-#>  Categoría 3     10         66.0         45.8
-#>  Categoría 4     10         61.8         35.4
-#>  Categoría 5     10         64.5         51.7
-#>  Categoría 6     10         65.6         60.2
-#> (SOM_cubierta y SOV_cubierta: suma de las marcas incluidas, en %)
 ```
+
+**Datos sintéticos:** 66 filas, 6 categorías. Se excluye la fila «resto del mercado» de cada categoría.
+
+| Categoría | Marcas | SOM cubierta (%) | SOV cubierta (%) |
+| --- | --- | --- | --- |
+| Categoría 1 | 10 | 79,0 | 59,3 |
+| Categoría 2 | 10 | 63,0 | 51,5 |
+| Categoría 3 | 10 | 66,0 | 45,8 |
+| Categoría 4 | 10 | 61,8 | 35,4 |
+| Categoría 5 | 10 | 64,5 | 51,7 |
+| Categoría 6 | 10 | 65,6 | 60,2 |
+
 
 Cada categoría tiene cuotas que suman exactamente 100 % (mercado
 cerrado) y el SOV se genera con ruido de Dirichlet (Morais et al.,
@@ -888,18 +774,20 @@ conocida** está en el atributo `simulacion`:
 
 ``` r
 sim <- attr(s, "simulacion")
-sim$postulado; sim$semilla
-#> [1] "jones_lineal"
-#> [1] 2019
 sim$verdad[, c("caso", "beta_lineal_publicadas", "cobertura_som")]
-#>    caso beta_lineal_publicadas cobertura_som
-#> 1 cat01                  -0.38      79.02612
-#> 2 cat02                  -0.38      63.03018
-#> 3 cat03                  -0.38      65.95594
-#> 4 cat04                  -0.38      61.78911
-#> 5 cat05                  -0.38      64.47230
-#> 6 cat06                  -0.38      65.58314
 ```
+
+Postulado: `jones_lineal`. Semilla: 2019.
+
+| Caso | β verdadera | SOM cubierta (%) |
+| --- | --- | --- |
+| cat01 | −0,38 | 79,03 |
+| cat02 | −0,38 | 63,03 |
+| cat03 | −0,38 | 65,96 |
+| cat04 | −0,38 | 61,79 |
+| cat05 | −0,38 | 64,47 |
+| cat06 | −0,38 | 65,58 |
+
 
 Se analizan con las mismas funciones que los datos reales, y todo
 resultado derivado se rotula como sintético:
@@ -907,14 +795,19 @@ resultado derivado se rotula como sintético:
 ``` r
 xs <- sov_analiza(s, B = 0)
 sov_tabla(xs, "resultados")[, 1:5]
-#>     Categoría  n     β   IC 95 % de β IC 95 % robusto (HC3)
-#> 1 Categoría 1 10 −0,44 [−0,67; −0,20]        [−0,70; −0,18]
-#> 2 Categoría 2 10 −0,23  [−0,72; 0,26]         [−1,03; 0,58]
-#> 3 Categoría 3 10 −0,86 [−1,44; −0,29]        [−1,13; −0,60]
-#> 4 Categoría 4 10 −0,61 [−0,99; −0,23]         [−1,53; 0,31]
-#> 5 Categoría 5 10 −0,11  [−0,66; 0,44]         [−1,27; 1,04]
-#> 6 Categoría 6 10 −1,07 [−1,75; −0,39]        [−1,49; −0,65]
 ```
+
+**Datos sintéticos.**
+
+| Categoría | n | β | IC 95 % | IC robusto HC3 |
+| --- | --- | --- | --- | --- |
+| Categoría 1 | 10 | −0,44 | [−0,67; −0,20] | [−0,70; −0,18] |
+| Categoría 2 | 10 | −0,23 | [−0,72; 0,26] | [−1,03; 0,58] |
+| Categoría 3 | 10 | −0,86 | [−1,44; −0,29] | [−1,13; −0,60] |
+| Categoría 4 | 10 | −0,61 | [−0,99; −0,23] | [−1,53; 0,31] |
+| Categoría 5 | 10 | −0,11 | [−0,66; 0,44] | [−1,27; 1,04] |
+| Categoría 6 | 10 | −1,07 | [−1,75; −0,39] | [−1,49; −0,65] |
+
 
 La misma semilla reproduce exactamente los mismos datos; el generador de
 números aleatorios del usuario no se altera.
@@ -922,37 +815,26 @@ números aleatorios del usuario no se altera.
 ### 10.3 Parámetros y su procedencia
 
 ``` r
-sov_parametros("jones_lineal")
-#> <sov_parametros> postulado: jones_lineal (Curva de Jones (lineal))
-#>  parametro      valor  
-#>  n_categorias   6      
-#>  n_total_marcas 30     
-#>  n_publicadas   10     
-#>  resto          TRUE   
-#>  theta          0.8334 
-#>  theta_sd       0.5014 
-#>  sigma_forma    0.2396 
-#>  kappa          43.2761
-#>  beta           -0.38  
-#>  tau_beta       0      
-#>  gamma          0.8205 
-#>  tau_gamma      0      
-#>  delta          0.004  
-#>  procedencia                                                                                                                          
-#>  Supuesto por defecto (igual al número de casos de AdAge 2019)                                                                        
-#>  Supuesto por defecto (Ad Age solo publica las marcas líderes)                                                                        
-#>  Calibrado con AdAge 2019 (6 categorías)                                                                                              
-#>  Estructura de Ad Age (fila derivada)                                                                                                 
-#>  Calibrado con AdAge 2019 (6 categorías); forma de ley de potencia: Bae et al. (2024)                                                 
-#>  Calibrado con AdAge 2019 (6 categorías) (dispersión entre categorías)                                                                
-#>  Calibrado con AdAge 2019 (6 categorías)                                                                                              
-#>  Calibrado con AdAge 2019 (6 categorías) (precisión de Dirichlet, estimador de momentos); distribución de cuotas: Morais et al. (2017)
-#>  Slide 22: ajuste lineal a la tabla de Jones (1990); no contrastado con el original                                                   
-#>  Supuesto por defecto (sin heterogeneidad)                                                                                            
-#>  Calibrado con AdAge 2019 (6 categorías) (mediana de la elasticidad log-log)                                                          
-#>  Supuesto por defecto (sin heterogeneidad)                                                                                            
-#>  Supuesto de sensibilidad (sin respaldo empírico)
+p <- sov_parametros("jones_lineal")
+p$procedencia
 ```
+
+| Parámetro | Valor | Procedencia |
+| --- | --- | --- |
+| n_categorias | 6 | Supuesto por defecto (igual al número de casos de AdAge 2019) |
+| n_total_marcas | 30 | Supuesto por defecto (Ad Age solo publica las marcas líderes) |
+| n_publicadas | 10 | Calibrado con AdAge 2019 (6 categorías) |
+| resto | TRUE | Estructura de Ad Age (fila derivada) |
+| theta | 0,8334 | Calibrado con AdAge 2019 (6 categorías); forma de ley de potencia: Bae et al. (2024) |
+| theta_sd | 0,5014 | Calibrado con AdAge 2019 (6 categorías) (dispersión entre categorías) |
+| sigma_forma | 0,2396 | Calibrado con AdAge 2019 (6 categorías) |
+| kappa | 43,2761 | Calibrado con AdAge 2019 (6 categorías) (precisión de Dirichlet, estimador de momentos); distribución de cuotas: Morais et al. (2017) |
+| beta | −0,38 | Slide 22: ajuste lineal a la tabla de Jones (1990); no contrastado con el original |
+| tau_beta | 0 | Supuesto por defecto (sin heterogeneidad) |
+| gamma | 0,8205 | Calibrado con AdAge 2019 (6 categorías) (mediana de la elasticidad log-log) |
+| tau_gamma | 0 | Supuesto por defecto (sin heterogeneidad) |
+| delta | 0,004 | Supuesto de sensibilidad (sin respaldo empírico) |
+
 
 Cada parámetro indica su valor, su procedencia (calibración con Ad Age
 2019, valor de la literatura, supuesto operativo o valor del usuario) y
@@ -978,18 +860,22 @@ identificador: `"paridad"`, `"jones_heterogeneo"`, `"potencia"`,
 ### 10.4 Calibración con los datos reales
 
 ``` r
-sov_calibra()
-#> <sov_calibracion> 6 categorías
-#>               sector  n theta sigma_forma  gamma   kappa   beta se_beta
-#>           Automoción 10 0.738       0.233  0.713 374.867 -0.350   0.098
-#>         Restauración 10 0.724       0.173  0.279  68.371  0.066   0.483
-#>      Telefonía móvil  6 1.582       0.724  0.928  20.418 -0.636   0.220
-#>  Tarjetas de crédito  8 0.929       0.279 -0.134   8.285 -0.517   0.515
-#>              Cerveza 10 1.845       0.246  1.465  30.583 -0.049   0.098
-#>              Bebidas 10 0.688       0.132  3.194  55.969  1.195   0.280
-#> 
-#> Resumen (medianas entre categorías): theta = 0.833 (sd 0.501), sigma_forma = 0.24, gamma = 0.82, kappa = 43.3, beta = -0.199, tau_beta = 0.579
+cal <- sov_calibra()
+cal$por_caso
+cal$resumen
 ```
+
+| Categoría | n | θ | σ forma | γ | κ | β | EE β |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Automoción | 10 | 0,738 | 0,233 | 0,713 | 374,867 | −0,350 | 0,098 |
+| Restauración | 10 | 0,724 | 0,173 | 0,279 | 68,371 | 0,066 | 0,483 |
+| Telefonía móvil | 6 | 1,582 | 0,724 | 0,928 | 20,418 | −0,636 | 0,220 |
+| Tarjetas de crédito | 8 | 0,929 | 0,279 | −0,134 | 8,285 | −0,517 | 0,515 |
+| Cerveza | 10 | 1,845 | 0,246 | 1,465 | 30,583 | −0,049 | 0,098 |
+| Bebidas | 10 | 0,688 | 0,132 | 3,194 | 55,969 | 1,195 | 0,280 |
+
+Resumen (medianas entre categorías): theta = 0.833 (sd 0.501), sigma_forma = 0.24, gamma = 0.82, kappa = 43.3, beta = -0.199, tau_beta = 0.579
+
 
 Estima, por método de momentos y por categoría, el tamaño del mercado
 (`theta`), la dispersión de las cuotas, la elasticidad `gamma`, la
@@ -1005,38 +891,31 @@ tiempo:
 
 ``` r
 d <- sov_simula_dinamica("elasticidad", semilla = 11)
-d
-#> <sov_datos> 528 filas, 6 categorías, 8 períodos  ** DATOS SINTÉTICOS (no son evidencia empírica) **
-#>   caso      sector    marca periodo       som       sov      esov resto    d_ln_som simulado
-#>  cat01 Categoría 1 Marca 01       1 12.064527 18.327942  6.263416 FALSE  0.18121537     TRUE
-#>  cat01 Categoría 1 Marca 02       1  7.551230  4.250047 -3.301183 FALSE -0.07107984     TRUE
-#>  cat01 Categoría 1 Marca 03       1  6.288403 10.242689  3.954286 FALSE  0.19536124     TRUE
-#>  cat01 Categoría 1 Marca 04       1  5.744222  2.138450 -3.605772 FALSE -0.18650699     TRUE
-#>  cat01 Categoría 1 Marca 05       1  4.896333  1.431642 -3.464690 FALSE -0.25353628     TRUE
-#>  cat01 Categoría 1 Marca 06       1  4.793668  3.183982 -1.609687 FALSE  0.03845971     TRUE
-#> ... (panel en formato largo: una fila por marca y período)
+head(d[, c("marca", "periodo", "som", "sov", "esov")])
 sov_efecto_esov(d)
-#> $eta
-#> [1] 0.2395361
-#> 
-#> $se
-#> [1] 0.001589648
-#> 
-#> $ic
-#> [1] 0.2364104 0.2426618
-#> 
-#> $p
-#> [1] 0
-#> 
-#> $n
-#> [1] 420
-#> 
-#> $grupos
-#> [1] 42
-#> 
-#> $gl
-#> [1] 377
 ```
+
+**Datos sintéticos:** 528 filas, 6 categorías, 8 períodos.
+
+| Marca | Período | SOM (%) | SOV (%) | ESOV (pp) |
+| --- | --- | --- | --- | --- |
+| Marca 01 | 1 | 12,06 | 18,33 | 6,26 |
+| Marca 02 | 1 | 7,55 | 4,25 | −3,30 |
+| Marca 03 | 1 | 6,29 | 10,24 | 3,95 |
+| Marca 04 | 1 | 5,74 | 2,14 | −3,61 |
+| Marca 05 | 1 | 4,90 | 1,43 | −3,46 |
+| Marca 06 | 1 | 4,79 | 3,18 | −1,61 |
+
+| Indicador | Valor |
+| --- | --- |
+| eta | 0,2395361 |
+| se | 0,001589648 |
+| ic | 0,2364104; 0,2426618 |
+| p | 0 |
+| n | 420 |
+| grupos | 42 |
+| gl | 377 |
+
 
 Con `"equilibrio"` (η = 0, Graham, 2009) el efecto estimado debe ser
 nulo; con `"elasticidad"` (η = 0,24) debe aproximarse a ese valor. La
@@ -1055,23 +934,23 @@ sov_valida_simulacion("jones_lineal", R = 500, B = 500, semilla = 11)
 
 ``` r
 v <- sov_valida_simulacion("jones_lineal", R = 100, semilla = 11, B = 200)
-v
-#> <sov_validacion> postulado: jones_lineal | R = 100 réplicas | 600 ajustes | semilla 11
-#>  medida                                                       valor  error_mc
-#>  Sesgo medio de beta (MCO)                                    0.0028 0.0317  
-#>  RMSE de beta (MCO)                                           0.7746     NA  
-#>  Cobertura del IC 95 % de beta (MCO clásico)                  0.8550 0.0144  
-#>  Tasa de rechazo de beta = 0 (MCO clásico, p < 0,05)          0.4450 0.0203  
-#>  Cobertura del IC 95 % de beta (robusto HC3)                  0.9217 0.0110  
-#>  Tasa de rechazo de beta = 0 (HC3, p < 0,05)                  0.2283 0.0171  
-#>  Sesgo medio de beta (Theil-Sen)                              0.0129 0.0364  
-#>  RMSE de beta (Theil-Sen)                                     0.8902     NA  
-#>  Cobertura del IC 95 % de beta (bootstrap percentil, B = 200) 0.8917 0.0127  
-#> 
-#> Forma funcional elegida por AICc: Lineal 58.3 % | ln SOM 32.2 % | Cuadrática 9.5 %
-#> 
-#> Lectura: el error_mc es el error de Monte Carlo (incertidumbre debida al número de réplicas). Una cobertura cercana a 95 % indica que los intervalos son fiables bajo este postulado; una desviación mayor que ~2 errores de Monte Carlo es una limitación real del método y debe comunicarse.
+v$resumen
 ```
+
+| Medida | Valor | Error Monte Carlo |
+| --- | --- | --- |
+| Sesgo medio de beta (MCO) | 0,0028 | 0,0317 |
+| RMSE de beta (MCO) | 0,7746 | NA |
+| Cobertura del IC 95 % de beta (MCO clásico) | 0,8550 | 0,0144 |
+| Tasa de rechazo de beta = 0 (MCO clásico, p < 0,05) | 0,4450 | 0,0203 |
+| Cobertura del IC 95 % de beta (robusto HC3) | 0,9217 | 0,0110 |
+| Tasa de rechazo de beta = 0 (HC3, p < 0,05) | 0,2283 | 0,0171 |
+| Sesgo medio de beta (Theil-Sen) | 0,0129 | 0,0364 |
+| RMSE de beta (Theil-Sen) | 0,8902 | NA |
+| Cobertura del IC 95 % de beta (bootstrap percentil, B = 200) | 0,8917 | 0,0127 |
+
+Forma funcional elegida por AICc: Lineal 58.3 % | ln SOM 32.2 % | Cuadrática 9.5 %
+
 
 Una cobertura cercana al 95 % indica que los intervalos son fiables bajo
 ese postulado. Los resultados dependen de `R`, de la semilla y de los
@@ -1140,24 +1019,24 @@ La ayuda de cada función está disponible con `?sov_analiza`,
 ### Referencias bibliográficas
 
 ``` r
-r <- sov_referencias()
-for (i in seq_len(nrow(r))) cat("- ", r$cita[i], " *[", r$verificacion[i], "]*\n", sep = "")
-#> - Jones, J. P. (1990). Ad spending: Maintaining market share. Harvard Business Review, 68(1), 38-42. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-#> - Hansen, F., & Christensen, L. B. (2005). Share of voice/share of market and long-term advertising effects. International Journal of Advertising, 24(3), 297-320. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-#> - Danenberg, N., Kennedy, R., Beal, V., & Sharp, B. (2016). Advertising budgeting: A reinvestigation of the evidence on brand size and spend. Journal of Advertising, 45(1), 139-146. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-#> - Sethuraman, R., Tellis, G. J., & Briesch, R. A. (2011). How well does advertising work? Generalizations from meta-analysis of brand advertising elasticities. Journal of Marketing Research, 48(3), 457-471. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-#> - Graham, C. (2009). What's the point of marketing anyway? The prevalence, temporal extent and implications of long-term market share equilibrium. Journal of Marketing Management. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
-#> - Bae, Y. H., et al. (2024). Category-level drivers of the market share-rank power law relationship. European Journal of Marketing. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
-#> - Morais, J., Thomas-Agnan, C., & Simioni, M. (2017). Using compositional and Dirichlet models for market share regression. Journal of Applied Statistics. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
-#> - Binet, L., & Field, P. (2007). Marketing in the Era of Accountability. WARC. *[Citada en la slide 22 del autor; no verificada con herramientas de búsqueda. Verifíquese antes de citar.]*
-#> - Binet, L., & Field, P. (2013). The Long and the Short of It. IPA. *[Citada en la slide 22 del autor; no verificada con herramientas de búsqueda. Verifíquese antes de citar.]*
-#> - Theil, H. (1950). A rank-invariant method of linear and polynomial regression analysis. Nederlandse Akademie van Wetenschappen, Proceedings, 53, 386-392, 521-525, 1397-1412. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-#> - Sen, P. K. (1968). Estimates of the regression coefficient based on Kendall's tau. Journal of the American Statistical Association, 63(324), 1379-1389. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-#> - Cook, R. D. (1977). Detection of influential observation in linear regression. Technometrics, 19(1), 15-18. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-#> - Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). Regression Diagnostics. Wiley. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-#> - Hurvich, C. M., & Tsai, C.-L. (1989). Regression and time series model selection in small samples. Biometrika, 76(2), 297-307. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-#> - Efron, B. (1979). Bootstrap methods: Another look at the jackknife. The Annals of Statistics, 7(1), 1-26. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
+sov_referencias()
 ```
+
+- Jones, J. P. (1990). Ad spending: Maintaining market share. Harvard Business Review, 68(1), 38-42. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
+- Hansen, F., & Christensen, L. B. (2005). Share of voice/share of market and long-term advertising effects. International Journal of Advertising, 24(3), 297-320. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
+- Danenberg, N., Kennedy, R., Beal, V., & Sharp, B. (2016). Advertising budgeting: A reinvestigation of the evidence on brand size and spend. Journal of Advertising, 45(1), 139-146. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
+- Sethuraman, R., Tellis, G. J., & Briesch, R. A. (2011). How well does advertising work? Generalizations from meta-analysis of brand advertising elasticities. Journal of Marketing Research, 48(3), 457-471. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
+- Graham, C. (2009). What's the point of marketing anyway? The prevalence, temporal extent and implications of long-term market share equilibrium. Journal of Marketing Management. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
+- Bae, Y. H., et al. (2024). Category-level drivers of the market share-rank power law relationship. European Journal of Marketing. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
+- Morais, J., Thomas-Agnan, C., & Simioni, M. (2017). Using compositional and Dirichlet models for market share regression. Journal of Applied Statistics. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
+- Binet, L., & Field, P. (2007). Marketing in the Era of Accountability. WARC. *[Citada en la slide 22 del autor; no verificada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Binet, L., & Field, P. (2013). The Long and the Short of It. IPA. *[Citada en la slide 22 del autor; no verificada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Theil, H. (1950). A rank-invariant method of linear and polynomial regression analysis. Nederlandse Akademie van Wetenschappen, Proceedings, 53, 386-392, 521-525, 1397-1412. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Sen, P. K. (1968). Estimates of the regression coefficient based on Kendall's tau. Journal of the American Statistical Association, 63(324), 1379-1389. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Cook, R. D. (1977). Detection of influential observation in linear regression. Technometrics, 19(1), 15-18. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). Regression Diagnostics. Wiley. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Hurvich, C. M., & Tsai, C.-L. (1989). Regression and time series model selection in small samples. Biometrika, 76(2), 297-307. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Efron, B. (1979). Bootstrap methods: Another look at the jackknife. The Annals of Statistics, 7(1), 1-26. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
 
 ## 14. Solución de problemas
 

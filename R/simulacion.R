@@ -103,9 +103,10 @@ sov_calibra <- function(datos = NULL, minimo = 4L) {
 print.sov_calibracion <- function(x, ...) {
   cat("<sov_calibracion> ", x$resumen$n_casos, " categor\u00edas\n", sep = "")
   t <- x$por_caso
-  t[, -(1:3)] <- lapply(t[, -(1:3)], function(v) round(v, 3))
-  print(t[, c("sector", "n", "theta", "sigma_forma", "gamma", "kappa", "beta", "se_beta")],
-        row.names = FALSE)
+  t[, -(1:3)] <- lapply(t[, -(1:3)], fmt_es, d = 3)
+  t <- t[, c("sector", "n", "theta", "sigma_forma", "gamma", "kappa", "beta", "se_beta")]
+  names(t) <- c("Categor\u00eda", "n", "theta", "sigma forma", "gamma", "kappa", "beta", "EE beta")
+  .imprime_bloques(t)
   r <- x$resumen
   cat("\nResumen (medianas entre categor\u00edas): theta = ", round(r$theta, 3), " (sd ", round(r$theta_sd, 3),
       "), sigma_forma = ", round(r$sigma_forma, 3), ", gamma = ", round(r$gamma, 3),
@@ -249,7 +250,11 @@ sov_parametros <- function(postulado = "jones_lineal", calibrar_con = NULL, ...)
 print.sov_parametros <- function(x, ...) {
   nombre <- sov_postulados()$nombre[match(x$postulado, sov_postulados()$id)]
   cat("<sov_parametros> postulado: ", x$postulado, " (", nombre, ")\n", sep = "")
-  print(x$procedencia, row.names = FALSE, right = FALSE)
+  for (i in seq_len(nrow(x$procedencia))) {
+    p <- x$procedencia[i, ]
+    cat("\n", p$parametro, " = ", p$valor, "\n", sep = "")
+    cat(paste(strwrap(p$procedencia, width = max(40L, getOption("width")), indent = 2, exdent = 2), collapse = "\n"), "\n", sep = "")
+  }
   invisible(x)
 }
 
@@ -652,8 +657,9 @@ print.sov_validacion <- function(x, ...) {
   cat("<sov_validacion> postulado: ", x$postulado, " | R = ", x$R, " r\u00e9plicas",
       if (!x$dinamico) paste0(" | ", x$N, " ajustes") else "", " | semilla ", x$semilla, "\n", sep = "")
   r <- x$resumen
-  r$valor <- round(r$valor, 4); r$error_mc <- round(r$error_mc, 4)
-  print(r, row.names = FALSE, right = FALSE)
+  r$valor <- fmt_es(r$valor, 4); r$error_mc <- fmt_es(r$error_mc, 4)
+  names(r) <- c("Medida", "Valor", "Error Monte Carlo")
+  .imprime_bloques(r)
   if (!x$dinamico) {
     tf <- attr(x$resumen, "forma_aicc")
     cat("\nForma funcional elegida por AICc: ",
