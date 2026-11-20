@@ -3,13 +3,31 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.path = "man/figures/R
                       fig.width = 7, fig.height = 4.6, dpi = 110, out.width = "90%")
 options(width = 100)
 library(mediaSOV)
+tabla <- function(d, digitos = 4) {
+  d <- as.data.frame(d); class(d) <- "data.frame"
+  cat("\n", knitr::kable(d, format = "pipe", row.names = FALSE, digits = digitos,
+                         format.args = list(decimal.mark = ",")), sep = "\n")
+  cat("\n\n")
+}
+ficha <- function(a) {
+  if (is.null(a)) { cat("Sin estimación.\n"); return(invisible(NULL)) }
+  tabla(data.frame(Indicador = names(a), Valor = vapply(a, function(v)
+    paste(format(v, digits = 8, decimal.mark = ","), collapse = "; "), character(1))))
+}
+resultados <- function(x) {
+  t <- sov_tabla(x, "resultados")
+  cat("\n**Estimación e inferencia clásica**\n")
+  tabla(t[, c(1, 2, 3, 4, 6, 7, 11)])
+  cat("\n**Robustez y sensibilidad**\n")
+  tabla(t[, c(1, 5, 8, 9, 10)])
+}
 ```
 
 # mediaSOV
 
 **Análisis y simulación de la relación entre cuota de voz (SOV) y cuota de mercado (SOM) en planificación de medios**, diseñado para usarse sin conocimientos avanzados de R y con el rigor metodológico que exige una publicación académica o un informe profesional.
 
-> Todas las salidas que aparecen en este documento se generan ejecutando el código mostrado con la versión actual del paquete (`README.Rmd` se compila con `knitr`).
+> Los resultados se generan desde el código de este documento mediante knitr; las tablas solo editan la presentación.
 
 ## Índice
 
@@ -105,11 +123,11 @@ sov_demo()          # recorrido guiado con datos reales y sintéticos
 sov_asistente()     # aplicación en el navegador, sin escribir código
 ```
 
-El mismo análisis en cuatro líneas:
+El mismo análisis en dos pasos. Las funciones auxiliares `tabla()`, `ficha()` y `resultados()` que se emplean al compilar este README solo dan formato; no forman parte de la API del paquete. Se definen en el bloque inicial de [README.Rmd](README.Rmd).
 
-```{r rapido}
-x <- sov_analiza(adage2019, B = 300)   # B = remuestras bootstrap (más = más preciso y lento)
-x
+```{r rapido, results='asis'}
+x <- sov_analiza(adage2019, B = 300)
+tabla(sov_tabla(x, "resultados")[, c(1, 2, 3, 4, 11)])
 ```
 
 ## 4. Sus propios datos
@@ -193,15 +211,15 @@ x <- sov_analiza(datos, nivel = 0.95, B = 2000, semilla = 2019,
 
 ### 5.1 Resumen
 
-```{r print}
-x
+```{r print, results='asis'}
+resultados(x)
 ```
 
 ### 5.2 Lectura en lenguaje llano
 
 `sov_interpreta()` redacta, para cada categoría, qué indican los coeficientes, cuán robustos son y qué marcas revisar:
 
-```{r interpreta}
+```{r interpreta, results='asis'}
 cat(sov_interpreta(x)[1:2], sep = "\n\n")
 ```
 
@@ -209,10 +227,9 @@ cat(sov_interpreta(x)[1:2], sep = "\n\n")
 
 El objeto `x` es una lista; cada categoría está en `x$sectores`:
 
-```{r acceso}
-names(x$sectores)
+```{r acceso, results='asis'}
 a <- x$sectores$auto_marcas$ajuste
-a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc3")]
+ficha(a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc3")])
 ```
 
 ## 6. Tablas
@@ -228,20 +245,22 @@ a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc3")]
 | `"elasticidad"` | Elasticidad γ del modelo log-log |
 | `"cobertura"` | Cobertura de cuotas de cada categoría |
 
-```{r tablas}
-sov_tabla(x, "resultados")
+```{r tablas, results='asis'}
+resultados(x)
 ```
 
-```{r tablas2}
-sov_tabla(x, "influencia", categoria = "restaurantes")
+```{r tablas2, results='asis'}
+t <- sov_tabla(x, "influencia", categoria = "restaurantes")
+tabla(t[, c(2:5, 11)])
+tabla(t[, c(2, 6:10)])
 ```
 
-```{r tablas3}
-sov_tabla(x, "formas", categoria = "auto_marcas")
+```{r tablas3, results='asis'}
+tabla(sov_tabla(x, "formas", categoria = "auto_marcas"))
 ```
 
-```{r tablas4}
-sov_tabla(x, "elasticidad")
+```{r tablas4, results='asis'}
+tabla(sov_tabla(x, "elasticidad"))
 ```
 
 ```r
@@ -305,48 +324,50 @@ som <- z$som; sov <- z$sov; esov <- z$esov; marca <- z$marca
 
 **Ajuste por mínimos cuadrados con errores robustos y Theil-Sen** (`sov_ajusta`):
 
-```{r ajusta}
+```{r ajusta, results='asis'}
 a <- sov_ajusta(som, esov)
-round(c(beta = a$beta, se = a$se_beta, p = a$p_beta, se_HC3 = a$se_beta_hc3, p_HC3 = a$p_beta_hc3), 4)
-a$ic_beta; a$ic_beta_hc3
+tabla(data.frame(Método = c("MCO", "MCO + HC3"), beta = a$beta,
+  EE = c(a$se_beta, a$se_beta_hc3), p = c(a$p_beta, a$p_beta_hc3),
+  IC = c(mediaSOV:::fmt_ic(a$ic_beta, 4), mediaSOV:::fmt_ic(a$ic_beta_hc3, 4))))
 ```
 
 **Estimador de Theil-Sen** (mediana de las pendientes por pares; poco sensible a extremos):
 
-```{r ts}
-sov_theil_sen(som, esov)
+```{r ts, results='asis'}
+tabla(as.data.frame(as.list(sov_theil_sen(som, esov))))
 ```
 
 **Influencia** (palanca, t\* estudentizado, Cook, DFBETAS, β al omitir la marca):
 
-```{r infl}
-sov_influencia(som, esov, marca, sov)
+```{r infl, results='asis'}
+i <- sov_influencia(som, esov, marca, sov)
+tabla(i[, c("marca", "som", "sov", "esov", "residuo")], 2)
+tabla(i[, c("marca", "palanca", "t_stud", "cook", "dfbetas", "beta_sin", "alerta")], 3)
 ```
 
 **Bootstrap de pares** (no supone normalidad):
 
-```{r boot}
+```{r boot, results='asis'}
 b <- sov_bootstrap(som, esov, B = 500, semilla = 1)
-b$ols     # IC percentil de la pendiente por MCO
-b$ts      # IC percentil de Theil-Sen
+tabla(data.frame(Método = c("MCO", "Theil-Sen"), IC = c(mediaSOV:::fmt_ic(b$ols, 4), mediaSOV:::fmt_ic(b$ts, 4))))
 ```
 
 **Formas funcionales alternativas** (lineal, ln SOM, cuadrática), con RMSE de validación cruzada dejando una marca fuera (PRESS) y AICc:
 
-```{r formas}
-sov_formas(som, esov)
+```{r formas, results='asis'}
+tabla(sov_formas(som, esov), 2)
 ```
 
 **Elasticidad** (modelo log-log, SOV = c · SOM<sup>γ</sup>; γ < 1 indica economías de escala):
 
-```{r elast}
-sov_elasticidad(som, sov)
+```{r elast, results='asis'}
+ficha(sov_elasticidad(som, sov))
 ```
 
 **Homogeneidad de pendientes** entre categorías (contraste F de pendientes comunes):
 
-```{r hetero}
-sov_heterogeneidad(x$datos)
+```{r hetero, results='asis'}
+ficha(sov_heterogeneidad(x$datos))
 ```
 
 ## 9. Informe HTML y asistente interactivo
@@ -394,8 +415,8 @@ Abre en el navegador una aplicación con tres orígenes de datos (ejemplo real, 
 
 ### 9.4 Glosario
 
-```{r glosario}
-sov_glosario("beta")
+```{r glosario, results='asis'}
+tabla(sov_glosario("beta"))
 ```
 
 ## 10. Datos sintéticos
@@ -404,39 +425,41 @@ sov_glosario("beta")
 
 ### 10.1 Postulados disponibles
 
-```{r postulados}
-sov_postulados()[, c("id", "nombre", "tipo")]
-sov_postulados()[, c("id", "formulacion")]
+```{r postulados, results='asis'}
+tabla(sov_postulados()[, c("id", "nombre", "tipo", "formulacion")])
 ```
 
 ### 10.2 Generar datos
 
-```{r simula}
+```{r simula, results='asis'}
 s <- sov_simula("jones_lineal", semilla = 2019)
-s
+cat("**Datos sintéticos.**\n")
+tabla(sov_tabla(sov_analiza(s, B = 0), "cobertura"))
 ```
 
 Cada categoría tiene cuotas que suman exactamente 100 % (mercado cerrado) y el SOV se genera con ruido de Dirichlet (Morais et al., 2017), que preserva el cierre sin sesgo en la media. La **verdad conocida** está en el atributo `simulacion`:
 
-```{r verdad}
+```{r verdad, results='asis'}
 sim <- attr(s, "simulacion")
-sim$postulado; sim$semilla
-sim$verdad[, c("caso", "beta_lineal_publicadas", "cobertura_som")]
+cat("Postulado: ", sim$postulado, ". Semilla: ", sim$semilla, ".\n", sep = "")
+tabla(sim$verdad[, c("caso", "beta_lineal_publicadas", "cobertura_som")], 2)
 ```
 
 Se analizan con las mismas funciones que los datos reales, y todo resultado derivado se rotula como sintético:
 
-```{r sim-analiza}
+```{r sim-analiza, results='asis'}
 xs <- sov_analiza(s, B = 0)
-sov_tabla(xs, "resultados")[, 1:5]
+cat("**Datos sintéticos.**\n")
+tabla(sov_tabla(xs, "resultados")[, 1:5])
 ```
 
 La misma semilla reproduce exactamente los mismos datos; el generador de números aleatorios del usuario no se altera.
 
 ### 10.3 Parámetros y su procedencia
 
-```{r parametros}
-sov_parametros("jones_lineal")
+```{r parametros, results='asis'}
+p <- sov_parametros("jones_lineal")
+tabla(p$procedencia)
 ```
 
 Cada parámetro indica su valor, su procedencia (calibración con Ad Age 2019, valor de la literatura, supuesto operativo o valor del usuario) y la fuente. Se modifican por nombre:
@@ -456,8 +479,10 @@ Todos los postulados estáticos se generan igual cambiando el identificador: `"p
 
 ### 10.4 Calibración con los datos reales
 
-```{r calibra}
-sov_calibra()
+```{r calibra, results='asis'}
+cal <- sov_calibra()
+tabla(cal$por_caso[, -1], 3)
+ficha(cal$resumen)
 ```
 
 Estima, por método de momentos y por categoría, el tamaño del mercado (`theta`), la dispersión de las cuotas, la elasticidad `gamma`, la precisión del ruido (`kappa`) y la pendiente `beta`. Admite sus propios datos: `sov_calibra(sus_datos)`, y `sov_parametros("jones_lineal", calibrar_con = sus_datos)` los usa directamente.
@@ -466,10 +491,11 @@ Estima, por método de momentos y por categoría, el tamaño del mercado (`theta
 
 Para estudiar si el exceso de voz hace crecer la cuota de mercado en el tiempo:
 
-```{r dinamica}
+```{r dinamica, results='asis'}
 d <- sov_simula_dinamica("elasticidad", semilla = 11)
-d
-sov_efecto_esov(d)
+cat("**Datos sintéticos.**\n")
+tabla(head(d[, c("marca", "periodo", "som", "sov", "esov")]), 2)
+ficha(sov_efecto_esov(d))
 ```
 
 Con `"equilibrio"` (η = 0, Graham, 2009) el efecto estimado debe ser nulo; con `"elasticidad"` (η = 0,24) debe aproximarse a ese valor. La elasticidad 0,24 es un **supuesto operativo** inspirado en Sethuraman et al. (2011), no una estimación propia.
@@ -482,9 +508,9 @@ Con `"equilibrio"` (η = 0, Graham, 2009) el efecto estimado debe ser nulo; con 
 sov_valida_simulacion("jones_lineal", R = 500, B = 500, semilla = 11)
 ```
 
-```{r valida}
+```{r valida, results='asis'}
 v <- sov_valida_simulacion("jones_lineal", R = 100, semilla = 11, B = 200)
-v
+tabla(v$resumen)
 ```
 
 Una cobertura cercana al 95 % indica que los intervalos son fiables bajo ese postulado. Los resultados dependen de `R`, de la semilla y de los parámetros; el `error_mc` es la incertidumbre de Monte Carlo. Con `R` pequeño (como en este ejemplo) las cifras son aproximadas; para resultados citables use `R ≥ 500`.
@@ -532,7 +558,7 @@ La ayuda de cada función está disponible con `?sov_analiza`, `help(package = "
 
 ### Referencias bibliográficas
 
-```{r refs}
+```{r refs, results='asis'}
 r <- sov_referencias()
 for (i in seq_len(nrow(r))) cat("- ", r$cita[i], " *[", r$verificacion[i], "]*\n", sep = "")
 ```

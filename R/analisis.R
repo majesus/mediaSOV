@@ -442,14 +442,18 @@ print.sov_analisis <- function(x, ...) {
   if (isTRUE(x$simulado)) {
     cat("** DATOS SINT\u00c9TICOS: los resultados describen el proceso simulado, no el mercado real **\n")
   }
-  print(sov_tabla(x, "resultados"), row.names = FALSE, right = FALSE)
-  cat("\n")
-  cat(paste(strwrap(sov_interpreta(x), width = 90, exdent = 2), collapse = "\n"), "\n", sep = "")
-  cat("\nSiguientes pasos: sov_grafico(x) | sov_tabla(x, \"influencia\") | sov_informe(x)\n")
+  print(sov_tabla(x, "resultados"))
+  cat("\nInterpretaci\u00f3n detallada: sov_interpreta(x)\n")
+  cat("Siguientes pasos: sov_grafico(x) | sov_tabla(x, \"influencia\") | sov_informe(x)\n")
   invisible(x)
 }
 
 #' @export
 summary.sov_analisis <- function(object, ...) {
   print(object, ...)
+  cat("\nINTERPRETACI\u00d3N POR CATEGOR\u00cdA\n\n")
+  for (p in sov_interpreta(object)) {
+    cat(paste(strwrap(p, width = max(40L, getOption("width"))), collapse = "\n"), "\n\n", sep = "")
+  }
+  invisible(object)
 }

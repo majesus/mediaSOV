@@ -21,7 +21,7 @@
 #'   tablas por marca o por forma.
 #' @param formato `"data.frame"` (por defecto) o `"html"` (cadena HTML
 #'   autocontenida, con estilos incrustados).
-#' @return Un `data.frame` de caracteres con el atributo `nota`, o una cadena
+#' @return Un `data.frame` de caracteres (clase `sov_tabla`) con el atributo `nota`, o una cadena
 #'   HTML.
 #' @examples
 #' x <- sov_analiza(adage2019, B = 0)
@@ -148,8 +148,48 @@ sov_tabla <- function(x, tipo = c("resultados", "influencia", "formas", "bootstr
   attr(res, "nota") <- nota
   attr(res, "titulo") <- titulo
   attr(res, "resaltar") <- resaltar
+  attr(res, "simulado") <- isTRUE(x$simulado)
   if (formato == "html") return(.tabla_html(res))
+  class(res) <- c("sov_tabla", "data.frame")
   res
+}
+
+#' @export
+print.sov_tabla <- function(x, ..., row.names = FALSE) {
+  titulo <- attr(x, "titulo")
+  if (!is.null(titulo)) cat("\n", titulo, "\n", sep = "")
+  if (isTRUE(attr(x, "simulado"))) cat("DATOS SINT\u00c9TICOS: no son evidencia emp\u00edrica.\n")
+  .imprime_bloques(x, claves = if ("Marca" %in% names(x)) 1:2 else 1L)
+  nota <- attr(x, "nota")
+  if (!is.null(nota)) cat("\n", paste(strwrap(nota, width = max(40L, getOption("width"))), collapse = "\n"), "\n", sep = "")
+  invisible(x)
+}
+
+# Divide tablas anchas en bloques completos, repitiendo las claves de fila.
+# No modifica ni redondea el objeto original.
+.imprime_bloques <- function(x, claves = 1L) {
+  x <- as.data.frame(x)
+  class(x) <- "data.frame"
+  if (!ncol(x)) return(invisible(x))
+  claves <- intersect(claves, seq_len(ncol(x)))
+  restantes <- setdiff(seq_len(ncol(x)), claves)
+  ancho <- vapply(seq_len(ncol(x)), function(i) {
+    max(nchar(c(names(x)[i], as.character(x[[i]])), type = "width"), na.rm = TRUE) + 2L
+  }, numeric(1))
+  mostrar <- function(i) {
+    op <- options(width = min(10000L, max(getOption("width"), sum(ancho[i]) + 2L)))
+    on.exit(options(op))
+    print(x[, i, drop = FALSE], row.names = FALSE, right = TRUE, max = .Machine$integer.max)
+  }
+  bloque <- claves
+  for (i in restantes) {
+    if (length(bloque) > length(claves) && sum(ancho[c(bloque, i)]) > getOption("width")) {
+      mostrar(bloque); cat("\n"); bloque <- claves
+    }
+    bloque <- c(bloque, i)
+  }
+  mostrar(bloque)
+  invisible(x)
 }
 
 # Convierte una tabla de sov_tabla() en HTML autocontenido.
@@ -163,6 +203,7 @@ sov_tabla <- function(x, tipo = c("resultados", "influencia", "formas", "bootstr
     paste0("<tr", cl, ">", celdas, "</tr>")
   }, character(1))
   estilo <- paste0(
+    "<style>.sovwrap{max-width:100%;overflow-x:auto;margin:1em 0}.sovtab td{white-space:normal}</style>",
     "<style>.sovtab{border-collapse:collapse;font-family:system-ui,Segoe UI,Arial,sans-serif;font-size:.9em;margin:1em 0}",
     ".sovtab caption{font-weight:700;text-align:left;padding:.3em 0}",
     ".sovtab th{background:#1f3a5f;color:#fff;padding:.45em .7em;text-align:center}",
@@ -170,7 +211,7 @@ sov_tabla <- function(x, tipo = c("resultados", "influencia", "formas", "bootstr
     ".sovtab td:first-child{text-align:left}.sovtab tr:nth-child(even){background:#f5f7fa}",
     ".sovtab tr.alerta{background:#fde8e8!important;font-weight:600}",
     ".sovnota{font-family:system-ui,Segoe UI,Arial,sans-serif;font-size:.8em;color:#4a5568;max-width:60em}</style>")
-  paste0(estilo, "<table class=\"sovtab\"><caption>", esc(attr(res, "titulo")), "</caption><thead><tr>", cab,
-         "</tr></thead><tbody>", paste(filas, collapse = ""), "</tbody></table>",
+  paste0(estilo, "<div class=\"sovwrap\"><table class=\"sovtab\"><caption>", esc(attr(res, "titulo")), "</caption><thead><tr>", cab,
+         "</tr></thead><tbody>", paste(filas, collapse = ""), "</tbody></table></div>",
          "<p class=\"sovnota\"><em>C\u00f3mo leer esta tabla.</em> ", esc(attr(res, "nota")), "</p>")
 }
