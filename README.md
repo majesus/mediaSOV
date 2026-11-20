@@ -54,13 +54,13 @@ y responde a la pregunta clásica de la curva de intensidad publicitaria
 de Jones (1990): ¿invierten las marcas grandes proporcionalmente menos
 que las pequeñas (**β \< 0**)?
 
-| Módulo     | Qué ofrece                                                                                                                                                                                                                         |
-|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Lectura    | CSV con separador `;` o `,`, decimal coma o punto, UTF-8 o Latin-1, nombres de columna flexibles                                                                                                                                   |
-| Análisis   | MCO, errores robustos HC3, Theil-Sen, validación dejando una marca fuera, influencia (palanca, Cook, DFBETAS), bootstrap de pares, formas funcionales (AICc y validación cruzada), elasticidad log-log, homogeneidad de pendientes |
-| Salidas    | Tablas (data.frame o HTML), gráficos, lectura en lenguaje llano, informe HTML autocontenido                                                                                                                                        |
-| Interfaz   | Aplicación Shiny (`sov_asistente()`) sin escribir código                                                                                                                                                                           |
-| Simulación | Datos sintéticos con verdad conocida bajo 5 postulados estáticos y 2 dinámicos, parámetros editables con procedencia, calibración con datos reales y estudio de recuperación                                                       |
+| <sub>Módulo</sub> | <sub>Qué ofrece</sub> |
+| :--- | :--- |
+| <sub>Lectura</sub> | <sub>CSV con separador `;` o `,`, decimal coma o punto, UTF-8 o Latin-1, nombres de columna flexibles</sub> |
+| <sub>Análisis</sub> | <sub>MCO, errores robustos HC3, Theil-Sen, validación dejando una marca fuera, influencia (palanca, Cook, DFBETAS), bootstrap de pares, formas funcionales (AICc y validación cruzada), elasticidad log-log, homogeneidad de pendientes</sub> |
+| <sub>Salidas</sub> | <sub>Tablas (data.frame o HTML), gráficos, lectura en lenguaje llano, informe HTML autocontenido</sub> |
+| <sub>Interfaz</sub> | <sub>Aplicación Shiny (`sov_asistente()`) sin escribir código</sub> |
+| <sub>Simulación</sub> | <sub>Datos sintéticos con verdad conocida bajo 5 postulados estáticos y 2 dinámicos, parámetros editables con procedencia, calibración con datos reales y estudio de recuperación</sub> |
 
 ## 2. Instalación
 
@@ -133,14 +133,14 @@ x <- sov_analiza(adage2019, B = 300)   # B = remuestras bootstrap (más = más p
 sov_tabla(x, "resultados")[, c(1, 2, 3, 4, 11)]
 ```
 
-| Categoría | n | β | IC 95 % de β | Lectura (MCO) |
-| --- | --- | --- | --- | --- |
-| Automoción | 10 | −0,35 | [−0,58; −0,12] | Economía de escala |
-| Restauración | 10 | 0,07 | [−1,05; 1,18] | No distinguible de 0 |
-| Telefonía móvil | 6 | −0,64 | [−1,25; −0,02] | Economía de escala |
-| Tarjetas de crédito | 8 | −0,52 | [−1,78; 0,74] | No distinguible de 0 |
-| Cerveza | 10 | −0,05 | [−0,28; 0,18] | No distinguible de 0 |
-| Bebidas | 10 | 1,19 | [0,55; 1,84] | Deseconomía de escala |
+| <sub>Categoría</sub> | <sub>n</sub> | <sub>β</sub> | <sub>IC 95 % de β</sub> | <sub>Lectura (MCO)</sub> |
+| :--- | ---: | ---: | ---: | :--- |
+| <sub>Automoción</sub> | <sub>10</sub> | <sub>−0,35</sub> | <sub>[−0,58; −0,12]</sub> | <sub>Economía de escala</sub> |
+| <sub>Restauración</sub> | <sub>10</sub> | <sub>0,07</sub> | <sub>[−1,05; 1,18]</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Telefonía móvil</sub> | <sub>6</sub> | <sub>−0,64</sub> | <sub>[−1,25; −0,02]</sub> | <sub>Economía de escala</sub> |
+| <sub>Tarjetas de crédito</sub> | <sub>8</sub> | <sub>−0,52</sub> | <sub>[−1,78; 0,74]</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Cerveza</sub> | <sub>10</sub> | <sub>−0,05</sub> | <sub>[−0,28; 0,18]</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Bebidas</sub> | <sub>10</sub> | <sub>1,19</sub> | <sub>[0,55; 1,84]</sub> | <sub>Deseconomía de escala</sub> |
 
 **Lectura rápida:** 6 categorías y 54 marcas. Automoción y telefonía móvil presentan pendientes negativas cuyo IC clásico excluye cero. La sección 5 contrasta los resultados con HC3.
 
@@ -151,12 +151,12 @@ sov_tabla(x, "resultados")[, c(1, 2, 3, 4, 11)]
 
 Una fila por marca, con **cuatro columnas obligatorias**:
 
-| Columna   | Contenido                                  | Variantes de nombre admitidas (ejemplos) |
-|-----------|--------------------------------------------|------------------------------------------|
-| categoría | Mercado o sector al que pertenece la marca | `categoria`, `sector`, `category`        |
-| marca     | Nombre de la marca                         | `marca`, `brand`                         |
-| SOM       | Cuota de mercado, **en %** (0–100)         | `som`, `cuota_mercado`, `market_share`   |
-| SOV       | Cuota de voz, **en %** (0–100)             | `sov`, `cuota_voz`, `share_of_voice`     |
+| <sub>Columna</sub> | <sub>Contenido</sub> | <sub>Variantes de nombre admitidas (ejemplos)</sub> |
+| :--- | :--- | :--- |
+| <sub>categoría</sub> | <sub>Mercado o sector al que pertenece la marca</sub> | <sub>`categoria`, `sector`, `category`</sub> |
+| <sub>marca</sub> | <sub>Nombre de la marca</sub> | <sub>`marca`, `brand`</sub> |
+| <sub>SOM</sub> | <sub>Cuota de mercado, **en %** (0–100)</sub> | <sub>`som`, `cuota_mercado`, `market_share`</sub> |
+| <sub>SOV</sub> | <sub>Cuota de voz, **en %** (0–100)</sub> | <sub>`sov`, `cuota_voz`, `share_of_voice`</sub> |
 
 Si trabaja con la estructura de Ad Age (columnas `market_share_pct`,
 `media_musd`, etc.), el paquete también la reconoce y calcula las cuotas
@@ -264,13 +264,13 @@ x <- sov_analiza(datos, nivel = 0.95, B = 2000, semilla = 2019,
                  incluir_resto = FALSE)
 ```
 
-| Argumento       | Significado                                                                |
-|-----------------|----------------------------------------------------------------------------|
-| `datos`         | Ruta de un CSV, `data.frame` o resultado de `sov_prepara()`/`sov_simula()` |
-| `nivel`         | Nivel de confianza de los intervalos (0,95 por defecto)                    |
-| `B`             | Remuestras del bootstrap (2000 por defecto; `0` lo omite y acelera)        |
-| `semilla`       | Semilla del bootstrap (el generador del usuario se restaura al terminar)   |
-| `incluir_resto` | `TRUE` para incluir la fila «resto del mercado» (no recomendado)           |
+| <sub>Argumento</sub> | <sub>Significado</sub> |
+| :--- | :--- |
+| <sub>`datos`</sub> | <sub>Ruta de un CSV, `data.frame` o resultado de `sov_prepara()`/`sov_simula()`</sub> |
+| <sub>`nivel`</sub> | <sub>Nivel de confianza de los intervalos (0,95 por defecto)</sub> |
+| <sub>`B`</sub> | <sub>Remuestras del bootstrap (2000 por defecto; `0` lo omite y acelera)</sub> |
+| <sub>`semilla`</sub> | <sub>Semilla del bootstrap (el generador del usuario se restaura al terminar)</sub> |
+| <sub>`incluir_resto`</sub> | <sub>`TRUE` para incluir la fila «resto del mercado» (no recomendado)</sub> |
 
 ### 5.1 Resumen
 
@@ -280,25 +280,25 @@ sov_tabla(x, "resultados")
 
 **Estimación e inferencia clásica**
 
-| Categoría | n | β | IC 95 % de β | p | R² | Lectura (MCO) |
-| --- | --- | --- | --- | --- | --- | --- |
-| Automoción | 10 | −0,35 | [−0,58; −0,12] | 0,007 | 0,61 | Economía de escala |
-| Restauración | 10 | 0,07 | [−1,05; 1,18] | 0,895 | 0,00 | No distinguible de 0 |
-| Telefonía móvil | 6 | −0,64 | [−1,25; −0,02] | 0,045 | 0,68 | Economía de escala |
-| Tarjetas de crédito | 8 | −0,52 | [−1,78; 0,74] | 0,355 | 0,14 | No distinguible de 0 |
-| Cerveza | 10 | −0,05 | [−0,28; 0,18] | 0,635 | 0,03 | No distinguible de 0 |
-| Bebidas | 10 | 1,19 | [0,55; 1,84] | 0,003 | 0,69 | Deseconomía de escala |
+| <sub>Categoría</sub> | <sub>n</sub> | <sub>β</sub> | <sub>IC 95 % de β</sub> | <sub>p</sub> | <sub>R²</sub> | <sub>Lectura (MCO)</sub> |
+| :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| <sub>Automoción</sub> | <sub>10</sub> | <sub>−0,35</sub> | <sub>[−0,58; −0,12]</sub> | <sub>0,007</sub> | <sub>0,61</sub> | <sub>Economía de escala</sub> |
+| <sub>Restauración</sub> | <sub>10</sub> | <sub>0,07</sub> | <sub>[−1,05; 1,18]</sub> | <sub>0,895</sub> | <sub>0,00</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Telefonía móvil</sub> | <sub>6</sub> | <sub>−0,64</sub> | <sub>[−1,25; −0,02]</sub> | <sub>0,045</sub> | <sub>0,68</sub> | <sub>Economía de escala</sub> |
+| <sub>Tarjetas de crédito</sub> | <sub>8</sub> | <sub>−0,52</sub> | <sub>[−1,78; 0,74]</sub> | <sub>0,355</sub> | <sub>0,14</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Cerveza</sub> | <sub>10</sub> | <sub>−0,05</sub> | <sub>[−0,28; 0,18]</sub> | <sub>0,635</sub> | <sub>0,03</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Bebidas</sub> | <sub>10</sub> | <sub>1,19</sub> | <sub>[0,55; 1,84]</sub> | <sub>0,003</sub> | <sub>0,69</sub> | <sub>Deseconomía de escala</sub> |
 
 **Robustez y sensibilidad**
 
-| Categoría | IC 95 % robusto (HC3) | β Theil-Sen | β al omitir cada marca | Umbral SOM |
-| --- | --- | --- | --- | --- |
-| Automoción | [−0,65; −0,05] | −0,50 | [−0,43; −0,29] | 3,0 % |
-| Restauración | [−5,17; 5,30] | 0,12 | [−2,19; 0,26] | — |
-| Telefonía móvil | [−1,26; −0,02] | −0,52 | [−0,80; −0,50] | 8,8 % |
-| Tarjetas de crédito | [−2,18; 1,15] | −0,66 | [−0,91; −0,07] | — |
-| Cerveza | [−0,50; 0,40] | 0,09 | [−0,07; 0,14] | — |
-| Bebidas | [−0,06; 2,45] | 1,36 | [1,15; 1,73] | — |
+| <sub>Categoría</sub> | <sub>IC 95 % robusto (HC3)</sub> | <sub>β Theil-Sen</sub> | <sub>β al omitir cada marca</sub> | <sub>Umbral SOM</sub> |
+| :--- | ---: | ---: | ---: | ---: |
+| <sub>Automoción</sub> | <sub>[−0,65; −0,05]</sub> | <sub>−0,50</sub> | <sub>[−0,43; −0,29]</sub> | <sub>3,0 %</sub> |
+| <sub>Restauración</sub> | <sub>[−5,17; 5,30]</sub> | <sub>0,12</sub> | <sub>[−2,19; 0,26]</sub> | <sub>—</sub> |
+| <sub>Telefonía móvil</sub> | <sub>[−1,26; −0,02]</sub> | <sub>−0,52</sub> | <sub>[−0,80; −0,50]</sub> | <sub>8,8 %</sub> |
+| <sub>Tarjetas de crédito</sub> | <sub>[−2,18; 1,15]</sub> | <sub>−0,66</sub> | <sub>[−0,91; −0,07]</sub> | <sub>—</sub> |
+| <sub>Cerveza</sub> | <sub>[−0,50; 0,40]</sub> | <sub>0,09</sub> | <sub>[−0,07; 0,14]</sub> | <sub>—</sub> |
+| <sub>Bebidas</sub> | <sub>[−0,06; 2,45]</sub> | <sub>1,36</sub> | <sub>[1,15; 1,73]</sub> | <sub>—</sub> |
 
 **Cómo leerlo.** Compare el IC clásico y HC3 antes de concluir. En Bebidas, el intervalo clásico excluye cero, pero el robusto lo incluye.
 
@@ -328,16 +328,16 @@ a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc3")]
 
 **Categorías disponibles:** `auto_marcas`, `restaurantes`, `telefonia`, `tarjetas`, `cerveza`, `bebidas`.
 
-| Campo | Valor (sin editar) |
-| --- | --- |
-| n | 10 |
-| alfa | 1.061521 |
-| beta | -0.3498058 |
-| ic_beta | -0.5762806 -0.1233310 |
-| p_beta | 0.007381539 |
-| r2 | 0.6132703 |
-| ts_beta | -0.5032545 |
-| ic_beta_hc3 | -0.64824020 -0.05137132 |
+| <sub>Campo</sub> | <sub>Valor (sin editar)</sub> |
+| :--- | :--- |
+| <sub>n</sub> | <sub>10</sub> |
+| <sub>alfa</sub> | <sub>1.061521</sub> |
+| <sub>beta</sub> | <sub>-0.3498058</sub> |
+| <sub>ic_beta</sub> | <sub>-0.5762806 -0.1233310</sub> |
+| <sub>p_beta</sub> | <sub>0.007381539</sub> |
+| <sub>r2</sub> | <sub>0.6132703</sub> |
+| <sub>ts_beta</sub> | <sub>-0.5032545</sub> |
+| <sub>ic_beta_hc3</sub> | <sub>-0.64824020 -0.05137132</sub> |
 
 
 ## 6. Tablas
@@ -346,14 +346,14 @@ a[c("n", "alfa", "beta", "ic_beta", "p_beta", "r2", "ts_beta", "ic_beta_hc3")]
 como `data.frame` de caracteres con formato español (coma decimal) o
 como HTML autocontenido (`formato = "html"`) para pegar en un documento:
 
-| `tipo`          | Contenido                                                                                |
-|-----------------|------------------------------------------------------------------------------------------|
-| `"resultados"`  | β, IC clásico y robusto HC3, p, R², Theil-Sen, rango al omitir cada marca, umbral de SOM |
-| `"influencia"`  | Palanca, t\*, Cook, DFBETAS y β sin cada marca, con alertas                              |
-| `"formas"`      | Comparación de formas funcionales (RMSE de validación cruzada, ΔAICc)                    |
-| `"bootstrap"`   | Intervalos bootstrap percentil de MCO y Theil-Sen                                        |
-| `"elasticidad"` | Elasticidad γ del modelo log-log                                                         |
-| `"cobertura"`   | Cobertura de cuotas de cada categoría                                                    |
+| <sub>`tipo`</sub> | <sub>Contenido</sub> |
+| :--- | :--- |
+| <sub>`"resultados"`</sub> | <sub>β, IC clásico y robusto HC3, p, R², Theil-Sen, rango al omitir cada marca, umbral de SOM</sub> |
+| <sub>`"influencia"`</sub> | <sub>Palanca, t\*, Cook, DFBETAS y β sin cada marca, con alertas</sub> |
+| <sub>`"formas"`</sub> | <sub>Comparación de formas funcionales (RMSE de validación cruzada, ΔAICc)</sub> |
+| <sub>`"bootstrap"`</sub> | <sub>Intervalos bootstrap percentil de MCO y Theil-Sen</sub> |
+| <sub>`"elasticidad"`</sub> | <sub>Elasticidad γ del modelo log-log</sub> |
+| <sub>`"cobertura"`</sub> | <sub>Cobertura de cuotas de cada categoría</sub> |
 
 ``` r
 t <- sov_tabla(x, "resultados")
@@ -363,25 +363,25 @@ t[, c(1, 5, 8, 9, 10)]
 
 **Estimación e inferencia clásica**
 
-| Categoría | n | β | IC 95 % de β | p | R² | Lectura (MCO) |
-| --- | --- | --- | --- | --- | --- | --- |
-| Automoción | 10 | −0,35 | [−0,58; −0,12] | 0,007 | 0,61 | Economía de escala |
-| Restauración | 10 | 0,07 | [−1,05; 1,18] | 0,895 | 0,00 | No distinguible de 0 |
-| Telefonía móvil | 6 | −0,64 | [−1,25; −0,02] | 0,045 | 0,68 | Economía de escala |
-| Tarjetas de crédito | 8 | −0,52 | [−1,78; 0,74] | 0,355 | 0,14 | No distinguible de 0 |
-| Cerveza | 10 | −0,05 | [−0,28; 0,18] | 0,635 | 0,03 | No distinguible de 0 |
-| Bebidas | 10 | 1,19 | [0,55; 1,84] | 0,003 | 0,69 | Deseconomía de escala |
+| <sub>Categoría</sub> | <sub>n</sub> | <sub>β</sub> | <sub>IC 95 % de β</sub> | <sub>p</sub> | <sub>R²</sub> | <sub>Lectura (MCO)</sub> |
+| :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| <sub>Automoción</sub> | <sub>10</sub> | <sub>−0,35</sub> | <sub>[−0,58; −0,12]</sub> | <sub>0,007</sub> | <sub>0,61</sub> | <sub>Economía de escala</sub> |
+| <sub>Restauración</sub> | <sub>10</sub> | <sub>0,07</sub> | <sub>[−1,05; 1,18]</sub> | <sub>0,895</sub> | <sub>0,00</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Telefonía móvil</sub> | <sub>6</sub> | <sub>−0,64</sub> | <sub>[−1,25; −0,02]</sub> | <sub>0,045</sub> | <sub>0,68</sub> | <sub>Economía de escala</sub> |
+| <sub>Tarjetas de crédito</sub> | <sub>8</sub> | <sub>−0,52</sub> | <sub>[−1,78; 0,74]</sub> | <sub>0,355</sub> | <sub>0,14</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Cerveza</sub> | <sub>10</sub> | <sub>−0,05</sub> | <sub>[−0,28; 0,18]</sub> | <sub>0,635</sub> | <sub>0,03</sub> | <sub>No distinguible de 0</sub> |
+| <sub>Bebidas</sub> | <sub>10</sub> | <sub>1,19</sub> | <sub>[0,55; 1,84]</sub> | <sub>0,003</sub> | <sub>0,69</sub> | <sub>Deseconomía de escala</sub> |
 
 **Robustez y sensibilidad**
 
-| Categoría | IC 95 % robusto (HC3) | β Theil-Sen | β al omitir cada marca | Umbral SOM |
-| --- | --- | --- | --- | --- |
-| Automoción | [−0,65; −0,05] | −0,50 | [−0,43; −0,29] | 3,0 % |
-| Restauración | [−5,17; 5,30] | 0,12 | [−2,19; 0,26] | — |
-| Telefonía móvil | [−1,26; −0,02] | −0,52 | [−0,80; −0,50] | 8,8 % |
-| Tarjetas de crédito | [−2,18; 1,15] | −0,66 | [−0,91; −0,07] | — |
-| Cerveza | [−0,50; 0,40] | 0,09 | [−0,07; 0,14] | — |
-| Bebidas | [−0,06; 2,45] | 1,36 | [1,15; 1,73] | — |
+| <sub>Categoría</sub> | <sub>IC 95 % robusto (HC3)</sub> | <sub>β Theil-Sen</sub> | <sub>β al omitir cada marca</sub> | <sub>Umbral SOM</sub> |
+| :--- | ---: | ---: | ---: | ---: |
+| <sub>Automoción</sub> | <sub>[−0,65; −0,05]</sub> | <sub>−0,50</sub> | <sub>[−0,43; −0,29]</sub> | <sub>3,0 %</sub> |
+| <sub>Restauración</sub> | <sub>[−5,17; 5,30]</sub> | <sub>0,12</sub> | <sub>[−2,19; 0,26]</sub> | <sub>—</sub> |
+| <sub>Telefonía móvil</sub> | <sub>[−1,26; −0,02]</sub> | <sub>−0,52</sub> | <sub>[−0,80; −0,50]</sub> | <sub>8,8 %</sub> |
+| <sub>Tarjetas de crédito</sub> | <sub>[−2,18; 1,15]</sub> | <sub>−0,66</sub> | <sub>[−0,91; −0,07]</sub> | <sub>—</sub> |
+| <sub>Cerveza</sub> | <sub>[−0,50; 0,40]</sub> | <sub>0,09</sub> | <sub>[−0,07; 0,14]</sub> | <sub>—</sub> |
+| <sub>Bebidas</sub> | <sub>[−0,06; 2,45]</sub> | <sub>1,36</sub> | <sub>[1,15; 1,73]</sub> | <sub>—</sub> |
 
 
 ``` r
@@ -390,33 +390,33 @@ sov_tabla(x, "influencia", categoria = "restaurantes")
 
 **Restauración · cuotas y diagnóstico**
 
-| Marca | SOM (%) | SOV (%) | ESOV (pp) | Alerta |
-| --- | --- | --- | --- | --- |
-| McDonald's | 7,0 | 11,3 | +4,3 | P A I |
-| Starbucks | 3,3 | 1,2 | −2,1 | A |
-| Subway | 2,0 | 5,7 | +3,7 | — |
-| Taco Bell | 1,8 | 6,9 | +5,1 | — |
-| Burger King | 1,8 | 5,6 | +3,8 | — |
-| Wendy's | 1,7 | 4,2 | +2,5 | — |
-| Chick-fil-A | 1,7 | 1,2 | −0,5 | — |
-| Dunkin' | 1,6 | 2,4 | +0,8 | — |
-| Domino's | 1,1 | 6,0 | +4,9 | — |
-| Pizza Hut | 1,0 | 3,4 | +2,4 | — |
+| <sub>Marca</sub> | <sub>SOM (%)</sub> | <sub>SOV (%)</sub> | <sub>ESOV (pp)</sub> | <sub>Alerta</sub> |
+| :--- | ---: | ---: | ---: | :--- |
+| <sub>McDonald's</sub> | <sub>7,0</sub> | <sub>11,3</sub> | <sub>+4,3</sub> | <sub>P A I</sub> |
+| <sub>Starbucks</sub> | <sub>3,3</sub> | <sub>1,2</sub> | <sub>−2,1</sub> | <sub>A</sub> |
+| <sub>Subway</sub> | <sub>2,0</sub> | <sub>5,7</sub> | <sub>+3,7</sub> | <sub>—</sub> |
+| <sub>Taco Bell</sub> | <sub>1,8</sub> | <sub>6,9</sub> | <sub>+5,1</sub> | <sub>—</sub> |
+| <sub>Burger King</sub> | <sub>1,8</sub> | <sub>5,6</sub> | <sub>+3,8</sub> | <sub>—</sub> |
+| <sub>Wendy's</sub> | <sub>1,7</sub> | <sub>4,2</sub> | <sub>+2,5</sub> | <sub>—</sub> |
+| <sub>Chick-fil-A</sub> | <sub>1,7</sub> | <sub>1,2</sub> | <sub>−0,5</sub> | <sub>—</sub> |
+| <sub>Dunkin'</sub> | <sub>1,6</sub> | <sub>2,4</sub> | <sub>+0,8</sub> | <sub>—</sub> |
+| <sub>Domino's</sub> | <sub>1,1</sub> | <sub>6,0</sub> | <sub>+4,9</sub> | <sub>—</sub> |
+| <sub>Pizza Hut</sub> | <sub>1,0</sub> | <sub>3,4</sub> | <sub>+2,4</sub> | <sub>—</sub> |
 
 **Restauración · influencia y sensibilidad**
 
-| Marca | Palanca | t* | Cook | DFBETAS | β sin la marca |
-| --- | --- | --- | --- | --- | --- |
-| McDonald's | 0,89 | 2,10 | 12,31 | 5,58 | −2,19 |
-| Starbucks | 0,14 | −2,55 | 0,30 | −0,52 | 0,26 |
-| Subway | 0,10 | 0,49 | 0,02 | −0,03 | 0,08 |
-| Taco Bell | 0,11 | 1,13 | 0,08 | −0,11 | 0,12 |
-| Burger King | 0,11 | 0,54 | 0,02 | −0,05 | 0,09 |
-| Wendy's | 0,11 | 0,04 | 0,00 | 0,00 | 0,07 |
-| Chick-fil-A | 0,11 | −1,28 | 0,10 | 0,15 | −0,01 |
-| Dunkin' | 0,12 | −0,68 | 0,03 | 0,10 | 0,02 |
-| Domino's | 0,15 | 1,05 | 0,10 | −0,26 | 0,19 |
-| Pizza Hut | 0,16 | −0,02 | 0,00 | 0,00 | 0,06 |
+| <sub>Marca</sub> | <sub>Palanca</sub> | <sub>t*</sub> | <sub>Cook</sub> | <sub>DFBETAS</sub> | <sub>β sin la marca</sub> |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| <sub>McDonald's</sub> | <sub>0,89</sub> | <sub>2,10</sub> | <sub>12,31</sub> | <sub>5,58</sub> | <sub>−2,19</sub> |
+| <sub>Starbucks</sub> | <sub>0,14</sub> | <sub>−2,55</sub> | <sub>0,30</sub> | <sub>−0,52</sub> | <sub>0,26</sub> |
+| <sub>Subway</sub> | <sub>0,10</sub> | <sub>0,49</sub> | <sub>0,02</sub> | <sub>−0,03</sub> | <sub>0,08</sub> |
+| <sub>Taco Bell</sub> | <sub>0,11</sub> | <sub>1,13</sub> | <sub>0,08</sub> | <sub>−0,11</sub> | <sub>0,12</sub> |
+| <sub>Burger King</sub> | <sub>0,11</sub> | <sub>0,54</sub> | <sub>0,02</sub> | <sub>−0,05</sub> | <sub>0,09</sub> |
+| <sub>Wendy's</sub> | <sub>0,11</sub> | <sub>0,04</sub> | <sub>0,00</sub> | <sub>0,00</sub> | <sub>0,07</sub> |
+| <sub>Chick-fil-A</sub> | <sub>0,11</sub> | <sub>−1,28</sub> | <sub>0,10</sub> | <sub>0,15</sub> | <sub>−0,01</sub> |
+| <sub>Dunkin'</sub> | <sub>0,12</sub> | <sub>−0,68</sub> | <sub>0,03</sub> | <sub>0,10</sub> | <sub>0,02</sub> |
+| <sub>Domino's</sub> | <sub>0,15</sub> | <sub>1,05</sub> | <sub>0,10</sub> | <sub>−0,26</sub> | <sub>0,19</sub> |
+| <sub>Pizza Hut</sub> | <sub>0,16</sub> | <sub>−0,02</sub> | <sub>0,00</sub> | <sub>0,00</sub> | <sub>0,06</sub> |
 
 P = palanca alta; A = atípico; I = influyente. — = sin alerta.
 
@@ -425,25 +425,25 @@ P = palanca alta; A = atípico; I = influyente. — = sin alerta.
 sov_tabla(x, "formas", categoria = "auto_marcas")
 ```
 
-| Categoría | Forma | RMSE CV | ΔAICc | Mejor en |
-| --- | --- | --- | --- | --- |
-| Automoción | Lineal | 1,43 | 0,0 | — |
-| Automoción | ln SOM | 1,27 | −2,3 | AICc |
-| Automoción | Cuadrática | 1,21 | +1,8 | RMSE |
+| <sub>Categoría</sub> | <sub>Forma</sub> | <sub>RMSE CV</sub> | <sub>ΔAICc</sub> | <sub>Mejor en</sub> |
+| :--- | :--- | ---: | ---: | :--- |
+| <sub>Automoción</sub> | <sub>Lineal</sub> | <sub>1,43</sub> | <sub>0,0</sub> | <sub>—</sub> |
+| <sub>Automoción</sub> | <sub>ln SOM</sub> | <sub>1,27</sub> | <sub>−2,3</sub> | <sub>AICc</sub> |
+| <sub>Automoción</sub> | <sub>Cuadrática</sub> | <sub>1,21</sub> | <sub>+1,8</sub> | <sub>RMSE</sub> |
 
 
 ``` r
 sov_tabla(x, "elasticidad")
 ```
 
-| Categoría | n | γ | IC 95 % de γ | p (γ = 1) | Lectura |
-| --- | --- | --- | --- | --- | --- |
-| Automoción | 10 | 0,71 | [0,44; 0,99] | 0,044 | Economía de escala |
-| Restauración | 10 | 0,28 | [−0,80; 1,36] | 0,161 | No distinguible de 1 (paridad) |
-| Telefonía móvil | 6 | 0,93 | [0,39; 1,47] | 0,729 | No distinguible de 1 (paridad) |
-| Tarjetas de crédito | 6 | −0,13 | [−2,37; 2,11] | 0,233 | No distinguible de 1 (paridad) |
-| Cerveza | 10 | 1,46 | [0,64; 2,29] | 0,231 | No distinguible de 1 (paridad) |
-| Bebidas | 10 | 3,19 | [0,78; 5,60] | 0,069 | No distinguible de 1 (paridad) |
+| <sub>Categoría</sub> | <sub>n</sub> | <sub>γ</sub> | <sub>IC 95 % de γ</sub> | <sub>p (γ = 1)</sub> | <sub>Lectura</sub> |
+| :--- | ---: | ---: | ---: | ---: | :--- |
+| <sub>Automoción</sub> | <sub>10</sub> | <sub>0,71</sub> | <sub>[0,44; 0,99]</sub> | <sub>0,044</sub> | <sub>Economía de escala</sub> |
+| <sub>Restauración</sub> | <sub>10</sub> | <sub>0,28</sub> | <sub>[−0,80; 1,36]</sub> | <sub>0,161</sub> | <sub>No distinguible de 1 (paridad)</sub> |
+| <sub>Telefonía móvil</sub> | <sub>6</sub> | <sub>0,93</sub> | <sub>[0,39; 1,47]</sub> | <sub>0,729</sub> | <sub>No distinguible de 1 (paridad)</sub> |
+| <sub>Tarjetas de crédito</sub> | <sub>6</sub> | <sub>−0,13</sub> | <sub>[−2,37; 2,11]</sub> | <sub>0,233</sub> | <sub>No distinguible de 1 (paridad)</sub> |
+| <sub>Cerveza</sub> | <sub>10</sub> | <sub>1,46</sub> | <sub>[0,64; 2,29]</sub> | <sub>0,231</sub> | <sub>No distinguible de 1 (paridad)</sub> |
+| <sub>Bebidas</sub> | <sub>10</sub> | <sub>3,19</sub> | <sub>[0,78; 5,60]</sub> | <sub>0,069</sub> | <sub>No distinguible de 1 (paridad)</sub> |
 
 
 ``` r
@@ -530,10 +530,10 @@ som <- z$som; sov <- z$sov; esov <- z$esov; marca <- z$marca
 a <- sov_ajusta(som, esov)
 ```
 
-| Método | β | EE | p | IC 95 % |
-| --- | --- | --- | --- | --- |
-| MCO | −0,3498 | 0,0982 | 0,0074 | [−0,5763; −0,1233] |
-| MCO + HC3 | −0,3498 | 0,1294 | 0,0270 | [−0,6482; −0,0514] |
+| <sub>Método</sub> | <sub>β</sub> | <sub>EE</sub> | <sub>p</sub> | <sub>IC 95 %</sub> |
+| :--- | ---: | ---: | ---: | ---: |
+| <sub>MCO</sub> | <sub>−0,3498</sub> | <sub>0,0982</sub> | <sub>0,0074</sub> | <sub>[−0,5763; −0,1233]</sub> |
+| <sub>MCO + HC3</sub> | <sub>−0,3498</sub> | <sub>0,1294</sub> | <sub>0,0270</sub> | <sub>[−0,6482; −0,0514]</sub> |
 
 
 **Estimador de Theil-Sen** (mediana de las pendientes por pares; poco
@@ -543,9 +543,9 @@ sensible a extremos):
 sov_theil_sen(som, esov)
 ```
 
-| Intercepto α | Pendiente β |
-| --- | --- |
-| 1,7181 | −0,5033 |
+| <sub>Intercepto α</sub> | <sub>Pendiente β</sub> |
+| ---: | ---: |
+| <sub>1,7181</sub> | <sub>−0,5033</sub> |
 
 
 **Influencia** (palanca, t\* estudentizado, Cook, DFBETAS, β al omitir
@@ -555,32 +555,32 @@ la marca):
 i <- sov_influencia(som, esov, marca, sov)
 ```
 
-| Marca | SOM (%) | SOV (%) | ESOV (pp) | Residuo |
-| --- | --- | --- | --- | --- |
-| Ford | 14,30 | 11,49 | −2,81 | 1,13 |
-| Toyota | 12,30 | 7,45 | −4,85 | −1,61 |
-| Chevrolet | 12,00 | 10,50 | −1,50 | 1,63 |
-| Honda | 8,60 | 4,97 | −3,63 | −1,68 |
-| Nissan | 8,40 | 6,03 | −2,37 | −0,50 |
-| Jeep | 4,80 | 3,73 | −1,07 | −0,46 |
-| Hyundai | 3,90 | 3,30 | −0,60 | −0,30 |
-| Subaru | 3,80 | 3,62 | −0,18 | 0,09 |
-| Kia | 3,40 | 4,83 | 1,43 | 1,56 |
-| GMC | 3,30 | 3,34 | 0,04 | 0,13 |
+| <sub>Marca</sub> | <sub>SOM (%)</sub> | <sub>SOV (%)</sub> | <sub>ESOV (pp)</sub> | <sub>Residuo</sub> |
+| :--- | ---: | ---: | ---: | ---: |
+| <sub>Ford</sub> | <sub>14,30</sub> | <sub>11,49</sub> | <sub>−2,81</sub> | <sub>1,13</sub> |
+| <sub>Toyota</sub> | <sub>12,30</sub> | <sub>7,45</sub> | <sub>−4,85</sub> | <sub>−1,61</sub> |
+| <sub>Chevrolet</sub> | <sub>12,00</sub> | <sub>10,50</sub> | <sub>−1,50</sub> | <sub>1,63</sub> |
+| <sub>Honda</sub> | <sub>8,60</sub> | <sub>4,97</sub> | <sub>−3,63</sub> | <sub>−1,68</sub> |
+| <sub>Nissan</sub> | <sub>8,40</sub> | <sub>6,03</sub> | <sub>−2,37</sub> | <sub>−0,50</sub> |
+| <sub>Jeep</sub> | <sub>4,80</sub> | <sub>3,73</sub> | <sub>−1,07</sub> | <sub>−0,46</sub> |
+| <sub>Hyundai</sub> | <sub>3,90</sub> | <sub>3,30</sub> | <sub>−0,60</sub> | <sub>−0,30</sub> |
+| <sub>Subaru</sub> | <sub>3,80</sub> | <sub>3,62</sub> | <sub>−0,18</sub> | <sub>0,09</sub> |
+| <sub>Kia</sub> | <sub>3,40</sub> | <sub>4,83</sub> | <sub>1,43</sub> | <sub>1,56</sub> |
+| <sub>GMC</sub> | <sub>3,30</sub> | <sub>3,34</sub> | <sub>0,04</sub> | <sub>0,13</sub> |
 
 
-| Marca | Palanca | t* | Cook | DFBETAS | β sin marca | Alerta |
-| --- | --- | --- | --- | --- | --- | --- |
-| Ford | 0,391 | 1,191 | 0,433 | 0,823 | −0,429 | I |
-| Toyota | 0,245 | −1,640 | 0,361 | −0,719 | −0,286 | I |
-| Chevrolet | 0,228 | 1,648 | 0,330 | 0,670 | −0,410 | I |
-| Honda | 0,108 | −1,555 | 0,124 | −0,146 | −0,337 | — |
-| Nissan | 0,105 | −0,401 | 0,011 | −0,031 | −0,347 | — |
-| Jeep | 0,145 | −0,376 | 0,013 | 0,086 | −0,359 | — |
-| Hyundai | 0,180 | −0,247 | 0,008 | 0,077 | −0,358 | — |
-| Subaru | 0,185 | 0,076 | 0,001 | −0,024 | −0,347 | — |
-| Kia | 0,204 | 1,516 | 0,254 | −0,548 | −0,300 | — |
-| GMC | 0,209 | 0,113 | 0,002 | −0,042 | −0,345 | — |
+| <sub>Marca</sub> | <sub>Palanca</sub> | <sub>t*</sub> | <sub>Cook</sub> | <sub>DFBETAS</sub> | <sub>β sin marca</sub> | <sub>Alerta</sub> |
+| :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| <sub>Ford</sub> | <sub>0,391</sub> | <sub>1,191</sub> | <sub>0,433</sub> | <sub>0,823</sub> | <sub>−0,429</sub> | <sub>I</sub> |
+| <sub>Toyota</sub> | <sub>0,245</sub> | <sub>−1,640</sub> | <sub>0,361</sub> | <sub>−0,719</sub> | <sub>−0,286</sub> | <sub>I</sub> |
+| <sub>Chevrolet</sub> | <sub>0,228</sub> | <sub>1,648</sub> | <sub>0,330</sub> | <sub>0,670</sub> | <sub>−0,410</sub> | <sub>I</sub> |
+| <sub>Honda</sub> | <sub>0,108</sub> | <sub>−1,555</sub> | <sub>0,124</sub> | <sub>−0,146</sub> | <sub>−0,337</sub> | <sub>—</sub> |
+| <sub>Nissan</sub> | <sub>0,105</sub> | <sub>−0,401</sub> | <sub>0,011</sub> | <sub>−0,031</sub> | <sub>−0,347</sub> | <sub>—</sub> |
+| <sub>Jeep</sub> | <sub>0,145</sub> | <sub>−0,376</sub> | <sub>0,013</sub> | <sub>0,086</sub> | <sub>−0,359</sub> | <sub>—</sub> |
+| <sub>Hyundai</sub> | <sub>0,180</sub> | <sub>−0,247</sub> | <sub>0,008</sub> | <sub>0,077</sub> | <sub>−0,358</sub> | <sub>—</sub> |
+| <sub>Subaru</sub> | <sub>0,185</sub> | <sub>0,076</sub> | <sub>0,001</sub> | <sub>−0,024</sub> | <sub>−0,347</sub> | <sub>—</sub> |
+| <sub>Kia</sub> | <sub>0,204</sub> | <sub>1,516</sub> | <sub>0,254</sub> | <sub>−0,548</sub> | <sub>−0,300</sub> | <sub>—</sub> |
+| <sub>GMC</sub> | <sub>0,209</sub> | <sub>0,113</sub> | <sub>0,002</sub> | <sub>−0,042</sub> | <sub>−0,345</sub> | <sub>—</sub> |
 
 
 **Bootstrap de pares** (no supone normalidad):
@@ -589,10 +589,10 @@ i <- sov_influencia(som, esov, marca, sov)
 b <- sov_bootstrap(som, esov, B = 500, semilla = 1)
 ```
 
-| Método | IC 95 % percentil |
-| --- | --- |
-| MCO | [−0,6992; −0,1903] |
-| Theil-Sen | [−0,7431; −0,2242] |
+| <sub>Método</sub> | <sub>IC 95 % percentil</sub> |
+| :--- | ---: |
+| <sub>MCO</sub> | <sub>[−0,6992; −0,1903]</sub> |
+| <sub>Theil-Sen</sub> | <sub>[−0,7431; −0,2242]</sub> |
 
 
 **Formas funcionales alternativas** (lineal, ln SOM, cuadrática), con
@@ -602,11 +602,11 @@ RMSE de validación cruzada dejando una marca fuera (PRESS) y AICc:
 sov_formas(som, esov)
 ```
 
-| Forma | k | RMSE CV | AICc | ΔAICc | Mejor RMSE | Mejor AICc |
-| --- | --- | --- | --- | --- | --- | --- |
-| Lineal | 3 | 1,43 | 40,48 | 0,00 | — | — |
-| ln SOM | 3 | 1,27 | 38,14 | −2,35 | — | Sí |
-| Cuadrática | 4 | 1,21 | 42,27 | 1,79 | Sí | — |
+| <sub>Forma</sub> | <sub>k</sub> | <sub>RMSE CV</sub> | <sub>AICc</sub> | <sub>ΔAICc</sub> | <sub>Mejor RMSE</sub> | <sub>Mejor AICc</sub> |
+| :--- | ---: | ---: | ---: | ---: | :--- | :--- |
+| <sub>Lineal</sub> | <sub>3</sub> | <sub>1,43</sub> | <sub>40,48</sub> | <sub>0,00</sub> | <sub>—</sub> | <sub>—</sub> |
+| <sub>ln SOM</sub> | <sub>3</sub> | <sub>1,27</sub> | <sub>38,14</sub> | <sub>−2,35</sub> | <sub>—</sub> | <sub>Sí</sub> |
+| <sub>Cuadrática</sub> | <sub>4</sub> | <sub>1,21</sub> | <sub>42,27</sub> | <sub>1,79</sub> | <sub>Sí</sub> | <sub>—</sub> |
 
 
 **Elasticidad** (modelo log-log, SOV = c · SOM<sup>γ</sup>; γ \< 1
@@ -616,14 +616,14 @@ indica economías de escala):
 sov_elasticidad(som, sov)
 ```
 
-| Indicador | Valor |
-| --- | --- |
-| n | 10 |
-| gamma | 0,7131474 |
-| se | 0,1202583 |
-| ic | 0,4358312; 0,9904635 |
-| p_igual1 | 0,04417841 |
-| excluidas | 0 |
+| <sub>Indicador</sub> | <sub>Valor</sub> |
+| :--- | :--- |
+| <sub>n</sub> | <sub>10</sub> |
+| <sub>gamma</sub> | <sub>0,7131474</sub> |
+| <sub>se</sub> | <sub>0,1202583</sub> |
+| <sub>ic</sub> | <sub>0,4358312; 0,9904635</sub> |
+| <sub>p_igual1</sub> | <sub>0,04417841</sub> |
+| <sub>excluidas</sub> | <sub>0</sub> |
 
 
 **Homogeneidad de pendientes** entre categorías (contraste F de
@@ -633,15 +633,15 @@ pendientes comunes):
 sov_heterogeneidad(x$datos)
 ```
 
-| Indicador | Valor |
-| --- | --- |
-| F | 3,372421 |
-| gl1 | 5 |
-| gl2 | 42 |
-| p | 0,01191121 |
-| beta_comun | −0,2473603 |
-| n | 54 |
-| casos | 6 |
+| <sub>Indicador</sub> | <sub>Valor</sub> |
+| :--- | ---: |
+| <sub>F</sub> | <sub>3,372421</sub> |
+| <sub>gl1</sub> | <sub>5</sub> |
+| <sub>gl2</sub> | <sub>42</sub> |
+| <sub>p</sub> | <sub>0,01191121</sub> |
+| <sub>beta_comun</sub> | <sub>−0,2473603</sub> |
+| <sub>n</sub> | <sub>54</sub> |
+| <sub>casos</sub> | <sub>6</sub> |
 
 
 ## 9. Informe HTML y asistente interactivo
@@ -718,10 +718,10 @@ descarga del informe HTML. Requiere `shiny`.
 sov_glosario("beta")
 ```
 
-| Término | Definición |
-| --- | --- |
-| beta (pendiente) | Cambio medio del ESOV por cada punto porcentual adicional de SOM. Negativo: las marcas grandes invierten proporcionalmente menos. |
-| Distancia de Cook / DFBETAS | Medidas de cuánto cambia la pendiente si se omite una marca. |
+| <sub>Término</sub> | <sub>Definición</sub> |
+| :--- | :--- |
+| <sub>beta (pendiente)</sub> | <sub>Cambio medio del ESOV por cada punto porcentual adicional de SOM. Negativo: las marcas grandes invierten proporcionalmente menos.</sub> |
+| <sub>Distancia de Cook / DFBETAS</sub> | <sub>Medidas de cuánto cambia la pendiente si se omite una marca.</sub> |
 
 
 ## 10. Datos sintéticos
@@ -737,15 +737,15 @@ sov_glosario("beta")
 sov_postulados()[, c("id", "nombre", "tipo", "formulacion")]
 ```
 
-| ID | Postulado | Tipo | Formulación |
-| --- | --- | --- | --- |
-| jones_lineal | Curva de Jones (lineal) | estático | ESOV = beta (SOM - media): las marcas pequeñas invierten proporcionalmente más si beta < 0 |
-| paridad | Paridad (SOV = SOM) | estático | ESOV = 0 salvo ruido: cada marca invierte en proporción a su cuota |
-| jones_heterogeneo | Curva de Jones heterogénea por categoría | estático | Como jones_lineal, con beta_c ~ N(beta, tau^2) distinto en cada categoría |
-| potencia | Ley de potencia | estático | SOV proporcional a SOM^gamma: gamma < 1 economías de escala, gamma > 1 deseconomías |
-| curvilinea | Curvilínea (ESOV cuadrático) | estático | ESOV = beta z + delta (z^2 - media(z^2)), z = SOM - media: efecto no lineal de la cuota |
-| equilibrio | Equilibrio de cuotas | dinámico | d ln SOM = eta ln(SOV/SOM) + u con eta = 0: el exceso de voz no cambia la cuota |
-| elasticidad | Elasticidad de largo plazo | dinámico | d ln SOM = eta ln(SOV/SOM) + u con eta > 0: el exceso de voz hace crecer la cuota |
+| <sub>ID</sub> | <sub>Postulado</sub> | <sub>Tipo</sub> | <sub>Formulación</sub> |
+| :--- | :--- | :--- | :--- |
+| <sub>jones_lineal</sub> | <sub>Curva de Jones (lineal)</sub> | <sub>estático</sub> | <sub>ESOV = beta (SOM - media): las marcas pequeñas invierten proporcionalmente más si beta < 0</sub> |
+| <sub>paridad</sub> | <sub>Paridad (SOV = SOM)</sub> | <sub>estático</sub> | <sub>ESOV = 0 salvo ruido: cada marca invierte en proporción a su cuota</sub> |
+| <sub>jones_heterogeneo</sub> | <sub>Curva de Jones heterogénea por categoría</sub> | <sub>estático</sub> | <sub>Como jones_lineal, con beta_c ~ N(beta, tau^2) distinto en cada categoría</sub> |
+| <sub>potencia</sub> | <sub>Ley de potencia</sub> | <sub>estático</sub> | <sub>SOV proporcional a SOM^gamma: gamma < 1 economías de escala, gamma > 1 deseconomías</sub> |
+| <sub>curvilinea</sub> | <sub>Curvilínea (ESOV cuadrático)</sub> | <sub>estático</sub> | <sub>ESOV = beta z + delta (z^2 - media(z^2)), z = SOM - media: efecto no lineal de la cuota</sub> |
+| <sub>equilibrio</sub> | <sub>Equilibrio de cuotas</sub> | <sub>dinámico</sub> | <sub>d ln SOM = eta ln(SOV/SOM) + u con eta = 0: el exceso de voz no cambia la cuota</sub> |
+| <sub>elasticidad</sub> | <sub>Elasticidad de largo plazo</sub> | <sub>dinámico</sub> | <sub>d ln SOM = eta ln(SOV/SOM) + u con eta > 0: el exceso de voz hace crecer la cuota</sub> |
 
 
 ### 10.2 Generar datos
@@ -757,14 +757,14 @@ s
 
 **Datos sintéticos:** 66 filas, 6 categorías. Se excluye la fila «resto del mercado» de cada categoría.
 
-| Categoría | Marcas | SOM cubierta (%) | SOV cubierta (%) |
-| --- | --- | --- | --- |
-| Categoría 1 | 10 | 79,0 | 59,3 |
-| Categoría 2 | 10 | 63,0 | 51,5 |
-| Categoría 3 | 10 | 66,0 | 45,8 |
-| Categoría 4 | 10 | 61,8 | 35,4 |
-| Categoría 5 | 10 | 64,5 | 51,7 |
-| Categoría 6 | 10 | 65,6 | 60,2 |
+| <sub>Categoría</sub> | <sub>Marcas</sub> | <sub>SOM cubierta (%)</sub> | <sub>SOV cubierta (%)</sub> |
+| :--- | ---: | ---: | ---: |
+| <sub>Categoría 1</sub> | <sub>10</sub> | <sub>79,0</sub> | <sub>59,3</sub> |
+| <sub>Categoría 2</sub> | <sub>10</sub> | <sub>63,0</sub> | <sub>51,5</sub> |
+| <sub>Categoría 3</sub> | <sub>10</sub> | <sub>66,0</sub> | <sub>45,8</sub> |
+| <sub>Categoría 4</sub> | <sub>10</sub> | <sub>61,8</sub> | <sub>35,4</sub> |
+| <sub>Categoría 5</sub> | <sub>10</sub> | <sub>64,5</sub> | <sub>51,7</sub> |
+| <sub>Categoría 6</sub> | <sub>10</sub> | <sub>65,6</sub> | <sub>60,2</sub> |
 
 
 Cada categoría tiene cuotas que suman exactamente 100 % (mercado
@@ -779,14 +779,14 @@ sim$verdad[, c("caso", "beta_lineal_publicadas", "cobertura_som")]
 
 Postulado: `jones_lineal`. Semilla: 2019.
 
-| Caso | β verdadera | SOM cubierta (%) |
-| --- | --- | --- |
-| cat01 | −0,38 | 79,03 |
-| cat02 | −0,38 | 63,03 |
-| cat03 | −0,38 | 65,96 |
-| cat04 | −0,38 | 61,79 |
-| cat05 | −0,38 | 64,47 |
-| cat06 | −0,38 | 65,58 |
+| <sub>Caso</sub> | <sub>β verdadera</sub> | <sub>SOM cubierta (%)</sub> |
+| :--- | ---: | ---: |
+| <sub>cat01</sub> | <sub>−0,38</sub> | <sub>79,03</sub> |
+| <sub>cat02</sub> | <sub>−0,38</sub> | <sub>63,03</sub> |
+| <sub>cat03</sub> | <sub>−0,38</sub> | <sub>65,96</sub> |
+| <sub>cat04</sub> | <sub>−0,38</sub> | <sub>61,79</sub> |
+| <sub>cat05</sub> | <sub>−0,38</sub> | <sub>64,47</sub> |
+| <sub>cat06</sub> | <sub>−0,38</sub> | <sub>65,58</sub> |
 
 
 Se analizan con las mismas funciones que los datos reales, y todo
@@ -799,14 +799,14 @@ sov_tabla(xs, "resultados")[, 1:5]
 
 **Datos sintéticos.**
 
-| Categoría | n | β | IC 95 % | IC robusto HC3 |
-| --- | --- | --- | --- | --- |
-| Categoría 1 | 10 | −0,44 | [−0,67; −0,20] | [−0,70; −0,18] |
-| Categoría 2 | 10 | −0,23 | [−0,72; 0,26] | [−1,03; 0,58] |
-| Categoría 3 | 10 | −0,86 | [−1,44; −0,29] | [−1,13; −0,60] |
-| Categoría 4 | 10 | −0,61 | [−0,99; −0,23] | [−1,53; 0,31] |
-| Categoría 5 | 10 | −0,11 | [−0,66; 0,44] | [−1,27; 1,04] |
-| Categoría 6 | 10 | −1,07 | [−1,75; −0,39] | [−1,49; −0,65] |
+| <sub>Categoría</sub> | <sub>n</sub> | <sub>β</sub> | <sub>IC 95 %</sub> | <sub>IC robusto HC3</sub> |
+| :--- | ---: | ---: | ---: | ---: |
+| <sub>Categoría 1</sub> | <sub>10</sub> | <sub>−0,44</sub> | <sub>[−0,67; −0,20]</sub> | <sub>[−0,70; −0,18]</sub> |
+| <sub>Categoría 2</sub> | <sub>10</sub> | <sub>−0,23</sub> | <sub>[−0,72; 0,26]</sub> | <sub>[−1,03; 0,58]</sub> |
+| <sub>Categoría 3</sub> | <sub>10</sub> | <sub>−0,86</sub> | <sub>[−1,44; −0,29]</sub> | <sub>[−1,13; −0,60]</sub> |
+| <sub>Categoría 4</sub> | <sub>10</sub> | <sub>−0,61</sub> | <sub>[−0,99; −0,23]</sub> | <sub>[−1,53; 0,31]</sub> |
+| <sub>Categoría 5</sub> | <sub>10</sub> | <sub>−0,11</sub> | <sub>[−0,66; 0,44]</sub> | <sub>[−1,27; 1,04]</sub> |
+| <sub>Categoría 6</sub> | <sub>10</sub> | <sub>−1,07</sub> | <sub>[−1,75; −0,39]</sub> | <sub>[−1,49; −0,65]</sub> |
 
 
 La misma semilla reproduce exactamente los mismos datos; el generador de
@@ -819,21 +819,21 @@ p <- sov_parametros("jones_lineal")
 p$procedencia
 ```
 
-| Parámetro | Valor | Procedencia |
-| --- | --- | --- |
-| n_categorias | 6 | Supuesto por defecto (igual al número de casos de AdAge 2019) |
-| n_total_marcas | 30 | Supuesto por defecto (Ad Age solo publica las marcas líderes) |
-| n_publicadas | 10 | Calibrado con AdAge 2019 (6 categorías) |
-| resto | TRUE | Estructura de Ad Age (fila derivada) |
-| theta | 0,8334 | Calibrado con AdAge 2019 (6 categorías); forma de ley de potencia: Bae et al. (2024) |
-| theta_sd | 0,5014 | Calibrado con AdAge 2019 (6 categorías) (dispersión entre categorías) |
-| sigma_forma | 0,2396 | Calibrado con AdAge 2019 (6 categorías) |
-| kappa | 43,2761 | Calibrado con AdAge 2019 (6 categorías) (precisión de Dirichlet, estimador de momentos); distribución de cuotas: Morais et al. (2017) |
-| beta | −0,38 | Slide 22: ajuste lineal a la tabla de Jones (1990); no contrastado con el original |
-| tau_beta | 0 | Supuesto por defecto (sin heterogeneidad) |
-| gamma | 0,8205 | Calibrado con AdAge 2019 (6 categorías) (mediana de la elasticidad log-log) |
-| tau_gamma | 0 | Supuesto por defecto (sin heterogeneidad) |
-| delta | 0,004 | Supuesto de sensibilidad (sin respaldo empírico) |
+| <sub>Parámetro</sub> | <sub>Valor</sub> | <sub>Procedencia</sub> |
+| :--- | :--- | :--- |
+| <sub>n_categorias</sub> | <sub>6</sub> | <sub>Supuesto por defecto (igual al número de casos de AdAge 2019)</sub> |
+| <sub>n_total_marcas</sub> | <sub>30</sub> | <sub>Supuesto por defecto (Ad Age solo publica las marcas líderes)</sub> |
+| <sub>n_publicadas</sub> | <sub>10</sub> | <sub>Calibrado con AdAge 2019 (6 categorías)</sub> |
+| <sub>resto</sub> | <sub>TRUE</sub> | <sub>Estructura de Ad Age (fila derivada)</sub> |
+| <sub>theta</sub> | <sub>0,8334</sub> | <sub>Calibrado con AdAge 2019 (6 categorías); forma de ley de potencia: Bae et al. (2024)</sub> |
+| <sub>theta_sd</sub> | <sub>0,5014</sub> | <sub>Calibrado con AdAge 2019 (6 categorías) (dispersión entre categorías)</sub> |
+| <sub>sigma_forma</sub> | <sub>0,2396</sub> | <sub>Calibrado con AdAge 2019 (6 categorías)</sub> |
+| <sub>kappa</sub> | <sub>43,2761</sub> | <sub>Calibrado con AdAge 2019 (6 categorías) (precisión de Dirichlet, estimador de momentos); distribución de cuotas: Morais et al. (2017)</sub> |
+| <sub>beta</sub> | <sub>−0,38</sub> | <sub>Slide 22: ajuste lineal a la tabla de Jones (1990); no contrastado con el original</sub> |
+| <sub>tau_beta</sub> | <sub>0</sub> | <sub>Supuesto por defecto (sin heterogeneidad)</sub> |
+| <sub>gamma</sub> | <sub>0,8205</sub> | <sub>Calibrado con AdAge 2019 (6 categorías) (mediana de la elasticidad log-log)</sub> |
+| <sub>tau_gamma</sub> | <sub>0</sub> | <sub>Supuesto por defecto (sin heterogeneidad)</sub> |
+| <sub>delta</sub> | <sub>0,004</sub> | <sub>Supuesto de sensibilidad (sin respaldo empírico)</sub> |
 
 
 Cada parámetro indica su valor, su procedencia (calibración con Ad Age
@@ -865,14 +865,14 @@ cal$por_caso
 cal$resumen
 ```
 
-| Categoría | n | θ | σ forma | γ | κ | β | EE β |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Automoción | 10 | 0,738 | 0,233 | 0,713 | 374,867 | −0,350 | 0,098 |
-| Restauración | 10 | 0,724 | 0,173 | 0,279 | 68,371 | 0,066 | 0,483 |
-| Telefonía móvil | 6 | 1,582 | 0,724 | 0,928 | 20,418 | −0,636 | 0,220 |
-| Tarjetas de crédito | 8 | 0,929 | 0,279 | −0,134 | 8,285 | −0,517 | 0,515 |
-| Cerveza | 10 | 1,845 | 0,246 | 1,465 | 30,583 | −0,049 | 0,098 |
-| Bebidas | 10 | 0,688 | 0,132 | 3,194 | 55,969 | 1,195 | 0,280 |
+| <sub>Categoría</sub> | <sub>n</sub> | <sub>θ</sub> | <sub>σ forma</sub> | <sub>γ</sub> | <sub>κ</sub> | <sub>β</sub> | <sub>EE β</sub> |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| <sub>Automoción</sub> | <sub>10</sub> | <sub>0,738</sub> | <sub>0,233</sub> | <sub>0,713</sub> | <sub>374,867</sub> | <sub>−0,350</sub> | <sub>0,098</sub> |
+| <sub>Restauración</sub> | <sub>10</sub> | <sub>0,724</sub> | <sub>0,173</sub> | <sub>0,279</sub> | <sub>68,371</sub> | <sub>0,066</sub> | <sub>0,483</sub> |
+| <sub>Telefonía móvil</sub> | <sub>6</sub> | <sub>1,582</sub> | <sub>0,724</sub> | <sub>0,928</sub> | <sub>20,418</sub> | <sub>−0,636</sub> | <sub>0,220</sub> |
+| <sub>Tarjetas de crédito</sub> | <sub>8</sub> | <sub>0,929</sub> | <sub>0,279</sub> | <sub>−0,134</sub> | <sub>8,285</sub> | <sub>−0,517</sub> | <sub>0,515</sub> |
+| <sub>Cerveza</sub> | <sub>10</sub> | <sub>1,845</sub> | <sub>0,246</sub> | <sub>1,465</sub> | <sub>30,583</sub> | <sub>−0,049</sub> | <sub>0,098</sub> |
+| <sub>Bebidas</sub> | <sub>10</sub> | <sub>0,688</sub> | <sub>0,132</sub> | <sub>3,194</sub> | <sub>55,969</sub> | <sub>1,195</sub> | <sub>0,280</sub> |
 
 Resumen (medianas entre categorías): theta = 0.833 (sd 0.501), sigma_forma = 0.24, gamma = 0.82, kappa = 43.3, beta = -0.199, tau_beta = 0.579
 
@@ -897,24 +897,24 @@ sov_efecto_esov(d)
 
 **Datos sintéticos:** 528 filas, 6 categorías, 8 períodos.
 
-| Marca | Período | SOM (%) | SOV (%) | ESOV (pp) |
-| --- | --- | --- | --- | --- |
-| Marca 01 | 1 | 12,06 | 18,33 | 6,26 |
-| Marca 02 | 1 | 7,55 | 4,25 | −3,30 |
-| Marca 03 | 1 | 6,29 | 10,24 | 3,95 |
-| Marca 04 | 1 | 5,74 | 2,14 | −3,61 |
-| Marca 05 | 1 | 4,90 | 1,43 | −3,46 |
-| Marca 06 | 1 | 4,79 | 3,18 | −1,61 |
+| <sub>Marca</sub> | <sub>Período</sub> | <sub>SOM (%)</sub> | <sub>SOV (%)</sub> | <sub>ESOV (pp)</sub> |
+| :--- | ---: | ---: | ---: | ---: |
+| <sub>Marca 01</sub> | <sub>1</sub> | <sub>12,06</sub> | <sub>18,33</sub> | <sub>6,26</sub> |
+| <sub>Marca 02</sub> | <sub>1</sub> | <sub>7,55</sub> | <sub>4,25</sub> | <sub>−3,30</sub> |
+| <sub>Marca 03</sub> | <sub>1</sub> | <sub>6,29</sub> | <sub>10,24</sub> | <sub>3,95</sub> |
+| <sub>Marca 04</sub> | <sub>1</sub> | <sub>5,74</sub> | <sub>2,14</sub> | <sub>−3,61</sub> |
+| <sub>Marca 05</sub> | <sub>1</sub> | <sub>4,90</sub> | <sub>1,43</sub> | <sub>−3,46</sub> |
+| <sub>Marca 06</sub> | <sub>1</sub> | <sub>4,79</sub> | <sub>3,18</sub> | <sub>−1,61</sub> |
 
-| Indicador | Valor |
-| --- | --- |
-| eta | 0,2395361 |
-| se | 0,001589648 |
-| ic | 0,2364104; 0,2426618 |
-| p | 0 |
-| n | 420 |
-| grupos | 42 |
-| gl | 377 |
+| <sub>Indicador</sub> | <sub>Valor</sub> |
+| :--- | :--- |
+| <sub>eta</sub> | <sub>0,2395361</sub> |
+| <sub>se</sub> | <sub>0,001589648</sub> |
+| <sub>ic</sub> | <sub>0,2364104; 0,2426618</sub> |
+| <sub>p</sub> | <sub>0</sub> |
+| <sub>n</sub> | <sub>420</sub> |
+| <sub>grupos</sub> | <sub>42</sub> |
+| <sub>gl</sub> | <sub>377</sub> |
 
 
 Con `"equilibrio"` (η = 0, Graham, 2009) el efecto estimado debe ser
@@ -937,17 +937,17 @@ v <- sov_valida_simulacion("jones_lineal", R = 100, semilla = 11, B = 200)
 v$resumen
 ```
 
-| Medida | Valor | Error Monte Carlo |
-| --- | --- | --- |
-| Sesgo medio de beta (MCO) | 0,0028 | 0,0317 |
-| RMSE de beta (MCO) | 0,7746 | NA |
-| Cobertura del IC 95 % de beta (MCO clásico) | 0,8550 | 0,0144 |
-| Tasa de rechazo de beta = 0 (MCO clásico, p < 0,05) | 0,4450 | 0,0203 |
-| Cobertura del IC 95 % de beta (robusto HC3) | 0,9217 | 0,0110 |
-| Tasa de rechazo de beta = 0 (HC3, p < 0,05) | 0,2283 | 0,0171 |
-| Sesgo medio de beta (Theil-Sen) | 0,0129 | 0,0364 |
-| RMSE de beta (Theil-Sen) | 0,8902 | NA |
-| Cobertura del IC 95 % de beta (bootstrap percentil, B = 200) | 0,8917 | 0,0127 |
+| <sub>Medida</sub> | <sub>Valor</sub> | <sub>Error Monte Carlo</sub> |
+| :--- | ---: | ---: |
+| <sub>Sesgo medio de beta (MCO)</sub> | <sub>0,0028</sub> | <sub>0,0317</sub> |
+| <sub>RMSE de beta (MCO)</sub> | <sub>0,7746</sub> | <sub>NA</sub> |
+| <sub>Cobertura del IC 95 % de beta (MCO clásico)</sub> | <sub>0,8550</sub> | <sub>0,0144</sub> |
+| <sub>Tasa de rechazo de beta = 0 (MCO clásico, p < 0,05)</sub> | <sub>0,4450</sub> | <sub>0,0203</sub> |
+| <sub>Cobertura del IC 95 % de beta (robusto HC3)</sub> | <sub>0,9217</sub> | <sub>0,0110</sub> |
+| <sub>Tasa de rechazo de beta = 0 (HC3, p < 0,05)</sub> | <sub>0,2283</sub> | <sub>0,0171</sub> |
+| <sub>Sesgo medio de beta (Theil-Sen)</sub> | <sub>0,0129</sub> | <sub>0,0364</sub> |
+| <sub>RMSE de beta (Theil-Sen)</sub> | <sub>0,8902</sub> | <sub>NA</sub> |
+| <sub>Cobertura del IC 95 % de beta (bootstrap percentil, B = 200)</sub> | <sub>0,8917</sub> | <sub>0,0127</sub> |
 
 Forma funcional elegida por AICc: Lineal 58.3 % | ln SOM 32.2 % | Cuadrática 9.5 %
 
@@ -987,30 +987,30 @@ paquete muestra siempre ambos intervalos.
 
 ## 13. Referencia de funciones
 
-| Función                                                                                                                               | Para qué sirve                                                                                               |
-|---------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| `sov_demo()`                                                                                                                          | Recorrido guiado de todo el flujo                                                                            |
-| `sov_asistente()`                                                                                                                     | Aplicación Shiny sin código                                                                                  |
-| `sov_plantilla()`                                                                                                                     | Crea un CSV de muestra compatible con Excel                                                                  |
-| `sov_ejemplo()`                                                                                                                       | Ruta del CSV de ejemplo (Ad Age, 2019)                                                                       |
-| `adage2019`                                                                                                                           | Datos reales de ejemplo                                                                                      |
-| `sov_lee()`                                                                                                                           | Lee un CSV (separador, decimal y codificación automáticos)                                                   |
-| `sov_prepara()`                                                                                                                       | Estandariza y valida los datos                                                                               |
-| `sov_analiza()`                                                                                                                       | Análisis completo por categoría                                                                              |
-| `sov_interpreta()`                                                                                                                    | Lectura en lenguaje llano                                                                                    |
-| `sov_tabla()`                                                                                                                         | Tablas de resultados (data.frame o HTML)                                                                     |
-| `sov_grafico()`, `sov_grafico_bosque()`, `sov_mapa()`, `plot()`                                                                       | Gráficos (ESOV por SOM, bosque de pendientes, mapa SOV–SOM)                                                  |
-| `sov_informe()`                                                                                                                       | Informe HTML autocontenido (incluye las dos guías)                                                           |
-| `sov_guia()`                                                                                                                          | Guía paso a paso: de las cuotas a la brecha de una marca (`"marca"`) o de los puntos a la recta (`"sector"`) |
-| `sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()` | Componentes del análisis con vectores                                                                        |
-| `sov_postulados()`                                                                                                                    | Catálogo de postulados de simulación                                                                         |
-| `sov_parametros()`                                                                                                                    | Parámetros y procedencia                                                                                     |
-| `sov_calibra()`                                                                                                                       | Calibración con datos reales                                                                                 |
-| `sov_simula()`, `sov_simula_dinamica()`                                                                                               | Generación de datos sintéticos                                                                               |
-| `sov_efecto_esov()`                                                                                                                   | Efecto del ESOV sobre la variación de cuota (panel)                                                          |
-| `sov_valida_simulacion()`                                                                                                             | Estudio de recuperación (sesgo, RMSE, cobertura)                                                             |
-| `sov_referencias()`                                                                                                                   | Bibliografía con estado de verificación                                                                      |
-| `sov_glosario()`                                                                                                                      | Definición de términos                                                                                       |
+| <sub>Función</sub> | <sub>Para qué sirve</sub> |
+| :--- | :--- |
+| <sub>`sov_demo()`</sub> | <sub>Recorrido guiado de todo el flujo</sub> |
+| <sub>`sov_asistente()`</sub> | <sub>Aplicación Shiny sin código</sub> |
+| <sub>`sov_plantilla()`</sub> | <sub>Crea un CSV de muestra compatible con Excel</sub> |
+| <sub>`sov_ejemplo()`</sub> | <sub>Ruta del CSV de ejemplo (Ad Age, 2019)</sub> |
+| <sub>`adage2019`</sub> | <sub>Datos reales de ejemplo</sub> |
+| <sub>`sov_lee()`</sub> | <sub>Lee un CSV (separador, decimal y codificación automáticos)</sub> |
+| <sub>`sov_prepara()`</sub> | <sub>Estandariza y valida los datos</sub> |
+| <sub>`sov_analiza()`</sub> | <sub>Análisis completo por categoría</sub> |
+| <sub>`sov_interpreta()`</sub> | <sub>Lectura en lenguaje llano</sub> |
+| <sub>`sov_tabla()`</sub> | <sub>Tablas de resultados (data.frame o HTML)</sub> |
+| <sub>`sov_grafico()`, `sov_grafico_bosque()`, `sov_mapa()`, `plot()`</sub> | <sub>Gráficos (ESOV por SOM, bosque de pendientes, mapa SOV–SOM)</sub> |
+| <sub>`sov_informe()`</sub> | <sub>Informe HTML autocontenido (incluye las dos guías)</sub> |
+| <sub>`sov_guia()`</sub> | <sub>Guía paso a paso: de las cuotas a la brecha de una marca (`"marca"`) o de los puntos a la recta (`"sector"`)</sub> |
+| <sub>`sov_ajusta()`, `sov_theil_sen()`, `sov_influencia()`, `sov_bootstrap()`, `sov_formas()`, `sov_elasticidad()`, `sov_heterogeneidad()`</sub> | <sub>Componentes del análisis con vectores</sub> |
+| <sub>`sov_postulados()`</sub> | <sub>Catálogo de postulados de simulación</sub> |
+| <sub>`sov_parametros()`</sub> | <sub>Parámetros y procedencia</sub> |
+| <sub>`sov_calibra()`</sub> | <sub>Calibración con datos reales</sub> |
+| <sub>`sov_simula()`, `sov_simula_dinamica()`</sub> | <sub>Generación de datos sintéticos</sub> |
+| <sub>`sov_efecto_esov()`</sub> | <sub>Efecto del ESOV sobre la variación de cuota (panel)</sub> |
+| <sub>`sov_valida_simulacion()`</sub> | <sub>Estudio de recuperación (sesgo, RMSE, cobertura)</sub> |
+| <sub>`sov_referencias()`</sub> | <sub>Bibliografía con estado de verificación</sub> |
+| <sub>`sov_glosario()`</sub> | <sub>Definición de términos</sub> |
 
 La ayuda de cada función está disponible con `?sov_analiza`,
 `help(package = "mediaSOV")` y `vignette("primeros-pasos", "mediaSOV")`
@@ -1040,16 +1040,16 @@ sov_referencias()
 
 ## 14. Solución de problemas
 
-| Síntoma                                                | Causa probable                     | Solución                                                                       |
-|--------------------------------------------------------|------------------------------------|--------------------------------------------------------------------------------|
-| `no se puede abrir el URL` / error en `install_github` | Sin conexión o proxy               | Descargue el ZIP (apartado 2.3)                                                |
-| Error por Pandoc en `sov_informe()`                    | Pandoc no instalado                | Use RStudio o instale Pandoc (<https://pandoc.org/installing.html>)            |
-| `Falta el paquete 'shiny'`                             | Paquete opcional ausente           | `install.packages("shiny")`                                                    |
-| «columna» no encontrada al leer                        | Nombres de columna no reconocidos  | Renómbrelos (apartado 4.1) o use `sov_plantilla()`                             |
-| Cifras 100 veces menores o mayores                     | Cuotas en proporción (0–1)         | Multiplique por 100                                                            |
-| «menos de 4 marcas»                                    | Categoría con pocas marcas         | Se omite; añada marcas o agrupe categorías                                     |
-| Acentos mal en consola de Windows                      | Codificación de la consola         | El archivo se lee bien; use RStudio o `Sys.setlocale("LC_ALL", "es_ES.UTF-8")` |
-| Excel muestra todo en una columna                      | Separador distinto del configurado | Use la plantilla del paquete o *Datos → Texto en columnas*                     |
+| <sub>Síntoma</sub> | <sub>Causa probable</sub> | <sub>Solución</sub> |
+| :--- | :--- | :--- |
+| <sub>`no se puede abrir el URL` / error en `install_github`</sub> | <sub>Sin conexión o proxy</sub> | <sub>Descargue el ZIP (apartado 2.3)</sub> |
+| <sub>Error por Pandoc en `sov_informe()`</sub> | <sub>Pandoc no instalado</sub> | <sub>Use RStudio o instale Pandoc (<https://pandoc.org/installing.html>)</sub> |
+| <sub>`Falta el paquete 'shiny'`</sub> | <sub>Paquete opcional ausente</sub> | <sub>`install.packages("shiny")`</sub> |
+| <sub>«columna» no encontrada al leer</sub> | <sub>Nombres de columna no reconocidos</sub> | <sub>Renómbrelos (apartado 4.1) o use `sov_plantilla()`</sub> |
+| <sub>Cifras 100 veces menores o mayores</sub> | <sub>Cuotas en proporción (0–1)</sub> | <sub>Multiplique por 100</sub> |
+| <sub>«menos de 4 marcas»</sub> | <sub>Categoría con pocas marcas</sub> | <sub>Se omite; añada marcas o agrupe categorías</sub> |
+| <sub>Acentos mal en consola de Windows</sub> | <sub>Codificación de la consola</sub> | <sub>El archivo se lee bien; use RStudio o `Sys.setlocale("LC_ALL", "es_ES.UTF-8")`</sub> |
+| <sub>Excel muestra todo en una columna</sub> | <sub>Separador distinto del configurado</sub> | <sub>Use la plantilla del paquete o *Datos → Texto en columnas*</sub> |
 
 Si el problema persiste, abra una *issue* en
 <https://github.com/majesus/mediaSOV/issues> indicando la salida de
