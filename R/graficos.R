@@ -90,7 +90,8 @@ sov_grafico <- function(x, categoria = NULL, etiquetas = TRUE) {
 #' @param categoria Identificador de la categoría (por defecto, la primera con al menos 4 marcas).
 #' @param marca Marca que se resalta en rojo (opcional).
 #' @param jones Si `TRUE` (por defecto), dibuja la referencia de Jones. Sus valores
-#'   son alfa = +6,4 y beta = -0,38.
+#'   (alfa = +6,4; beta = -0,38) definen la recta de mínimos cuadrados ajustada a
+#'   la tabla de Jones (1990, p. 40).
 #' @param valores Si `TRUE` (por defecto), añade el SOV y el SOM junto a cada marca.
 #' @return `NULL`, de forma invisible.
 #' @examples
