@@ -131,7 +131,7 @@ cat(knitr::kable(sov_glosario(), format = "html", col.names = c("Término", "Def
 
 # Limitaciones
 
-Las cuotas de una categoría suman 100 %, de modo que SOV y SOM no son independientes y la relación puede contener efectos de cierre. Con 6 a 10 marcas por categoría la potencia estadística es baja y los intervalos clásicos tienden a ser estrechos; el paquete ofrece además errores robustos (HC3), Theil-Sen y bootstrap de pares, y el estudio de recuperación (`sov_valida_simulacion()`) cuantifica su cobertura. Una asociación entre ESOV y SOM no demuestra causalidad. Los coeficientes de la curva de Jones usados como referencia proceden de una diapositiva docente y no se han verificado contra el original. La elasticidad η = 0,24 de las simulaciones dinámicas es un supuesto operativo inspirado en la literatura, no una estimación propia.
+Las cuotas de una categoría suman 100 %, de modo que SOV y SOM no son independientes y la relación puede contener efectos de cierre. Con 6 a 10 marcas por categoría la potencia estadística es baja y los intervalos clásicos tienden a ser estrechos; el paquete ofrece además errores robustos (HC3), Theil-Sen y bootstrap de pares, y el estudio de recuperación (`sov_valida_simulacion()`) cuantifica su cobertura. Una asociación entre ESOV y SOM no demuestra causalidad. Los coeficientes de la curva de Jones usados como referencia proceden de un ajuste lineal a la tabla de Jones (1990). La elasticidad η = 0,24 de las simulaciones dinámicas es un supuesto operativo inspirado en la literatura, no una estimación propia.
 
 # Referencias
 
