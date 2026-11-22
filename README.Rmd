@@ -601,7 +601,7 @@ La velocidad implícita en la regla de Peckham es unas diez veces la de Field. A
 
 Toda la fórmula depende de $k$, y conviene estimarlo antes que suponerlo. Si se dispone de un **panel** de la categoría (varios años de SOV y SOM por marca), `sov_efecto_esov()` estima η en $d\ln\mathrm{SOM} = \eta\,\ln(\mathrm{SOV}/\mathrm{SOM})$ (apartado 10.5). Cuando SOV y SOM son próximas, $\ln(v/s) \approx (v-s)/s$ y, por tanto, $ds/dt \approx \eta\,(v-s)$: **el η estimado puede emplearse como k con la referencia de paridad**, expresado en la periodicidad del panel; la aproximación es tanto más fiel cuanto menor sea la distancia entre voz y cuota.
 
-Sin panel, lo prudente es **acotar** el presupuesto con los dos anclajes de la tabla anterior, 0,05 y 0,55, y tratar el intervalo resultante como el rango de decisiones defendibles. Dos cautelas completan el cuadro. La primera: un $k$ estimado frente a la paridad no es trasladable sin más a la referencia de Jones,, porque mide la respuesta a otro exceso; con la referencia de Jones, $k$ debe estimarse frente a esa recta. La segunda: la respuesta a la publicidad es heterogénea y no siempre detectable; en el metaanálisis de Sethuraman et al. (2011), poco más de la mitad de las 437 elasticidades con error típico calculable resultaron significativamente mayores que cero al 95 % (citado en Danenberg et al., 2016, p. 145).
+Sin panel, lo prudente es **acotar** el presupuesto con los dos anclajes de la tabla anterior, 0,05 y 0,55, y tratar el intervalo resultante como el rango de decisiones defendibles. Dos cautelas completan el cuadro. La primera: un $k$ estimado frente a la paridad no es trasladable sin más a la referencia de Jones, porque mide la respuesta a otro exceso; con la referencia de Jones, $k$ debe estimarse frente a esa recta. La segunda: la respuesta a la publicidad es heterogénea y no siempre detectable; en el metaanálisis de Sethuraman et al. (2011), poco más de la mitad de las 437 elasticidades con error típico calculable resultaron significativamente mayores que cero al 95 % (citado en Danenberg et al., 2016, p. 145).
 
 ### 13.5 Ejemplo resuelto: Marca E, del 8 % al 10 % en dos años
 
@@ -642,11 +642,72 @@ Un plan de este tipo dibuja en ambos mapas la misma secuencia de tres movimiento
 
 De esta geometría se desprenden dos consecuencias prácticas. La primera: **que el ESOV disminuya durante el plan no indica que el plan esté fallando**; es la consecuencia mecánica de crecer con la voz constante. La segunda: **el aterrizaje es parte del plan**. Si la marca no rebaja su voz al cierre del segundo año, sigue creciendo hacia la cuota en la que esa voz sería de mantenimiento, el 11,0 % con paridad o el 12,0 % con Jones, y paga por un crecimiento que no estaba en el objetivo.
 
-### 13.7 Lo que el método no resuelve
+### 13.7 Del presupuesto al calendario: `sov_plan()`
+
+La fórmula del apartado 13.3 responde a cuánta voz comprar; `sov_plan()` responde, además, a cuándo comprarla. Con la cuota de mercado y la cuota de voz actuales, el objetivo, el horizonte y la recta de mantenimiento, devuelve para cada periodo la SOV del plan, su presupuesto y la cuota de mercado prevista. El modelo es el mismo del apartado 13.2: la voz se mantiene fija dentro de cada periodo y la trayectoria se calcula de forma exacta, de modo que con `periodos = 1` la función reproduce las cifras de la tabla del apartado 13.5.
+
+```{r plan-calculo}
+cte <- sov_plan(som = 8, sov = 9, objetivo = 10, referencia = "jones", periodos = 4)
+mc  <- sov_plan(som = 8, sov = 9, objetivo = 10, referencia = "jones", periodos = 4,
+                senda = "minimo_coste")
+```
+
+La función admite dos sendas. La **senda constante** mantiene la misma SOV en todos los periodos; repartida por trimestres, es idéntica a la anual. La **senda de mínimo coste** busca la combinación de SOV trimestrales que alcanza el objetivo con el menor presupuesto total, sin bajar nunca de la voz que conserva la cuota de partida (argumento `sov_minima`). La tabla compara ambas para la Marca E con la referencia de Jones y k = 0,55; el presupuesto se expresa en el mismo índice del apartado 13.5, con la inversión trimestral actual igual a 25, y la SOM es la prevista al cierre de cada trimestre.
+
+**Marca E: reparto trimestral de la SOV con la referencia de Jones y k = 0,55**
+
+```{r plan-tabla, echo=FALSE, results='asis'}
+pc <- cte$periodos; pm <- mc$periodos
+pct <- function(x, d = 1) paste(mediaSOV:::fmt_es(x, d), "%")
+num <- function(x, d = 1) mediaSOV:::fmt_es(x, d)
+tabla(data.frame(
+  Trimestre = pc$periodo,
+  `SOV, constante` = pct(pc$sov),
+  `Presupuesto, constante` = num(pc$presupuesto),
+  `SOM, constante` = pct(pc$som_fin, 2),
+  `SOV, mínimo coste` = pct(pm$sov),
+  `Presupuesto, mínimo coste` = num(pm$presupuesto),
+  `SOM, mínimo coste` = pct(pm$som_fin, 2),
+  check.names = FALSE))
+```
+
+```{r plan-cifras, include=FALSE}
+ic <- round(cte$resumen$indice); im <- round(mc$resumen$indice)
+sim_retardo <- function(v, retardo_trim, p = mc$parametros) {
+  dec <- exp(-p$k * (1 + p$beta) / p$periodos)
+  va <- c(rep(p$sov, retardo_trim), v)[seq_along(v)]
+  s <- p$som
+  for (x in va) s <- s * dec + (1 - dec) * (x - p$alfa) / (1 + p$beta)
+  s
+}
+fc <- sim_retardo(pc$sov, 2); fm <- sim_retardo(pm$sov, 2)
+```
+
+La senda constante cuesta `r ic` puntos de índice al año y la de mínimo coste, `r im`. El ahorro procede de la forma de la senda: durante cinco trimestres la marca sostiene solo la voz que conserva su cuota, `r num(min(pm$sov))` %, y concentra el esfuerzo en el último semestre, hasta una SOV del `r num(max(pm$sov))` % en el trimestre final. Esa **carga hacia el final** tiene una lógica precisa. En el modelo, la ventaja de cuota que compra un trimestre de voz se erosiona después a un ritmo k(1 + β), de modo que la voz próxima al cierre llega más entera al objetivo; como el presupuesto crece más que proporcionalmente con la SOV, $A = X\,v/(100-v)$, no compensa tampoco concentrarlo todo en el último trimestre, y la solución escalona la subida. Cuanto más lenta es la respuesta, menos se erosiona la ventaja y más se parece la senda de mínimo coste a la constante: con k = 0,05, ambas cuestan prácticamente lo mismo.
+
+```{r plan, include=FALSE, fig.height=4.8}
+plot(mc)
+```
+
+<img src="man/figures/README-plan-1.png" width="90%" />
+
+El ahorro tiene un precio que la tabla no muestra: **la senda de mínimo coste es la más frágil ante un retardo no previsto**. Si la cuota tardara medio año en responder a la voz, la senda constante cerraría el segundo año con una cuota del `r pct(fc, 2)`, por debajo del objetivo pero por encima del punto de partida, mientras que la de mínimo coste lo cerraría en el `r pct(fm, 2)`, por debajo incluso de la cuota de partida, porque la mayor parte de su voz llegaría después del cierre. Concentrar el gasto al final solo es defendible cuando la respuesta de la categoría es rápida y se conoce bien.
+
+```{r plan-retardo, include=FALSE}
+ret <- lapply(c(0, 0.5, 1, 1.5), function(L)
+  sov_plan(8, 9, 10, referencia = "jones", periodos = 4, retardo = L))
+ret3 <- sov_plan(8, 9, 10, anios = 3, referencia = "jones", periodos = 4, retardo = 1.5)
+```
+
+El argumento `retardo` incorpora ese desfase al cálculo. Con un retardo de $L$ años, la cuota responde durante los primeros $L$ años a la voz actual, y la voz de los últimos $L$ años del horizonte solo actúa después del cierre; la función fija esos periodos en la SOV de mantenimiento del objetivo, `r num(ret[[1]]$resumen$sov_mantenimiento)` % con la referencia de Jones, que es la que conserva la cuota alcanzada. El efecto sobre el plan es severo, porque el retardo acorta el tiempo útil del horizonte. Con la senda constante, la SOV de los periodos activos pasa del `r num(ret[[1]]$periodos$sov[1])` % sin retardo al `r num(ret[[2]]$periodos$sov[1])` % con medio año, al `r num(ret[[3]]$periodos$sov[1])` % con un año y al `r num(ret[[4]]$periodos$sov[1])` % con los 18 meses que Schroer (1990) señala como plazo de aparición del efecto; el índice de presupuesto sube de `r round(ret[[1]]$resumen$indice)` a `r round(ret[[4]]$resumen$indice)`. Con ese último retardo, solo la voz de los dos primeros trimestres decide la cuota del cierre. Ampliar el horizonte a tres años devuelve el plan a valores razonables: SOV del `r num(ret3$periodos$sov[1])` % en los periodos activos e índice de `r round(ret3$resumen$indice)`. El resultado concuerda con la observación de Schroer de que la relación entre gasto y cuota solo se confirma de forma fiable a partir de los tres años.
+
+La función acepta también una recta propia de la categoría (`alfa`, `beta`), por ejemplo la estimada con `sov_analiza()`; una previsión de la inversión de la competencia, constante o periodo a periodo (`inversion_competencia`), que permite incorporar la respuesta de los rivales; y repartos semestrales o mensuales (`periodos = 2` o `12`). `plot()` dibuja la senda de SOV y la trayectoria de la cuota, como en la figura anterior.
+
+### 13.8 Lo que el método no resuelve
 
 El modelo supone que la respuesta es lineal en el exceso de voz. Danenberg et al. (2016) conjeturan que el efecto de un aumento de voz depende más de su distancia al equilibrio que del cambio proporcional, y piden comprobar si crece de forma monótona con esa distancia (p. 145); el método adopta esa hipótesis como supuesto de trabajo. La recta de mantenimiento varía con la categoría y con el año, y los autores desaconsejan sustituir la recta propia por la media de Jones cuando aquella puede estimarse (p. 144); con pocas marcas, el intervalo de β que ofrece `sov_analiza()` debe trasladarse a la SOV del plan. La cuota responde también a factores ajenos al peso publicitario, como la innovación o la entrada de competidores, que pesaron con claridad en los mercados de proveedores de internet estudiados (pp. 142–143). Las cuotas suman 100: si la competencia reacciona, el mismo presupuesto compra menos voz, y $A$ debe recalcularse con la previsión de $X$. Schroer (1990) añade tres matices. En equilibrio, las cuotas de los líderes apenas responden a cambios marginales de gasto, lo que cuestiona la linealidad del modelo para excesos pequeños. Una ofensiva tiende a provocar la respuesta de los rivales hasta que se restablece el equilibrio. Y estas relaciones operan mercado a mercado, no a escala nacional, de modo que el plan debe calcularse para cada mercado donde se compite. Advierte también que su lógica de voz relativa no se aplica a productos nuevos ni a nichos muy diferenciados, para los que recomienda invertir lo necesario para lograr alcance y frecuencia suficientes. Por último, la fórmula no maximiza beneficios: Danenberg et al. (2016) recomiendan no fijar el presupuesto con un único criterio y combinarlo con un cálculo de optimización del beneficio basado en elasticidades y con el método de objetivo y tarea (p. 145).
 
-### 13.8 Referencias de este apartado
+### 13.9 Referencias de este apartado
 
 Danenberg, N., Kennedy, R., Beal, V., & Sharp, B. (2016). Advertising budgeting: A reinvestigation of the evidence on brand size and spend. *Journal of Advertising, 45*(1), 139–146. https://doi.org/10.1080/00913367.2015.1090938
 
@@ -679,6 +740,7 @@ Schroer, J. C. (1990). Ad spending: Growing market share. *Harvard Business Revi
 | <sub>`sov_calibra()`</sub> | <sub>Calibración con datos reales</sub> |
 | <sub>`sov_simula()`, `sov_simula_dinamica()`</sub> | <sub>Generación de datos sintéticos</sub> |
 | <sub>`sov_efecto_esov()`</sub> | <sub>Efecto del ESOV sobre la variación de cuota (panel)</sub> |
+| <sub>`sov_plan()`</sub> | <sub>Plan de SOV a varios años: senda, presupuesto y cuota prevista por periodo</sub> |
 | <sub>`sov_valida_simulacion()`</sub> | <sub>Estudio de recuperación (sesgo, RMSE, cobertura)</sub> |
 | <sub>`sov_referencias()`</sub> | <sub>Bibliografía del paquete</sub> |
 | <sub>`sov_glosario()`</sub> | <sub>Definición de términos</sub> |

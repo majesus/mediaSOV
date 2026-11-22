@@ -33,7 +33,7 @@ tablas por marca o por forma.}
 autocontenida, con estilos incrustados).}
 }
 \value{
-Un \code{data.frame} de caracteres con el atributo \code{nota}, o una cadena
+Un \code{data.frame} de caracteres (clase \code{sov_tabla}) con el atributo \code{nota}, o una cadena
 HTML.
 }
 \description{
