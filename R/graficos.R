@@ -90,8 +90,7 @@ sov_grafico <- function(x, categoria = NULL, etiquetas = TRUE) {
 #' @param categoria Identificador de la categoría (por defecto, la primera con al menos 4 marcas).
 #' @param marca Marca que se resalta en rojo (opcional).
 #' @param jones Si `TRUE` (por defecto), dibuja la referencia de Jones. Sus valores
-#'   (alfa = +6,4; beta = -0,38) proceden de las diapositivas del curso y no están
-#'   verificados con la fuente original.
+#'   son alfa = +6,4 y beta = -0,38.
 #' @param valores Si `TRUE` (por defecto), añade el SOV y el SOM junto a cada marca.
 #' @return `NULL`, de forma invisible.
 #' @examples

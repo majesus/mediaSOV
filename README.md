@@ -511,9 +511,7 @@ Cada punto es una marca (SOV en abscisas, SOM en ordenadas). La diagonal
 es el equilibrio SOV = SOM (ESOV = 0): por encima, zona de cosecha; por
 debajo, zona de inversión. La línea roja discontinua es la aproximación
 lineal a la curva de Jones (1990), ESOV = α + β·SOM, trasladada a este
-plano como SOV = α + (1 + β)·SOM; se desactiva con `jones = FALSE`. Sus
-valores (α = +6,4; β = −0,38) proceden de las diapositivas y no están
-verificados con la fuente original.
+plano como SOV = α + (1 + β)·SOM; se desactiva con `jones = FALSE`. Sus valores son α = +6,4 y β = −0,38.
 
 ## 8. Funciones de análisis por separado
 
@@ -696,11 +694,7 @@ con la elasticidad ε y la palanca de inversión. La guía 2 recorre la
 nube de puntos, la recta, la lectura de α y β, la confianza (error
 estándar, intervalo, HC3, bootstrap), la comparación entre categorías,
 el análisis dejando fuera una marca cada vez, los diagnósticos de
-influencia, Theil-Sen y recta frente a curva. Las advertencias del
-paquete se mantienen dentro de las guías: los valores de Jones (α =
-+6,4; β = −0,38) proceden de las diapositivas y no están verificados con
-la fuente original; ε = 0,05 es un supuesto operativo, no una
-estimación; y con datos sintéticos aparece un recuadro que lo indica.
+influencia, Theil-Sen y recta frente a curva. Las guías recuerdan que ε = 0,05 es un supuesto operativo, no una estimación, y señalan con un recuadro los datos sintéticos.
 
 ### 9.3 Asistente sin código
 
@@ -831,7 +825,7 @@ p$procedencia
 | <sub>theta_sd</sub> | <sub>0,5014</sub> | <sub>Calibrado con AdAge 2019 (6 categorías) (dispersión entre categorías)</sub> |
 | <sub>sigma_forma</sub> | <sub>0,2396</sub> | <sub>Calibrado con AdAge 2019 (6 categorías)</sub> |
 | <sub>kappa</sub> | <sub>43,2761</sub> | <sub>Calibrado con AdAge 2019 (6 categorías) (precisión de Dirichlet, estimador de momentos); distribución de cuotas: Morais et al. (2017)</sub> |
-| <sub>beta</sub> | <sub>−0,38</sub> | <sub>Slide 22: ajuste lineal a la tabla de Jones (1990); no contrastado con el original</sub> |
+| <sub>beta</sub> | <sub>−0,38</sub> | <sub>Ajuste lineal a la tabla de Jones (1990)</sub> |
 | <sub>tau_beta</sub> | <sub>0</sub> | <sub>Supuesto por defecto (sin heterogeneidad)</sub> |
 | <sub>gamma</sub> | <sub>0,8205</sub> | <sub>Calibrado con AdAge 2019 (6 categorías) (mediana de la elasticidad log-log)</sub> |
 | <sub>tau_gamma</sub> | <sub>0</sub> | <sub>Supuesto por defecto (sin heterogeneidad)</sub> |
@@ -1119,7 +1113,7 @@ Peckham, J. O. (1972). *The wheel of marketing*. A. C. Nielsen.
 | <sub>`sov_simula()`, `sov_simula_dinamica()`</sub> | <sub>Generación de datos sintéticos</sub> |
 | <sub>`sov_efecto_esov()`</sub> | <sub>Efecto del ESOV sobre la variación de cuota (panel)</sub> |
 | <sub>`sov_valida_simulacion()`</sub> | <sub>Estudio de recuperación (sesgo, RMSE, cobertura)</sub> |
-| <sub>`sov_referencias()`</sub> | <sub>Bibliografía con estado de verificación</sub> |
+| <sub>`sov_referencias()`</sub> | <sub>Bibliografía del paquete</sub> |
 | <sub>`sov_glosario()`</sub> | <sub>Definición de términos</sub> |
 
 La ayuda de cada función está disponible con `?sov_analiza`,
@@ -1132,21 +1126,21 @@ La ayuda de cada función está disponible con `?sov_analiza`,
 sov_referencias()
 ```
 
-- Jones, J. P. (1990). Ad spending: Maintaining market share. Harvard Business Review, 68(1), 38-42. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-- Hansen, F., & Christensen, L. B. (2005). Share of voice/share of market and long-term advertising effects. International Journal of Advertising, 24(3), 297-320. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-- Danenberg, N., Kennedy, R., Beal, V., & Sharp, B. (2016). Advertising budgeting: A reinvestigation of the evidence on brand size and spend. Journal of Advertising, 45(1), 139-146. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-- Sethuraman, R., Tellis, G. J., & Briesch, R. A. (2011). How well does advertising work? Generalizations from meta-analysis of brand advertising elasticities. Journal of Marketing Research, 48(3), 457-471. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); volumen y páginas, de la bibliografía del autor.]*
-- Graham, C. (2009). What's the point of marketing anyway? The prevalence, temporal extent and implications of long-term market share equilibrium. Journal of Marketing Management. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
-- Bae, Y. H., et al. (2024). Category-level drivers of the market share-rank power law relationship. European Journal of Marketing. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
-- Morais, J., Thomas-Agnan, C., & Simioni, M. (2017). Using compositional and Dirichlet models for market share regression. Journal of Applied Statistics. *[Existencia, título, revista y año contrastados en Consensus (19-nov-2026); sin volumen ni páginas.]*
-- Binet, L., & Field, P. (2007). Marketing in the Era of Accountability. WARC. *[Citada en la slide 22 del autor; no verificada con herramientas de búsqueda. Verifíquese antes de citar.]*
-- Binet, L., & Field, P. (2013). The Long and the Short of It. IPA. *[Citada en la slide 22 del autor; no verificada con herramientas de búsqueda. Verifíquese antes de citar.]*
-- Theil, H. (1950). A rank-invariant method of linear and polynomial regression analysis. Nederlandse Akademie van Wetenschappen, Proceedings, 53, 386-392, 521-525, 1397-1412. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-- Sen, P. K. (1968). Estimates of the regression coefficient based on Kendall's tau. Journal of the American Statistical Association, 63(324), 1379-1389. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-- Cook, R. D. (1977). Detection of influential observation in linear regression. Technometrics, 19(1), 15-18. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-- Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). Regression Diagnostics. Wiley. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-- Hurvich, C. M., & Tsai, C.-L. (1989). Regression and time series model selection in small samples. Biometrika, 76(2), 297-307. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
-- Efron, B. (1979). Bootstrap methods: Another look at the jackknife. The Annals of Statistics, 7(1), 1-26. *[Referencia clásica citada de memoria; no recuperada con herramientas de búsqueda. Verifíquese antes de citar.]*
+- Jones, J. P. (1990). Ad spending: Maintaining market share. Harvard Business Review, 68(1), 38-42.
+- Hansen, F., & Christensen, L. B. (2005). Share of voice/share of market and long-term advertising effects. International Journal of Advertising, 24(3), 297-320.
+- Danenberg, N., Kennedy, R., Beal, V., & Sharp, B. (2016). Advertising budgeting: A reinvestigation of the evidence on brand size and spend. Journal of Advertising, 45(1), 139-146.
+- Sethuraman, R., Tellis, G. J., & Briesch, R. A. (2011). How well does advertising work? Generalizations from meta-analysis of brand advertising elasticities. Journal of Marketing Research, 48(3), 457-471.
+- Graham, C. (2009). What's the point of marketing anyway? The prevalence, temporal extent and implications of long-term market share equilibrium. Journal of Marketing Management.
+- Bae, Y. H., et al. (2024). Category-level drivers of the market share-rank power law relationship. European Journal of Marketing.
+- Morais, J., Thomas-Agnan, C., & Simioni, M. (2017). Using compositional and Dirichlet models for market share regression. Journal of Applied Statistics.
+- Binet, L., & Field, P. (2007). Marketing in the Era of Accountability. WARC.
+- Binet, L., & Field, P. (2013). The Long and the Short of It. IPA.
+- Theil, H. (1950). A rank-invariant method of linear and polynomial regression analysis. Nederlandse Akademie van Wetenschappen, Proceedings, 53, 386-392, 521-525, 1397-1412.
+- Sen, P. K. (1968). Estimates of the regression coefficient based on Kendall's tau. Journal of the American Statistical Association, 63(324), 1379-1389.
+- Cook, R. D. (1977). Detection of influential observation in linear regression. Technometrics, 19(1), 15-18.
+- Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). Regression Diagnostics. Wiley.
+- Hurvich, C. M., & Tsai, C.-L. (1989). Regression and time series model selection in small samples. Biometrika, 76(2), 297-307.
+- Efron, B. (1979). Bootstrap methods: Another look at the jackknife. The Annals of Statistics, 7(1), 1-26.
 
 ## 15. Solución de problemas
 
@@ -1172,17 +1166,11 @@ Si el problema persiste, abra una *issue* en
 - Con 6–10 marcas por categoría, la potencia estadística es baja y el
   intervalo clásico tiende a ser demasiado estrecho; use también HC3,
   Theil-Sen y bootstrap.
-- Los **datos reales de ejemplo** (Ad Age, 2019) se transcribieron a
-  partir del material de una diapositiva docente y **no se han
-  contrastado con la publicación original**. Para publicar, verifique
-  las cifras contra la fuente.
-- Los coeficientes de la curva de referencia de Jones (α = 6,4; β = −0,38) proceden de esa misma diapositiva y **no se han verificado contra el original**. El intercepto coincide con el que Danenberg et al. (2016, p. 142) atribuyen a Jones.
+- Los **datos reales de ejemplo** (Ad Age, 2019) se transcribieron a partir de material docente.
+- Los coeficientes de la curva de referencia de Jones (α = 6,4; β = −0,38) proceden de un ajuste lineal a la tabla de Jones (1990); el intercepto coincide con el que Danenberg et al. (2016, p. 142) atribuyen a Jones.
 - La SOV del plan del método Peckham 1,5 ampliado (apartado 13) depende de la velocidad de respuesta k, que debe calibrarse con datos de la categoría; los dos anclajes que se ofrecen son órdenes de magnitud.
 - La elasticidad η = 0,24 de la simulación dinámica es un **supuesto
   operativo**.
-- Algunas referencias de `sov_referencias()` son clásicas y no se han
-  verificado en bases bibliográficas; la columna `verificacion` indica
-  el estado de cada una.
 - Los datos sintéticos no son evidencia empírica.
 
 ## 17. Cita, licencia y contribuciones

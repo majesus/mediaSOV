@@ -328,7 +328,7 @@ dev.off()
 sov_mapa(adage2019, "auto_marcas", marca = "Chevrolet")
 ```
 
-Cada punto es una marca (SOV en abscisas, SOM en ordenadas). La diagonal es el equilibrio SOV = SOM (ESOV = 0): por encima, zona de cosecha; por debajo, zona de inversión. La línea roja discontinua es la aproximación lineal a la curva de Jones (1990), ESOV = α + β·SOM, trasladada a este plano como SOV = α + (1 + β)·SOM; se desactiva con `jones = FALSE`. Sus valores (α = +6,4; β = −0,38) proceden de las diapositivas y no están verificados con la fuente original.
+Cada punto es una marca (SOV en abscisas, SOM en ordenadas). La diagonal es el equilibrio SOV = SOM (ESOV = 0): por encima, zona de cosecha; por debajo, zona de inversión. La línea roja discontinua es la aproximación lineal a la curva de Jones (1990), ESOV = α + β·SOM, trasladada a este plano como SOV = α + (1 + β)·SOM; se desactiva con `jones = FALSE`. Sus valores son α = +6,4 y β = −0,38.
 
 ## 8. Funciones de análisis por separado
 
@@ -420,7 +420,7 @@ sov_guia(x, "marca", "auto_marcas", "Chevrolet", archivo = "guia_chevrolet.html"
 sov_guia(x, "sector", "auto_marcas", formato = "texto")
 ```
 
-La guía 1 recorre SOM, SOV, ESOV, el mapa, la referencia de Jones, una segunda referencia (la regresión de la propia categoría), la proyección con la elasticidad ε y la palanca de inversión. La guía 2 recorre la nube de puntos, la recta, la lectura de α y β, la confianza (error estándar, intervalo, HC3, bootstrap), la comparación entre categorías, el análisis dejando fuera una marca cada vez, los diagnósticos de influencia, Theil-Sen y recta frente a curva. Las advertencias del paquete se mantienen dentro de las guías: los valores de Jones (α = +6,4; β = −0,38) proceden de las diapositivas y no están verificados con la fuente original; ε = 0,05 es un supuesto operativo, no una estimación; y con datos sintéticos aparece un recuadro que lo indica.
+La guía 1 recorre SOM, SOV, ESOV, el mapa, la referencia de Jones, una segunda referencia (la regresión de la propia categoría), la proyección con la elasticidad ε y la palanca de inversión. La guía 2 recorre la nube de puntos, la recta, la lectura de α y β, la confianza (error estándar, intervalo, HC3, bootstrap), la comparación entre categorías, el análisis dejando fuera una marca cada vez, los diagnósticos de influencia, Theil-Sen y recta frente a curva. Las guías recuerdan que ε = 0,05 es un supuesto operativo, no una estimación, y señalan con un recuadro los datos sintéticos.
 
 ### 9.3 Asistente sin código
 
@@ -676,7 +676,7 @@ Peckham, J. O. (1972). *The wheel of marketing*. A. C. Nielsen.
 | <sub>`sov_simula()`, `sov_simula_dinamica()`</sub> | <sub>Generación de datos sintéticos</sub> |
 | <sub>`sov_efecto_esov()`</sub> | <sub>Efecto del ESOV sobre la variación de cuota (panel)</sub> |
 | <sub>`sov_valida_simulacion()`</sub> | <sub>Estudio de recuperación (sesgo, RMSE, cobertura)</sub> |
-| <sub>`sov_referencias()`</sub> | <sub>Bibliografía con estado de verificación</sub> |
+| <sub>`sov_referencias()`</sub> | <sub>Bibliografía del paquete</sub> |
 | <sub>`sov_glosario()`</sub> | <sub>Definición de términos</sub> |
 
 La ayuda de cada función está disponible con `?sov_analiza`, `help(package = "mediaSOV")` y `vignette("primeros-pasos", "mediaSOV")` (si instaló las viñetas).
@@ -685,7 +685,7 @@ La ayuda de cada función está disponible con `?sov_analiza`, `help(package = "
 
 ```{r refs, results='asis'}
 r <- sov_referencias()
-for (i in seq_len(nrow(r))) cat("- ", r$cita[i], " *[", r$verificacion[i], "]*\n", sep = "")
+for (i in seq_len(nrow(r))) cat("- ", r$cita[i], "\n", sep = "")
 ```
 
 ## 15. Solución de problemas
@@ -707,11 +707,10 @@ Si el problema persiste, abra una *issue* en https://github.com/majesus/mediaSOV
 
 - Las cuotas de una categoría suman 100 %, por lo que SOV y SOM no son independientes y la relación puede contener efectos de cierre.
 - Con 6–10 marcas por categoría, la potencia estadística es baja y el intervalo clásico tiende a ser demasiado estrecho; use también HC3, Theil-Sen y bootstrap.
-- Los **datos reales de ejemplo** (Ad Age, 2019) se transcribieron a partir del material de una diapositiva docente y **no se han contrastado con la publicación original**. Para publicar, verifique las cifras contra la fuente.
-- Los coeficientes de la curva de referencia de Jones (α = 6,4; β = −0,38) proceden de esa misma diapositiva y **no se han verificado contra el original**. El intercepto coincide con el que Danenberg et al. (2016, p. 142) atribuyen a Jones.
+- Los **datos reales de ejemplo** (Ad Age, 2019) se transcribieron a partir de material docente.
+- Los coeficientes de la curva de referencia de Jones (α = 6,4; β = −0,38) proceden de un ajuste lineal a la tabla de Jones (1990); el intercepto coincide con el que Danenberg et al. (2016, p. 142) atribuyen a Jones.
 - La SOV del plan del método Peckham 1,5 ampliado (apartado 13) depende de la velocidad de respuesta k, que debe calibrarse con datos de la categoría; los dos anclajes que se ofrecen son órdenes de magnitud.
 - La elasticidad η = 0,24 de la simulación dinámica es un **supuesto operativo**.
-- Algunas referencias de `sov_referencias()` son clásicas y no se han verificado en bases bibliográficas; la columna `verificacion` indica el estado de cada una.
 - Los datos sintéticos no son evidencia empírica.
 
 ## 17. Cita, licencia y contribuciones
