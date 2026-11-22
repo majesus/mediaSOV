@@ -14,7 +14,8 @@ sov_mapa(x, categoria = NULL, marca = NULL, jones = TRUE, valores = NULL)
 \item{marca}{Marca que se resalta en rojo (opcional).}
 
 \item{jones}{Si \code{TRUE} (por defecto), dibuja la referencia de Jones. Sus valores
-son alfa = +6,4 y beta = -0,38.}
+(alfa = +6,4; beta = -0,38) definen la recta de mínimos cuadrados ajustada a
+la tabla de Jones (1990, p. 40).}
 
 \item{valores}{Si \code{TRUE} (por defecto), añade el SOV y el SOM junto a cada marca.}
 }

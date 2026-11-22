@@ -1,6 +1,7 @@
 # Utilidades internas -----------------------------------------------------------
-# Ajuste lineal a la tabla de Jones (1990) tal como figura en la slide 22 del
-# material docente del autor: ESOV = 6,4 - 0,38 * SOM.
+# Recta de mínimos cuadrados ajustada a los diez tramos de cuota de la tabla
+# «Average Share of Voice Compared with Share of Market» (Jones, 1990, p. 40),
+# tomados en su punto medio: ESOV = 6,4 - 0,38 * SOM.
 .jones_slide <- c(alfa = 6.4, beta = -0.38)
 
 `%||%` <- function(a, b) if (is.null(a)) b else a

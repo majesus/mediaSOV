@@ -328,7 +328,7 @@ dev.off()
 sov_mapa(adage2019, "auto_marcas", marca = "Chevrolet")
 ```
 
-Cada punto es una marca (SOV en abscisas, SOM en ordenadas). La diagonal es el equilibrio SOV = SOM (ESOV = 0): por encima, zona de cosecha; por debajo, zona de inversión. La línea roja discontinua es la aproximación lineal a la curva de Jones (1990), ESOV = α + β·SOM, trasladada a este plano como SOV = α + (1 + β)·SOM; se desactiva con `jones = FALSE`. Sus valores son α = +6,4 y β = −0,38.
+Cada punto es una marca (SOV en abscisas, SOM en ordenadas). La diagonal es el equilibrio SOV = SOM (ESOV = 0): por encima, zona de cosecha; por debajo, zona de inversión. La línea roja discontinua es la aproximación lineal a la curva de Jones (1990), ESOV = α + β·SOM, trasladada a este plano como SOV = α + (1 + β)·SOM; se desactiva con `jones = FALSE`. Sus valores (α = +6,4; β = −0,38) definen la recta de mínimos cuadrados ajustada a la tabla de Jones (1990, p. 40).
 
 ## 8. Funciones de análisis por separado
 
@@ -546,17 +546,17 @@ Una cobertura cercana al 95 % indica que los intervalos son fiables bajo ese pos
 
 ## 13. Cuánto SOV invertir: el método Peckham 1,5 ampliado
 
-Los apartados anteriores diagnostican dónde está una marca. Este responde a la pregunta que sigue al diagnóstico: **qué cuota de voz debe sostener durante los próximos dos años para alcanzar una cuota de mercado objetivo**, cuánto presupuesto supone y cómo se desplazará la marca en el mapa ESOV–SOM (el de la recta de Jones, `sov_grafico()`) y en el mapa SOV–SOM (`sov_mapa()`). El punto de partida es la regla del 1,5; el resultado es una fórmula que la contiene como caso particular y que incorpora lo que esa regla no considera.
+Los apartados anteriores diagnostican dónde está una marca. Este responde a la pregunta que sigue al diagnóstico: **qué cuota de voz debe sostener durante los próximos dos años para alcanzar una cuota de mercado objetivo**, cuánto presupuesto supone y cómo se desplazará la marca en el mapa ESOV–SOM (el de la recta de Jones, `sov_grafico()`) y en el mapa SOV–SOM (`sov_mapa()`). El punto de partida es la regla clásica de Peckham; el resultado es una fórmula que la contiene como caso particular y que incorpora lo que esa regla no considera.
 
 ### 13.1 La regla de partida y sus tres silencios
 
-El método parte de una regla simple para lanzamientos: una marca nueva que aspira a una cuota de mercado $s^\ast$ sostiene durante dos años una cuota de voz de $1{,}5\,s^\ast$. Danenberg et al. (2016) sitúan en los trabajos de Peckham de los años setenta el arranque del uso de la relación entre SOV y SOM como criterio presupuestario, y emparentan su propio análisis longitudinal con la «diferencia dinámica» que Peckham propuso (pp. 139, 141).
+La regla del 1,5 procede de Peckham (1975/1981), que estudió con los datos del índice de detallistas de Nielsen la evolución de las ventas de marcas de gran consumo: una marca nueva que aspira a una cuota de mercado $s^\ast$ debe sostener durante unos dos años una cuota de voz de $1{,}5\,s^\ast$. Jones (1990, p. 39) recoge el mismo principio al señalar que Nielsen recomendaba desde hacía tiempo dotar a las marcas nuevas de una voz superior a su cuota. Danenberg et al. (2016) sitúan en los trabajos de Peckham de los años setenta el arranque del uso de la relación entre SOV y SOM como criterio presupuestario, y emparentan su propio análisis longitudinal con la «diferencia dinámica» que Peckham propuso (pp. 139, 141).
 
 La regla debe su difusión a que comprime una decisión compleja en un solo número. Esa compresión tiene un precio: guarda silencio sobre tres variables que alteran la respuesta.
 
 **El punto de partida.** La regla prescribe lo mismo a una marca que nace que a otra que ya posee el 8 % y desea el 10 %; la cuota actual no interviene en el cálculo.
 
-**El tamaño de la marca.** El equilibrio implícito es SOV = SOM. La curva de intensidad publicitaria de Jones (1990) describe otra cosa: las marcas pequeñas necesitan voz por encima de su cuota solo para conservarla, y las grandes se sostienen por debajo. Danenberg et al. (2016) observan esa forma descendente en bebidas refrescantes y en proveedores de internet de once países, también en medios distintos de la televisión, si bien la pendiente y el intercepto cambian entre categorías, países y años, de modo que no existe una recta universal (pp. 142, 144).
+**El tamaño de la marca.** El equilibrio implícito es SOV = SOM. La curva de intensidad publicitaria de Jones (1990) describe otra cosa: las marcas pequeñas tienden a invertir por encima de su cuota, y las grandes se sostienen por debajo de ella sin perder posición (pp. 39–41). Schroer (1990) comparte la segunda parte, porque el líder disfruta de una ventaja de escala, pero discute que los competidores pequeños deban sobreinvertir para atacar a los líderes. Danenberg et al. (2016) observan esa forma descendente en bebidas refrescantes y en proveedores de internet de once países, también en medios distintos de la televisión, si bien la pendiente y el intercepto cambian entre categorías, países y años, de modo que no existe una recta universal (pp. 142, 144).
 
 **La velocidad de respuesta.** La regla no indica con qué rapidez responde la cuota al exceso de voz. El documento aporta un orden de magnitud para bienes de consumo envasado: alrededor de medio punto de cuota al año por cada 10 puntos de ESOV, con el ESOV medido frente a SOV = SOM (Field, 2009, citado en Danenberg et al., 2016, p. 140).
 
@@ -580,13 +580,13 @@ $$v \;=\; \underbrace{v^{\ast}(s^{\ast})}_{\text{mantenimiento en el objetivo}} 
 
 La SOV del plan se descompone, por tanto, en dos sumandos con significado propio: la voz que hará falta para conservar la cuota objetivo una vez alcanzada y una **prima de crecimiento** proporcional a los puntos por ganar. El **multiplicador** $w$ resume en un solo número la velocidad de la categoría y la paciencia del plan: cuanto más lenta la respuesta o más corto el horizonte, mayor es $w$ y más cara cada décima de cuota.
 
-**La regla del 1,5 como caso particular.** Con la referencia de paridad, una marca que parte de cero ($s_0 = 0$) y un horizonte de dos años, la fórmula se reduce a $v = w\,s^\ast$. La regla del 1,5 equivale a $w = 1{,}5$, es decir, a $e^{-2k} = 1/3$ y $k = \ln 3 / 2 \approx 0{,}55$ al año, con una semivida de 1,3 años: esa es la velocidad de respuesta que la regla presupone. Con esa misma velocidad, la regla ampliada para cualquier punto de partida resulta
+**La regla de Peckham como caso particular.** Con la referencia de paridad, una marca que parte de cero ($s_0 = 0$) y un horizonte de dos años, la fórmula se reduce a $v = w\,s^\ast$. La regla de Peckham equivale a $w = 1{,}5$, es decir, a $e^{-2k} = 1/3$ y $k = \ln 3 / 2 \approx 0{,}55$ al año, con una semivida de 1,3 años: esa es la velocidad de respuesta que la regla presupone. Con esa misma velocidad, la regla ampliada para cualquier punto de partida resulta
 
 $$v \;=\; 1{,}5\,s^\ast \;-\; 0{,}5\,s_0 ,$$
 
 que admite una lectura inmediata: **la cuota objetivo más medio punto de voz por cada punto de cuota que se quiere ganar**. Para $s_0 = 0$ reproduce exactamente la regla original.
 
-La velocidad implícita en la regla del 1,5 es unas diez veces la de Field. Ambas cifras describen regímenes distintos: la primera, lanzamientos; la segunda, marcas maduras de gran consumo. La diferencia es coherente con la regularidad de que las elasticidades publicitarias son menores en marcas grandes y consolidadas que en marcas pequeñas o nuevas (Danenberg et al., 2016, pp. 140, 144).
+La velocidad implícita en la regla de Peckham es unas diez veces la de Field. Ambas cifras describen regímenes distintos: la primera, lanzamientos; la segunda, marcas maduras de gran consumo. La diferencia es coherente con la regularidad de que las elasticidades publicitarias son menores en marcas grandes y consolidadas que en marcas pequeñas o nuevas (Danenberg et al., 2016, pp. 140, 144).
 
 **Multiplicador w para un horizonte de dos años con referencia de paridad**
 
@@ -595,7 +595,7 @@ La velocidad implícita en la regla del 1,5 es unas diez veces la de Field. Amba
 | <sub>0,05</sub> | <sub>13,9 años</sub> | <sub>10,5</sub> | <sub>Marca madura de gran consumo (orden de magnitud de Field)</sub> |
 | <sub>0,10</sub> | <sub>6,9 años</sub> | <sub>5,5</sub> | <sub>Valor ilustrativo</sub> |
 | <sub>0,25</sub> | <sub>2,8 años</sub> | <sub>2,5</sub> | <sub>Valor ilustrativo</sub> |
-| <sub>0,55</sub> | <sub>1,3 años</sub> | <sub>1,5</sub> | <sub>Velocidad implícita en la regla del 1,5</sub> |
+| <sub>0,55</sub> | <sub>1,3 años</sub> | <sub>1,5</sub> | <sub>Velocidad implícita en la regla de Peckham</sub> |
 
 ### 13.4 Calibrar k, el parámetro decisivo
 
@@ -605,7 +605,7 @@ Sin panel, lo prudente es **acotar** el presupuesto con los dos anclajes de la t
 
 ### 13.5 Ejemplo resuelto: Marca E, del 8 % al 10 % en dos años
 
-Marca E es la marca ficticia de `sov_plantilla()`: SOM del 8 % y SOV del 9 %, con un ESOV de +1 punto. El objetivo es una cuota del 10 % al cierre del segundo año. Para la recta de la categoría se toma la referencia de Jones que usa el paquete, α = 6,4 y β = −0,38; el intercepto es el que Danenberg et al. (2016, p. 142) atribuyen a Jones.
+Marca E es la marca ficticia de `sov_plantilla()`: SOM del 8 % y SOV del 9 %, con un ESOV de +1 punto. El objetivo es una cuota del 10 % al cierre del segundo año. Para la recta de la categoría se toma la referencia de Jones que usa el paquete, α = 6,4 y β = −0,38: es la recta de mínimos cuadrados que ajusta las diferencias medias entre SOV y SOM de la tabla de Jones (1990, p. 40), con cada tramo de cuota situado en su punto medio.
 
 *Paso a paso con la referencia de paridad y k = 0,55.* El multiplicador vale w = 1,5; la SOV de mantenimiento en el objetivo es v\*(10) = 10; la prima es 1 × 0,5 × 2 = 1. La SOV del plan es **11,0 %** en cada uno de los dos años.
 
@@ -619,12 +619,14 @@ La relación no es lineal: con $X$ constante, pasar del 9 % al 11 % de SOV exige
 
 | <sub>Plan</sub> | <sub>SOV, años 1 y 2</sub> | <sub>Presupuesto (hoy = 100)</sub> | <sub>SOM al cierre del año 1</sub> | <sub>SOM al cierre del año 2</sub> |
 | :--- | ---: | ---: | ---: | ---: |
-| <sub>Regla del 1,5 (1,5 × 10), paridad, k = 0,55</sub> | <sub>15,0 %</sub> | <sub>178</sub> | <sub>11,0 %</sub> | <sub>12,7 %</sub> |
+| <sub>Regla de Peckham (1,5 × 10), paridad, k = 0,55</sub> | <sub>15,0 %</sub> | <sub>178</sub> | <sub>11,0 %</sub> | <sub>12,7 %</sub> |
 | <sub>Ampliado, paridad, k = 0,55</sub> | <sub>11,0 %</sub> | <sub>125</sub> | <sub>9,3 %</sub> | <sub>10,0 %</sub> |
 | <sub>Ampliado, Jones, k = 0,55</sub> | <sub>13,9 %</sub> | <sub>163</sub> | <sub>9,2 %</sub> | <sub>10,0 %</sub> |
 | <sub>Ampliado, paridad, k = 0,05</sub> | <sub>29,0 %</sub> | <sub>413</sub> | <sub>9,0 %</sub> | <sub>10,0 %</sub> |
 
-La tabla admite tres lecturas. **Ignorar el punto de partida encarece el plan y lo desborda**: la regla original, aplicada a una marca que no nace de cero, cuesta 53 puntos de índice más que la versión ampliada y lleva la cuota al 12,7 %, por encima del objetivo. **La corrección de Jones eleva la factura**: con un 8 % de cuota, la recta de Jones fija el mantenimiento en una SOV del 11,4 %, de modo que la Marca E, con su 9 % actual, ya invierte por debajo de lo que su tamaño exige y parte de un déficit. **Con la velocidad de una marca madura, el objetivo deja de ser creíble**: cuadruplicar el presupuesto es una señal para revisar la meta o el horizonte, no para aprobar el gasto; con k = 0,05, la SOV del 15 % que prescribe la regla del 1,5 solo llevaría la cuota al 8,7 %.
+La tabla admite tres lecturas. **Ignorar el punto de partida encarece el plan y lo desborda**: la regla original, aplicada a una marca que no nace de cero, cuesta 53 puntos de índice más que la versión ampliada y lleva la cuota al 12,7 %, por encima del objetivo. **La corrección de Jones eleva la factura**: con un 8 % de cuota, la recta de Jones fija el mantenimiento en una SOV del 11,4 %, de modo que la Marca E, con su 9 % actual, ya invierte por debajo de lo que su tamaño exige y parte de un déficit. **Con la velocidad de una marca madura, el objetivo deja de ser creíble**: cuadruplicar el presupuesto es una señal para revisar la meta o el horizonte, no para aprobar el gasto; con k = 0,05, la SOV del 15 % que prescribe la regla de Peckham solo llevaría la cuota al 8,7 %.
+
+Schroer (1990) ofrece un contraste independiente de esa última lectura. En los mercados maduros de gran consumo que analizó, los cambios de cuota atribuibles a la publicidad solo aparecieron cuando un competidor sostuvo una prima de voz de 20 a 30 puntos del gasto total de la categoría, aproximadamente el doble que su rival principal, y aun así la correlación entre gasto y variación de cuota no pasó de 0,5. Aunque Schroer mide la prima frente al rival y no frente a la propia cuota, el orden de magnitud coincide con el que implica k = 0,05: veinte puntos de exceso de voz por cada punto de cuota ganado al año. El mismo autor sitúa la aparición de la relación entre gasto y cuota hacia los 18 meses y su confirmación fiable a partir de los tres años, de modo que un plan a dos años debe juzgarse al cierre del horizonte y no trimestre a trimestre.
 
 ### 13.6 Consecuencias en los mapas: salto, deslizamiento y aterrizaje
 
@@ -642,15 +644,17 @@ De esta geometría se desprenden dos consecuencias prácticas. La primera: **que
 
 ### 13.7 Lo que el método no resuelve
 
-El modelo supone que la respuesta es lineal en el exceso de voz. Danenberg et al. (2016) conjeturan que el efecto de un aumento de voz depende más de su distancia al equilibrio que del cambio proporcional, y piden comprobar si crece de forma monótona con esa distancia (p. 145); el método adopta esa hipótesis como supuesto de trabajo. La recta de mantenimiento varía con la categoría y con el año, y los autores desaconsejan sustituir la recta propia por la media de Jones cuando aquella puede estimarse (p. 144); con pocas marcas, el intervalo de β que ofrece `sov_analiza()` debe trasladarse a la SOV del plan. La cuota responde también a factores ajenos al peso publicitario, como la innovación o la entrada de competidores, que pesaron con claridad en los mercados de proveedores de internet estudiados (pp. 142–143). Las cuotas suman 100: si la competencia reacciona, el mismo presupuesto compra menos voz, y $A$ debe recalcularse con la previsión de $X$. Por último, la fórmula no maximiza beneficios: Danenberg et al. (2016) recomiendan no fijar el presupuesto con un único criterio y combinarlo con un cálculo de optimización del beneficio basado en elasticidades y con el método de objetivo y tarea (p. 145).
+El modelo supone que la respuesta es lineal en el exceso de voz. Danenberg et al. (2016) conjeturan que el efecto de un aumento de voz depende más de su distancia al equilibrio que del cambio proporcional, y piden comprobar si crece de forma monótona con esa distancia (p. 145); el método adopta esa hipótesis como supuesto de trabajo. La recta de mantenimiento varía con la categoría y con el año, y los autores desaconsejan sustituir la recta propia por la media de Jones cuando aquella puede estimarse (p. 144); con pocas marcas, el intervalo de β que ofrece `sov_analiza()` debe trasladarse a la SOV del plan. La cuota responde también a factores ajenos al peso publicitario, como la innovación o la entrada de competidores, que pesaron con claridad en los mercados de proveedores de internet estudiados (pp. 142–143). Las cuotas suman 100: si la competencia reacciona, el mismo presupuesto compra menos voz, y $A$ debe recalcularse con la previsión de $X$. Schroer (1990) añade tres matices. En equilibrio, las cuotas de los líderes apenas responden a cambios marginales de gasto, lo que cuestiona la linealidad del modelo para excesos pequeños. Una ofensiva tiende a provocar la respuesta de los rivales hasta que se restablece el equilibrio. Y estas relaciones operan mercado a mercado, no a escala nacional, de modo que el plan debe calcularse para cada mercado donde se compite. Advierte también que su lógica de voz relativa no se aplica a productos nuevos ni a nichos muy diferenciados, para los que recomienda invertir lo necesario para lograr alcance y frecuencia suficientes. Por último, la fórmula no maximiza beneficios: Danenberg et al. (2016) recomiendan no fijar el presupuesto con un único criterio y combinarlo con un cálculo de optimización del beneficio basado en elasticidades y con el método de objetivo y tarea (p. 145).
 
 ### 13.8 Referencias de este apartado
 
 Danenberg, N., Kennedy, R., Beal, V., & Sharp, B. (2016). Advertising budgeting: A reinvestigation of the evidence on brand size and spend. *Journal of Advertising, 45*(1), 139–146. https://doi.org/10.1080/00913367.2015.1090938
 
-Jones, J. P. (1990). Ad spending: Maintaining market share. *Harvard Business Review, 68*(1), 38–43.
+Jones, J. P. (1990). Ad spending: Maintaining market share. *Harvard Business Review, 68*(1), 38–42.
 
-Peckham, J. O. (1972). *The wheel of marketing*. A. C. Nielsen.
+Peckham, J. O. (1981). *The wheel of marketing: An analysis and interpretation of what generally happens to consumer sales of branded food products, household needs, toiletries, proprietary drug products… based on Nielsen retail index data*. Nielsen Marketing Research. (Obra original publicada en 1975; edición intermedia de 1978)
+
+Schroer, J. C. (1990). Ad spending: Growing market share. *Harvard Business Review, 68*(1), 44–48.
 
 ## 14. Referencia de funciones
 
@@ -708,7 +712,7 @@ Si el problema persiste, abra una *issue* en https://github.com/majesus/mediaSOV
 - Las cuotas de una categoría suman 100 %, por lo que SOV y SOM no son independientes y la relación puede contener efectos de cierre.
 - Con 6–10 marcas por categoría, la potencia estadística es baja y el intervalo clásico tiende a ser demasiado estrecho; use también HC3, Theil-Sen y bootstrap.
 - Los **datos reales de ejemplo** (Ad Age, 2019) se transcribieron a partir de material docente.
-- Los coeficientes de la curva de referencia de Jones (α = 6,4; β = −0,38) proceden de un ajuste lineal a la tabla de Jones (1990); el intercepto coincide con el que Danenberg et al. (2016, p. 142) atribuyen a Jones.
+- Los coeficientes de la curva de referencia de Jones (α = 6,4; β = −0,38) son la recta de mínimos cuadrados ajustada a los diez tramos de cuota de la tabla de Jones (1990, p. 40), tomados en su punto medio. La curva original es cóncava (p. 41), de modo que la recta la aproxima.
 - La SOV del plan del método Peckham 1,5 ampliado (apartado 13) depende de la velocidad de respuesta k, que debe calibrarse con datos de la categoría; los dos anclajes que se ofrecen son órdenes de magnitud.
 - La elasticidad η = 0,24 de la simulación dinámica es un **supuesto operativo**.
 - Los datos sintéticos no son evidencia empírica.
