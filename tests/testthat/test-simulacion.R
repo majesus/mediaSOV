@@ -56,8 +56,8 @@ test_that("la calibración con los datos reales devuelve parámetros finitos", {
   expect_true(all(is.finite(unlist(cal$resumen[c("theta", "kappa", "tau_beta")]))))
 })
 
-test_that("las referencias declaran su estado de verificación", {
+test_that("las referencias tienen clave y cita", {
   r <- sov_referencias()
-  expect_true(all(c("cita", "verificacion") %in% names(r)))
-  expect_true(all(nzchar(r$verificacion)))
+  expect_true(all(c("clave", "cita") %in% names(r)))
+  expect_true(all(nzchar(r$cita)))
 })

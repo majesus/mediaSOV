@@ -1,20 +1,13 @@
-#' Referencias bibliográficas del paquete y estado de su verificación
+#' Referencias bibliográficas del paquete
 #'
 #' Devuelve las fuentes en las que se apoyan los postulados del simulador y los
-#' métodos estadísticos, con una columna que declara **qué se ha verificado**
-#' con herramientas de búsqueda bibliográfica y qué procede de la bibliografía
-#' del autor o de referencias clásicas. Las fuentes no verificadas deben
-#' contrastarse con el original antes de citarlas.
+#' métodos estadísticos.
 #'
-#' @return Un `data.frame` con las columnas `clave`, `cita` y `verificacion`.
+#' @return Un `data.frame` con las columnas `clave` y `cita`.
 #' @examples
-#' sov_referencias()[, c("clave", "verificacion")]
+#' sov_referencias()
 #' @export
 sov_referencias <- function() {
-  v_c <- "Existencia, t\u00edtulo, revista y a\u00f1o contrastados en Consensus (19-nov-2026); volumen y p\u00e1ginas, de la bibliograf\u00eda del autor."
-  v_p <- "Existencia, t\u00edtulo, revista y a\u00f1o contrastados en Consensus (19-nov-2026); sin volumen ni p\u00e1ginas."
-  v_k <- "Referencia cl\u00e1sica citada de memoria; no recuperada con herramientas de b\u00fasqueda. Verif\u00edquese antes de citar."
-  v_s <- "Citada en la slide 22 del autor; no verificada con herramientas de b\u00fasqueda. Verif\u00edquese antes de citar."
   data.frame(
     clave = c("Jones1990", "Hansen2005", "Danenberg2016", "Sethuraman2011", "Graham2009", "Bae2024",
               "Morais2017", "Binet2007", "Binet2013", "Theil1950", "Sen1968", "Cook1977", "Belsley1980",
@@ -36,7 +29,6 @@ sov_referencias <- function() {
       "Hurvich, C. M., & Tsai, C.-L. (1989). Regression and time series model selection in small samples. Biometrika, 76(2), 297-307.",
       "Efron, B. (1979). Bootstrap methods: Another look at the jackknife. The Annals of Statistics, 7(1), 1-26."
     ),
-    verificacion = c(v_c, v_c, v_c, v_c, v_p, v_p, v_p, v_s, v_s, v_k, v_k, v_k, v_k, v_k, v_k),
     stringsAsFactors = FALSE
   )
 }

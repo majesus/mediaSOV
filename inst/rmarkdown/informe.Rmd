@@ -137,7 +137,7 @@ Las cuotas de una categoría suman 100 %, de modo que SOV y SOM no son independi
 
 ```{r refs}
 r <- sov_referencias()
-cat(paste0("- ", r$cita, " *(", r$verificacion, ")*"), sep = "\n")
+cat(paste0("- ", r$cita), sep = "\n")
 ```
 
 *Informe generado con mediaSOV `r x$version`.*
