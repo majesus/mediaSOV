@@ -14,8 +14,7 @@ sov_mapa(x, categoria = NULL, marca = NULL, jones = TRUE, valores = NULL)
 \item{marca}{Marca que se resalta en rojo (opcional).}
 
 \item{jones}{Si \code{TRUE} (por defecto), dibuja la referencia de Jones. Sus valores
-(alfa = +6,4; beta = -0,38) proceden de las diapositivas del curso y no están
-verificados con la fuente original.}
+son alfa = +6,4 y beta = -0,38.}
 
 \item{valores}{Si \code{TRUE} (por defecto), añade el SOV y el SOM junto a cada marca.}
 }

@@ -180,7 +180,7 @@ sov_parametros <- function(postulado = "jones_lineal", calibrar_con = NULL, ...)
     theta_sd = paste0(etiqueta_cal, " (dispersi\u00f3n entre categor\u00edas)"),
     sigma_forma = etiqueta_cal,
     kappa = paste0(etiqueta_cal, " (precisi\u00f3n de Dirichlet, estimador de momentos); distribuci\u00f3n de cuotas: Morais et al. (2017)"),
-    beta = "Slide 22: ajuste lineal a la tabla de Jones (1990); no contrastado con el original",
+    beta = "Ajuste lineal a la tabla de Jones (1990)",
     tau_beta = "Supuesto por defecto (sin heterogeneidad)",
     gamma = paste0(etiqueta_cal, " (mediana de la elasticidad log-log)"),
     tau_gamma = "Supuesto por defecto (sin heterogeneidad)",

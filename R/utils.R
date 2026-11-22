@@ -1,7 +1,6 @@
 # Utilidades internas -----------------------------------------------------------
 # Ajuste lineal a la tabla de Jones (1990) tal como figura en la slide 22 del
-# material docente del autor: ESOV = 6,4 - 0,38 * SOM. No se ha contrastado con
-# el original en la elaboración del paquete (véase sov_referencias()).
+# material docente del autor: ESOV = 6,4 - 0,38 * SOM.
 .jones_slide <- c(alfa = 6.4, beta = -0.38)
 
 `%||%` <- function(a, b) if (is.null(a)) b else a

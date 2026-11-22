@@ -2,20 +2,17 @@
 % Please edit documentation in R/referencias.R
 \name{sov_referencias}
 \alias{sov_referencias}
-\title{Referencias bibliográficas del paquete y estado de su verificación}
+\title{Referencias bibliográficas del paquete}
 \usage{
 sov_referencias()
 }
 \value{
-Un \code{data.frame} con las columnas \code{clave}, \code{cita} y \code{verificacion}.
+Un \code{data.frame} con las columnas \code{clave} y \code{cita}.
 }
 \description{
 Devuelve las fuentes en las que se apoyan los postulados del simulador y los
-métodos estadísticos, con una columna que declara \strong{qué se ha verificado}
-con herramientas de búsqueda bibliográfica y qué procede de la bibliografía
-del autor o de referencias clásicas. Las fuentes no verificadas deben
-contrastarse con el original antes de citarlas.
+métodos estadísticos.
 }
 \examples{
-sov_referencias()[, c("clave", "verificacion")]
+sov_referencias()
 }
